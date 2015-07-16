@@ -1,0 +1,59 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Querying for Member Properties in MDX</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="mdx_properties.htm" title="About MDX Properties"><link rel="prev" href="mdx_properties_opt.htm" title="MDX Optimization Properties"><link rel="next" href="mdx_properties_valuetype.htm" title="The Value Type of MDX Properties"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_properties_opt.htm';
+var nextPage = 'mdx_properties_valuetype.htm';
+var tocLinkId = 'mdx_properties_querymem';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="section" lang="EN-US"><div class="titlepage"><div><div><h1 class="title" style="clear: both"><a name="properties_techref_proj_maxl_dml_rules_d0e264"></a>Querying for Member Properties in MDX</h1></div></div></div><p>Properties can be used inside an MDX query in two ways. In the first
+approach, you can list the dimension and property combinations for each axis
+set. When a query is executed, the specified property is evaluated for all
+members from the specified dimension and included in the result set.</p><p>For example, on the column axis, the following query will return the
+GEN_NUMBER information for every Market dimension member. On the row axis,
+the query returns MEMBER_ALIAS information for every Product dimension member.</p><pre class="programlisting">SELECT
+ [Market].Members
+    DIMENSION PROPERTIES [Market].[GEN_NUMBER] on columns,
+ Filter ([Product].Members, Sales &gt; 5000)
+    DIMENSION PROPERTIES [Product].[MEMBER_ALIAS] on rows
+from Sample.Basic</pre><p>When querying for member properties using the DIMENSION PROPERTIES section
+of an axis, a property can be identified by the dimension name and the name
+of the property, or just by using the property name itself. When a property
+name is used by itself, that property information is returned for all members
+from all dimensions on that axis, for which that property applies.</p><div class="note"><p class="admonTitle">Note:</p><p>When a property name is used
+by itself within the DIMENSION PROPERTIES section, do not use brackets []
+around the property name.</p></div><p>In the following query. the MEMBER_ALIAS property is evaluated on the
+row axis for both Year and Product dimensions.</p><pre class="programlisting">SELECT
+ [Market].Members
+    DIMENSION PROPERTIES [Market].[GEN_NUMBER] on columns,
+ CrossJoin([Product].Children, Year.Children)
+    DIMENSION PROPERTIES MEMBER_ALIAS on rows
+from Sample.Basic</pre><p>In a second approach, properties can be used inside value expressions
+in an MDX query. For example you can filter a set based on a value expression
+that uses properties of members in input set.</p><p>The following query returns all caffeinated products that are packaged
+in cans.</p><pre class="programlisting">         
+Select
+Filter([Product].levels(0).members,
+         [Product].CurrentMember.Caffeinated and
+         [Product].CurrentMember.[Pkg Type] = "Can")
+         Dimension Properties
+           [Caffeinated], [Pkg Type] on columns</pre><p>The following query uses the UDA <span class="cCode">[Major Market]</span> to calculate
+the value <span class="cCode">[BudgetedExpenses]</span> based on whether the current member
+of the Market dimension is a major market or not.</p><pre class="programlisting">With 
+   MEMBER [Measures].[BudgetedExpenses] AS
+      'IIF([Market].CurrentMember.[Major Market],
+       [Marketing] * 1.2, [Marketing])'
+Select
+   {[Measures].[BudgetedExpenses]} on columns,
+   Market.Members on rows
+Where
+  ([Budget])</pre><p>The following queries use alias table names.</p><pre class="programlisting"> SELECT
+ [Product].Members
+  DIMENSION PROPERTIES [Default] on columns
+from Sample.Basic;
+
+SELECT
+ [Product].Members
+  DIMENSION PROPERTIES [Long Names] on columns
+from Sample.Basic;</pre></div></body></html>

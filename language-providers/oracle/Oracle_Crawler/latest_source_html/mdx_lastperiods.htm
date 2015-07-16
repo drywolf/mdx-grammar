@@ -1,0 +1,71 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>LastPeriods</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_lastchild.htm" title="LastChild"><link rel="next" href="mdx_lastsibling.htm" title="LastSibling"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_lastchild.htm';
+var nextPage = 'mdx_lastsibling.htm';
+var tocLinkId = 'mdx_lastperiods';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="lastperiods_techref_proj_maxl_dml_funcs"></a>LastPeriods<a class="indexterm" name="d0e104765"></a><a class="indexterm" name="d0e104768"></a><a class="indexterm" name="d0e104771"></a></h1>
+
+
+<p>Returns a set of members ending either at the specified member or at
+the current member in the time dimension.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">LastPeriods ( <span class="italic">numeric value expression</span> [, <span class="italic">member</span> [, <span class="italic">hierarchy</span> ] ] )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the LastPeriods function"><thead><tr><th id="hd-d0e104803-col1">Parameter</th><th id="hd-d0e104803-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e104803-col1"><p>numeric value expression</p></td>
+<td headers="hd-d0e104803-col2">
+<p>The number of members to return (see <a href="mdx_grammar_rules.htm" title="MDX Grammar Rules">MDX Grammar Rules</a>). If negative, <span class="italic">member</span> is
+treated as the starting point.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e104803-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a></p></td>
+<td headers="hd-d0e104803-col2">
+<p>Optional. A member expression.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e104803-col1"><p><a href="mdx_hierarchy.htm" title="MDX Hierarchy Specification">hierarchy</a></p></td>
+<td headers="hd-d0e104803-col2">
+<p>Optional. A specific hierarchy within the time dimension.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p><span class="cCode">Lastperiods(3, Apr)</span> returns the set <span class="cCode">{Feb, Mar, Apr}</span>.</p>
+<p><span class="cCode">Lastperiods(-3, Apr)</span> returns the set <span class="cCode">{Apr, May, Jun}</span>.</p>
+<p><span class="cCode">Lastperiods(1, Apr)</span> returns a set of one member: <span class="cCode">{Apr}</span>.</p>
+<p><span class="cCode">Lastperiods(0, Apr)</span> returns an empty set.</p>
+<p><span class="cCode">Lastperiods(5, Apr)</span> returns the set <span class="cCode">{Jan, Feb, Mar,
+Apr}</span>. Note that the output set has only four members.</p>
+<p>The following query:</p>
+<pre class="programlisting">WITH MEMBER
+ [Measures].[Rolling Sales] AS 
+'Avg  (
+ LastPeriods 
+    (3, [Year].Currentmember
+    ), 
+ [Measures].[Sales]
+ )'
+SELECT
+ {[Measures].[Sales], [Measures].[Rolling Sales]}
+ON COLUMNS, 
+ Descendants ([Year].[Qtr2])
+ON ROWS
+FROM Sample.Basic
+WHERE [Product].[Root Beer]</pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Sales</td><td>Rolling Sales</td></tr><tr><td>Qtr2</td><td>27401</td><td>27014</td></tr><tr><td>Apr</td><td>8969</td><td>8960</td></tr><tr><td>May</td><td>9071</td><td>8997</td></tr><tr><td>Jun</td><td>9361</td><td>9133.667</td></tr></tbody></table></div>
+
+</div></body></html>

@@ -1,0 +1,77 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Union</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_uda.htm" title="Uda"><link rel="next" href="mdx_unixdate.htm" title="UnixDate"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_uda.htm';
+var nextPage = 'mdx_unixdate.htm';
+var tocLinkId = 'mdx_union';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="union_techref_proj_maxl_dml_funcs"></a>Union<a class="indexterm" name="d0e114370"></a></h1>
+
+
+<p>Returns the union of two input sets, optionally retaining duplicates.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">Union ( <span class="italic">set1</span>, <span class="italic">set2</span> [,ALL] )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Union function"><thead><tr><th id="hd-d0e114409-col1">Parameter</th><th id="hd-d0e114409-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e114409-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set1</a></p></td>
+<td headers="hd-d0e114409-col2">
+<p>A set to join with <span class="italic">set2</span>.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e114409-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set2</a></p></td>
+<td headers="hd-d0e114409-col2">
+<p>A set to join with <span class="italic">set1</span>.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e114409-col1"><p>ALL</p></td>
+<td headers="hd-d0e114409-col2">
+<p>If the optional ALL keyword is used, duplicates are retained.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>Duplicates are eliminated by default from the tail of the set. The optional
+ALL keyword retains duplicates. The two input sets must have identical dimension
+signatures. For example, if <span class="italic">set1</span> consists
+of dimensions Product and Market, in that order, then <span class="italic">set2</span> should
+also consist of Product followed by Market.</p>
+
+<p class="func_subhead">Example</p>
+<p class="bridgehead"><a name="d0e114459"></a>Example 1</p>
+<p>The expression</p>
+<pre class="programlisting">Union( Siblings([Old Fashioned]), {[Sasparilla], [Birch Beer]}) </pre>
+<p>returns the set</p>
+<pre class="programlisting">{ [Old Fashioned], [Diet Root Beer], [Sasparilla], [Birch Beer] }</pre>
+<p class="bridgehead"><a name="d0e114474"></a>Example 3</p>
+<p>The expression</p>
+<pre class="programlisting">Union( Siblings([Old Fashioned]), {[Sasparilla], [Birch Beer]}, ALL)</pre>
+<p>returns the set</p>
+<pre class="programlisting">{ [Old Fashioned], [Diet Root Beer], [Sasparilla], [Birch Beer],
+      [Sasparilla], [Birch Beer] }</pre>
+<p class="bridgehead"><a name="d0e114489"></a>Example 2</p>
+<p>The following query</p>
+<pre class="programlisting">SELECT
+CrossJoin (
+         <span class="bold"><strong>Union (</strong></span>
+            Siblings ([Old Fashioned]),
+            {([Root Beer]), ([Cream Soda])}
+         <span class="bold"><strong>)</strong></span>,
+         {(Budget), ([Variance])}
+      )
+ON COLUMNS
+from Sample.Basic</pre>
+<p>returns the grid</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col><col><col><col><col><col><col><col></colgroup><tbody><tr><td colspan="2" valign="bottom">Old Fashioned</td><td colspan="2" valign="bottom">Diet Root Beer</td><td colspan="2" valign="bottom">Sasparilla</td><td colspan="2" valign="bottom">Birch Beer</td><td colspan="2" valign="bottom">Root Beer</td><td colspan="2" valign="bottom">Cream Soda</td></tr><tr><td>Budget</td><td>Variance</td><td>Budget</td><td>Variance</td><td>Budget</td><td>Variance</td><td>Budget</td><td>Variance</td><td>Budget</td><td>Variance</td><td>Budget</td><td>Variance</td></tr><tr><td>11640</td><td>-4439</td><td>14730</td><td>-2705</td><td>5050</td><td>-414</td><td>4530</td><td>-438</td><td>35950</td><td>-7996</td><td>29360</td><td>-3561</td></tr></tbody></table></div>
+
+</div></body></html>

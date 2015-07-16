@@ -1,0 +1,73 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>DrilldownByLayer</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_dimension.htm" title="Dimension"><link rel="next" href="mdx_drilldownmember.htm" title="DrilldownMember"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_dimension.htm';
+var nextPage = 'mdx_drilldownmember.htm';
+var tocLinkId = 'mdx_drilldownbylayer';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="drilldownbylayer_techref_proj_maxl_dml_funcs"></a>DrilldownByLayer<a class="indexterm" name="d0e97296"></a></h1>
+
+
+<p>Drills down members of a set that are at a specified layer.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">DrilldownByLayer ( <span class="italic">set</span> [, <span class="italic">layer</span> | <span class="italic">index</span> ] )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the DrilldownByLayer function"><thead><tr><th id="hd-d0e97352-col1">Parameter</th><th id="hd-d0e97352-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e97352-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set</a></p></td>
+<td headers="hd-d0e97352-col2">
+<p>The set in which the drilldown should occur.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e97352-col1"><p><a href="mdx_layer.htm" title="MDX Layer Specification">layer</a></p></td>
+<td headers="hd-d0e97352-col2">
+<p>The layer of the members that should be drilled down.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e97352-col1"><p>index</p></td>
+<td headers="hd-d0e97352-col2">
+<p>A number of hierarchical steps representing the location of members
+that should be drilled down.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>This function returns the members of <span class="italic">set</span> to
+one level below the optionally specified <span class="italic">layer</span> (or <span class="italic">index</span> number of the level). If <span class="italic">layer</span> (or <span class="italic">index</span>) is omitted, the lowest level of <span class="italic">set</span> is returned. Members are returned in their hierarchical
+order as represented in the database outline.</p>
+
+<p class="func_subhead">Example</p>
+<p>The following query</p>
+<pre class="programlisting">SELECT
+DrilldownByLayer ( 
+ {([Product],[California]), ([Product],[Oregon]),
+  ([Product],[New York]), ([Product],[South]),
+  ([Product],[Washington])}, [Market].[Region]
+ ) 
+ON COLUMNS
+FROM Sample.Basic</pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col><col><col><col><col></colgroup><tbody><tr><td valign="bottom">Product</td><td valign="bottom">Product</td><td valign="bottom">Product</td><td valign="bottom">Product</td><td valign="bottom">Product</td><td valign="bottom">Product</td><td valign="bottom">Product</td><td valign="bottom">Product</td><td valign="bottom">Product</td></tr><tr><td valign="bottom">California</td><td valign="bottom">Oregon</td><td valign="bottom">New York</td><td valign="bottom">South</td><td valign="bottom">Texas</td><td valign="bottom">Oklahoma</td><td valign="bottom">Louisiana</td><td valign="bottom">New Mexico</td><td valign="bottom">Washington</td></tr><tr><td>12964</td><td>5062</td><td>8202</td><td>13238</td><td>6425</td><td>3491</td><td>2992</td><td>330</td><td>4641</td></tr></tbody></table></div>
+<p>TO use <span class="italic">index</span>, note that <span class="italic">index</span> is the index number of the dimension to drill
+down on. In the example below, the function drills down on Market. If you
+change the 1 to a 0, it drills down on Product.</p>
+<pre class="programlisting">SELECT
+DrilldownByLayer ( 
+ {
+   ([Product],[East]), ([Product],[West])
+ }, 1
+ ) 
+ON COLUMNS
+FROM Sample.Basic</pre>
+
+</div></body></html>

@@ -1,0 +1,43 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>@ISIDESC</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="calc_func_ref.htm" title="Calculation Function Reference"><link rel="prev" href="isichild.htm" title="@ISICHILD"><link rel="next" href="isiparent.htm" title="@ISIPARENT"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'isichild.htm';
+var nextPage = 'isiparent.htm';
+var tocLinkId = 'isidesc';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="isidesc_techref_proj_funcs"></a>@ISIDESC<a class="indexterm" name="d0e10720"></a></h1>
+
+
+<p>Returns TRUE if the current member is the specified member or a descendant
+of the specified member.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">@ISIDESC (<span class="italic">mbrName</span>)</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the @ISIDESC function"><thead><tr><th id="hd-d0e10744-col1">Parameter</th><th id="hd-d0e10744-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e10744-col1"><p>mbrName</p></td>
+<td headers="hd-d0e10744-col2">
+<p>Any valid single member name or member combination, or a function that
+returns a single member or member combination.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p>In the Sample Basic database:</p>
+<pre class="programlisting">@ISIDESC(South)</pre>
+<p>Returns TRUE for Texas, Oklahoma,
+Louisiana, New Mexico, South</p>
+<pre class="programlisting">@ISIDESC(West)</pre>
+<p>Returns FALSE for Market,
+East, South, and Central</p>
+
+<p class="func_subhead">See Also</p><p><li><a href="isdesc.htm" title="@ISDESC"><span class="FunctionName">@ISDESC</span></a></li></p>
+</div></body></html>

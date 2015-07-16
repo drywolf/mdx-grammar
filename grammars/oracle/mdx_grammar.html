@@ -1,0 +1,481 @@
+<pre>&lt;AcctTag&gt; ::=  
+        FIRST 
+      | LAST 
+      | AVERAGE
+      | EXPENSE
+      | TWO-PASS</pre>
+<pre>&lt;approximate_numeric_literal&gt; ::=  
+        &lt;mantissa&gt;E&lt;exponent&gt;</pre>
+<pre>&lt;axis_specification&gt; ::=  
+        [NON EMPTY] &lt;set&gt; [&lt;dim_props&gt;] ON 
+        COLUMNS | ROWS | PAGES | CHAPTERS | 
+        SECTIONS | AXIS (&lt;unsigned_integer&gt;)</pre>
+<pre>&lt;base&gt; ::=  
+        &lt;numeric_value_expression&gt;</pre>
+<pre>&lt;bool_factor&gt; ::= 
+        &lt;bool_primary&gt;
+      | <a href="./source_html/mdx_operators.htm#operators_techref_proj_maxl_dml_rules_d0e159">NOT</a> &lt;bool_primary&gt;</pre>
+<pre>&lt;bool_primary&gt; ::=  
+        &lt;value_expression&gt; [=|&gt;|&lt;|&lt;&gt;|&gt;=|&lt;=] &lt;value_expression&gt;
+      | &lt;property&gt; <a href="./source_html/mdx_operators.htm#operators_techref_proj_maxl_dml_rules_d0e67">IN</a> &lt;member&gt;|&lt;character_string_literal&gt;
+      | &lt;property&gt;
+      | <a href="./source_html/mdx_isempty.htm" title="IsEmpty"><span class="FunctionName">IsEmpty</span></a> ( &lt;value_expression&gt; )
+      | ( &lt;search_condition&gt; )
+      | <a href="./source_html/mdx_issibling.htm" title="IsSibling"><span class="FunctionName">IsSibling</span></a>(&lt;member&gt;,&lt;member&gt; [, INCLUDEMEMBER])
+      | <a href="./source_html/mdx_isleaf.htm" title="IsLeaf"><span class="FunctionName">IsLeaf</span></a>(&lt;member&gt;)
+      | <a href="./source_html/mdx_isgeneration.htm" title="IsGeneration"><span class="FunctionName">IsGeneration</span></a>(&lt;member&gt;,&lt;index&gt;)
+      | <a href="./source_html/mdx_islevel.htm" title="IsLevel"><span class="FunctionName">IsLevel</span></a>(&lt;member&gt;,&lt;index&gt;)
+      | <a href="./source_html/mdx_isancestor.htm" title="IsAncestor"><span class="FunctionName">IsAncestor</span></a>(&lt;member&gt;,&lt;member&gt; [, INCLUDEMEMBER])
+      | <a href="./source_html/mdx_ischild.htm" title="IsChild"><span class="FunctionName">IsChild</span></a>(&lt;member&gt;,&lt;member&gt; [, INCLUDEMEMBER])
+      | <a href="./source_html/mdx_isuda.htm" title="IsUda"><span class="FunctionName">IsUda</span></a> (&lt;member&gt;, &lt;string_value_expression&gt;)
+      | <a href="./source_html/mdx_isacctype.htm" title="IsAccType"><span class="FunctionName">IsAccType</span></a> (&lt;member&gt;, &lt;AcctTag&gt;)
+      | <a href="./source_html/mdx_is.htm" title="Is"><span class="FunctionName">Is</span></a> ( &lt;member&gt; , &lt;member&gt; ) 
+           | &lt;member&gt; <a href="./source_html/mdx_operators.htm#operators_techref_proj_maxl_dml_rules_d0e67">Is</a> &lt;member&gt;
+      | <a href="./source_html/mdx_isvalid.htm" title="IsValid"><span class="FunctionName">IsValid</span></a> (&lt;member&gt; | &lt;tuple&gt; | &lt;set&gt;  | &lt;layer&gt; | &lt;property&gt;)
+      | <a href="./source_html/mdx_contains.htm" title="Contains"><span class="FunctionName">Contains</span></a> (&lt;member_or_tuple&gt;, &lt;set&gt;)</pre>
+<pre>&lt;bool_term&gt; ::= 
+        &lt;bool_factor&gt;
+      | &lt;bool_term&gt; <a href="./source_html/mdx_operators.htm#operators_techref_proj_maxl_dml_rules_d0e159">AND</a> &lt;bool_factor&gt;</pre>
+<pre>&lt;calculated member name&gt; ::= &lt;@ NO BNF @&gt; Names used for calculated members cannot be the same as any names/aliases
+of database members, generation/level names, or UDA names.</pre>
+<pre>&lt;case_expression&gt; ::=    
+        &lt;simple_case&gt; | &lt;searched_case&gt;</pre>
+<pre>&lt;case_operand&gt; ::=  
+        &lt;value_expression&gt;</pre>
+<pre>&lt;character_representation&gt; ::=  
+       &lt;nonquote_character&gt; 
+     | &lt;quote_symbol&gt;</pre>
+<pre>&lt;character_string_literal&gt; ::=  
+       &lt;quote&gt;[&lt;character_representation&gt;...] &lt;quote&gt;</pre>
+<pre>&lt;conditional_expression&gt; ::=  
+        &lt;if_expression&gt; 
+      | &lt;case_expression&gt; 
+      | <a href="./source_html/mdx_coalesceempty.htm" title="CoalesceEmpty"><span class="FunctionName">CoalesceEmpty</span></a> ( &lt;numeric_value_expression&gt;
+                      , &lt;numeric_value_expression&gt;)</pre>
+<pre>&lt;cube_specification&gt; ::=  
+       '[' &lt;ident_or_string&gt;.&lt;ident_or_string&gt; ']'
+     | &lt;delim_ident&gt;.&lt;delim_ident&gt;</pre>
+<pre>&lt;date_format_string&gt; ::= 
+        "mon dd yyyy"
+      | "Month dd yyyy"
+      | "mm/dd/yy"
+      | "mm/dd/yyyy"
+      | "yy.mm.dd"
+      | "dd/mm/yy"
+      | "dd.mm.yy"
+      | "dd-mm-yy"
+      | "dd Month yy"
+      | "dd mon yy"
+      | "Month dd, yy"
+      | "mon dd, yy"
+      | "mm-dd-yy"
+      | "yy/mm/dd"
+      | "yymmdd"
+      | "dd Month yyyy"
+      | "dd mon yyyy"
+      | "yyyy-mm-dd"
+      | "yyyy/mm/dd"
+      | "Long format"
+      | "Short format"</pre>
+<pre>&lt;date_function&gt; ::= 
+        <a href="./source_html/mdx_dateroll.htm" title="DateRoll"><span class="FunctionName">DateRoll</span></a>(&lt;date&gt;, &lt;date_part&gt;, &lt;index&gt;)
+      | <a href="./source_html/mdx_datediff.htm" title="DateDiff"><span class="FunctionName">DateDiff</span></a>(&lt;date&gt;, &lt;date&gt;, &lt;date_part&gt;)
+      | <a href="./source_html/mdx_datepart.htm" title="DatePart"><span class="FunctionName">DatePart</span></a>(&lt;date&gt;, &lt;date_part&gt;)
+      | <a href="./source_html/mdx_today.htm" title="Today"><span class="FunctionName">Today</span></a>()
+      | <a href="./source_html/mdx_todateex.htm" title="TodateEx"><span class="FunctionName">TodateEx</span></a>(&lt;date_format_string&gt;, &lt;string&gt;)
+      | <a href="./source_html/mdx_getfirstdate.htm" title="GetFirstDate"><span class="FunctionName">GetFirstDate</span></a>(&lt;member&gt;)
+      | <a href="./source_html/mdx_getlastdate.htm" title="GetLastDate"><span class="FunctionName">GetLastDate</span></a>(&lt;member&gt;)
+      | <a href="./source_html/mdx_unixdate.htm" title="UnixDate"><span class="FunctionName">UnixDate</span></a>(&lt;numeric_value_expression&gt;)
+      | <a href="./source_html/mdx_getfirstday.htm" title="GetFirstDay"><span class="FunctionName">GetFirstDay</span></a>(&lt;date&gt;, &lt;date_part&gt;)
+      | <a href="./source_html/mdx_getlastday.htm" title="GetLastDay"><span class="FunctionName">GetLastDay</span></a>(&lt;date&gt;, &lt;date_part&gt;)
+      | <a href="./source_html/mdx_getnextday.htm" title="GetNextDay"><span class="FunctionName">GetNextDay</span></a>(&lt;date&gt;, &lt;week-day-specification&gt;, [0|1] )
+      | <a href="./source_html/mdx_getrounddate.htm" title="GetRoundDate"><span class="FunctionName">GetRoundDate</span></a>(&lt;date&gt;, &lt;date_part&gt;)</pre>
+<pre>&lt;date_part&gt; ::= 
+         DP_YEAR
+       | DP_QUARTER
+       | DP_MONTH
+       | DP_WEEK
+       | DP_DAY
+       | DP_DAYOFYEAR
+       | DP_WEEKDAY</pre>
+<pre>&lt;delim_ident&gt; ::=  
+       '[' &lt;ident&gt; ']' 
+     | &lt;ident_or_string&gt;</pre>
+<pre>&lt;Desc_flags&gt; ::=  
+        SELF 
+      | AFTER 
+      | BEFORE 
+      | BEFORE_AND_AFTER 
+      | SELF_AND_AFTER 
+      | SELF_AND_BEFORE 
+      | SELF_BEFORE_AFTER 
+      | LEAVES</pre>
+<pre>&lt;digit&gt; ::=  
+       0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9</pre>
+<pre>&lt;dim_hier&gt; ::=  &lt;dimension&gt;
+
+&lt;dimension&gt; :: = 
+        &lt;dimension-name-specification&gt;
+      | <a href="./source_html/mdx_dimension.htm">DIMENSION</a> ( &lt;member&gt; | &lt;layer&gt; )
+           | &lt;member&gt;.DIMENSION  
+           | &lt;layer&gt;.DIMENSION</pre>
+<pre>&lt;dim_props&gt; ::=  
+        [DIMENSION] PROPERTIES &lt;property&gt; [, &lt;property&gt;...]</pre>
+<pre>&lt;dimension-name-specification&gt; ::=  
+    Same as &lt;member_name-specification&gt; case 1. 
+    e.g. Product, [Product]</pre>
+<pre>&lt;else_clause&gt; ::=  
+        ELSE &lt;value_expression&gt; | &lt;set&gt;</pre>
+<pre>&lt;enum_string&gt; ::=  
+        &lt;textlist-name-specification&gt;.&lt;character_string_literal&gt; 
+      | &lt;member&gt;.&lt;character_string_literal&gt;</pre>
+<pre>&lt;exact_numeric_literal&gt; ::=  
+        &lt;unsigned_integer&gt;[.&lt;unsigned_integer&gt;]
+      | &lt;unsigned_integer&gt;.
+      | .&lt;unsigned_integer&gt;</pre>
+<pre>&lt;exponent&gt; ::=  
+       [&lt;sign&gt;]&lt;unsigned_integer&gt;</pre>
+<pre>&lt;factor&gt; ::=  
+        [+ | -]&lt;numeric_primary&gt;</pre>
+<pre>&lt;false_part&gt; ::=  
+        &lt;value_expression&gt; | &lt;set&gt;</pre>
+<pre>&lt;formula_specification&gt; ::=  &lt;nonempty_specification&gt;
+                            &lt;numeric_value_expression&gt;</pre>
+<pre>&lt;frml_spec&gt; ::= 
+        &lt;single_frml_spec&gt;
+      | &lt;frml_spec&gt; &lt;single_frml_spec&gt;</pre>
+<pre>&lt;hierarchy&gt; ::= 
+
+
+A <span class="bold"><strong>hierarchy</strong></span> refers to a root member of an alternate hierarchy, which is always at 
+generation 2 of a dimension.  Member value expressions are not allowed as hierarchy 
+arguments.</pre>
+<pre>&lt;ident_or_string&gt; ::=   
+       ' &lt;ident&gt; ' 
+     | &lt;ident&gt;</pre>
+<pre>&lt;if_expression&gt; ::=  
+        <a href="./source_html/mdx_iif.htm" title="IIF"><span class="FunctionName">IIF</span></a> ( &lt;search_condition&gt;, &lt;true_part&gt;, &lt;false_part&gt; )</pre>
+<pre>&lt;index&gt; ::=  
+        &lt;numeric_value_expression&gt;</pre>
+<pre>&lt;layer&gt; ::=  
+        &lt;layer-name-specification&gt;
+      | <a href="./source_html/mdx_levels.htm" title="Levels"><span class="FunctionName">Levels</span></a> ( &lt;dim_hier&gt;, &lt;index&gt; )
+           | &lt;dim_hier&gt;.Levels ( &lt;index&gt; )      
+      | <a href="./source_html/mdx_generations.htm" title="Generations"><span class="FunctionName">Generations</span></a> ( &lt;dim_hier&gt;, &lt;index&gt; )
+           | &lt;dim_hier&gt;.Generations ( &lt;index&gt; ) 
+      | &lt;member&gt;.<a href="./source_html/mdx_generation.htm" title="Generation"><span class="FunctionName">Generation</span></a>
+      | &lt;member&gt;.<a href="./source_html/mdx_level.htm" title="Level"><span class="FunctionName">Level</span></a></pre>
+<pre>&lt;layer-name-specification&gt; ::= &lt;@ NO BNF @&gt; A <span class="bold"><strong>layer name</strong></span> can be specified in the
+following ways:<ol type="1"><li><p>By specifying the generation or level names; for example, <span class="cCode">States</span> or <span class="cCode">Regions</span>.</p><p>The generation or level name can be within braces; for example, <span class="cCode">[Regions]</span>.
+Using braces is recommended.</p></li><li><p>By specifying the dimension name along with the generation
+or level name; for example, <span class="cCode">Market.Regions</span> and <span class="cCode">[Market].[States]</span> This
+naming convention is recommended.</p></li></ol></pre>
+<pre>&lt;layertype&gt; ::=  
+        GENERATION | LEVEL</pre>
+<pre>&lt;mantissa&gt; ::=  
+        &lt; exact_numeric_literal&gt;</pre>
+<pre>&lt;mathematical_function&gt; ::=  
+        <a href="./source_html/mdx_abs.htm" title="Abs"><span class="FunctionName">Abs</span></a> ( &lt;numeric_value_expression&gt; )
+      | <a href="./source_html/mdx_exp.htm" title="Exp"><span class="FunctionName">Exp</span></a> ( &lt;numeric_value_expression&gt; )
+      | <a href="./source_html/mdx_factorial.htm" title="Factorial"><span class="FunctionName">Factorial</span></a> ( &lt;index&gt; )
+      | <a href="./source_html/mdx_int.htm" title="Int"><span class="FunctionName">Int</span></a> ( &lt;numeric_value_expression&gt; )
+      | <a href="./source_html/mdx_ln.htm" title="Ln"><span class="FunctionName">Ln</span></a> ( &lt;numeric_value_expression&gt; )
+      | <a href="./source_html/mdx_log.htm" title="Log"><span class="FunctionName">Log</span></a> ( &lt;numeric_value_expression&gt; [, &lt;base&gt;] )
+      | <a href="./source_html/mdx_log10.htm" title="Log10"><span class="FunctionName">Log10</span></a> ( &lt;numeric_value_expression&gt; )
+      | <a href="./source_html/mdx_mod.htm" title="Mod"><span class="FunctionName">Mod</span></a> ( &lt;numeric_value_expression&gt; , &lt;numeric_value_expression&gt; )
+      | <a href="./source_html/mdx_power.htm" title="Power"><span class="FunctionName">Power</span></a> ( &lt;numeric_value_expression&gt; , &lt;power&gt; )
+      | <a href="./source_html/mdx_remainder.htm" title="Remainder"><span class="FunctionName">Remainder</span></a> ( &lt;numeric_value_expression&gt; )
+      | <a href="./source_html/mdx_stddev.htm" title="Stddev"><span class="FunctionName">Stddev</span></a> ( &lt;set&gt; [,&lt;numeric_value_expression&gt; [,IncludeEmpty] ] )
+      | <a href="./source_html/mdx_stddevp.htm" title="Stddevp"><span class="FunctionName">Stddevp</span></a> ( &lt;set&gt; [,&lt;numeric_value_expression&gt; [,IncludeEmpty] ] )
+      | <a href="./source_html/mdx_round.htm" title="Round"><span class="FunctionName">Round</span></a> ( &lt;numeric_value_expression&gt; , &lt;index&gt; )
+      | <a href="./source_html/mdx_truncate.htm" title="Truncate"><span class="FunctionName">Truncate</span></a> ( &lt;numeric_value_expression&gt; )</pre>
+<pre>&lt;member&gt; ::=  
+        &lt;member-name-specification&gt;
+      | &lt;member_value_expression&gt;</pre>
+<pre>&lt;member_name&gt; ::=  
+        &lt;dimension-name-specification&gt;.&lt;calculated member name&gt;</pre>
+<pre>&lt;member_or_tuple&gt; ::= 
+        &lt;member&gt;
+      | &lt;tuple&gt;</pre>
+<pre>&lt;member_specification&gt; ::=  
+        MEMBER &lt;member_name&gt; AS ' 
+                &lt;nonempty_specification&gt;
+                &lt;numeric_value_expression&gt; '
+        [, &lt;solve_order_specification&gt;]</pre>
+<pre>&lt;member_value_expression&gt; ::= 
+        <a href="./source_html/mdx_parent.htm" title="Parent"><span class="FunctionName">Parent</span></a> ( &lt;member&gt; [,&lt;hierarchy&gt;] ) 
+           | &lt;member&gt;.Parent [(&lt;hierarchy&gt;)]     
+      | <a href="./source_html/mdx_firstchild.htm" title="FirstChild"><span class="FunctionName">FirstChild</span></a> ( &lt;member&gt; ) 
+           | &lt;member&gt;.FirstChild     
+      | <a href="./source_html/mdx_lastchild.htm" title="LastChild"><span class="FunctionName">LastChild</span></a> ( &lt;member&gt; ) 
+           | &lt;member&gt;.LastChild      
+      | <a href="./source_html/mdx_prevmember.htm" title="PrevMember"><span class="FunctionName">PrevMember</span></a> ( &lt;member&gt; [,&lt;layertype&gt;] )
+           | &lt;member&gt;.PrevMember [( &lt;layertype&gt; ) ] 
+      | <a href="./source_html/mdx_nextmember.htm" title="NextMember"><span class="FunctionName">NextMember</span></a> ( &lt;member&gt; [,&lt;layertype&gt;] )
+           | &lt;member&gt;.NextMember [( &lt;layertype&gt; ) ] 
+      | <a href="./source_html/mdx_firstsibling.htm" title="FirstSibling"><span class="FunctionName">FirstSibling</span></a> ( &lt;member&gt; [,&lt;hierarchy&gt;])
+           | &lt;member&gt;.FirstSibling [(&lt;hierarchy&gt;)]
+      | <a href="./source_html/mdx_lastsibling.htm" title="LastSibling"><span class="FunctionName">LastSibling</span></a> ( &lt;member&gt; [,&lt;hierarchy&gt;])
+           | &lt;member&gt;.LastSibling [(&lt;hierarchy&gt;)]   
+      | <a href="./source_html/mdx_ancestor.htm" title="Ancestor"><span class="FunctionName">Ancestor</span></a> ( &lt;member&gt; , &lt;layer&gt; | &lt;index&gt; [,&lt;hierarchy&gt;] )
+      | <a href="./source_html/mdx_lead.htm" title="Lead"><span class="FunctionName">Lead</span></a> ( &lt;member&gt;, &lt;index&gt; [,&lt;layertype&gt;] [,&lt;hierarchy&gt;] )
+           | &lt;member&gt;.Lead ( &lt;index&gt; [,&lt;layertype&gt;] [,&lt;hierarchy&gt;] )   
+      | <a href="./source_html/mdx_lag.htm" title="Lag"><span class="FunctionName">Lag</span></a>  ( &lt;member&gt;, &lt;index&gt; [,&lt;layertype&gt;] [,&lt;hierarchy&gt;] )
+           | &lt;member&gt;.Lag  ( &lt;index&gt; [,&lt;layertype&gt;] [,&lt;hierarchy&gt;] )   
+      | <a href="./source_html/mdx_currentmember.htm" title="CurrentMember"><span class="FunctionName">CurrentMember</span></a> ( &lt;dim_hier&gt; )
+           | &lt;dim_hier&gt;. CurrentMember  
+      | <a href="./source_html/mdx_defaultmember.htm" title="DefaultMember"><span class="FunctionName">DefaultMember</span></a> ( &lt;dim_hier&gt; )
+           | &lt;dim_hier&gt;. DefaultMember  
+      | <a href="./source_html/mdx_openingperiod.htm" title="OpeningPeriod"><span class="FunctionName">OpeningPeriod</span></a> ( [&lt;layer&gt; [,&lt;member&gt;]] )
+      | <a href="./source_html/mdx_closingperiod.htm" title="ClosingPeriod"><span class="FunctionName">ClosingPeriod</span></a> ( [&lt;layer&gt; [,&lt;member&gt;]] )
+      | <a href="./source_html/mdx_cousin.htm" title="Cousin"><span class="FunctionName">Cousin</span></a> (&lt;member&gt;, &lt;member&gt;)
+      | <a href="./source_html/mdx_parallelperiod.htm" title="ParallelPeriod"><span class="FunctionName">ParallelPeriod</span></a>( [&lt;layer&gt;[, &lt;index&gt;[, &lt;member&gt; [,&lt;hierarchy&gt;]]]] )
+      | <a href="./source_html/mdx_item.htm" title="Item"><span class="FunctionName">Item</span></a> ( &lt;tuple&gt;, &lt;index&gt; ) 
+           | tuple[.Item] ( &lt;index&gt; ) 
+      | <a href="./source_html/mdx_linkmember.htm" title="LinkMember"><span class="FunctionName">LinkMember</span></a> ( &lt;member&gt;, &lt;hierarchy&gt; ) 
+           | member.LinkMember ( &lt;hierarchy&gt; )
+       | <a href="./source_html/mdx_datetomember.htm" title="DateToMember"><span class="FunctionName">DateToMember</span></a> (&lt;date&gt;, &lt;dim_hier&gt; [ ,&lt;genlev&gt;] )
+      | <a href="./source_html/mdx_strtombr.htm" title="StrToMbr"><span class="FunctionName">StrToMbr</span></a> (&lt;string_value_expr&gt; [,&lt;dimension&gt;] [, MEMBER_NAMEONLY | &lt;alias_table_name&gt;])</pre>
+<pre>&lt;member-name-specification&gt; ::= &lt;@ NO BNF @&gt; A <span class="bold"><strong>member name</strong></span> can be specified in the
+following ways:<ol type="1"><li><p>By specifying the actual name or the alias; for example, <span class="cCode">Cola</span>, <span class="cCode">Actual</span>, <span class="cCode">COGS</span>,
+and <span class="cCode">[100]</span>.</p><p>If the member name starts with number
+or contains spaces, it should be within braces; for example, <span class="cCode">[100]</span>.
+Braces are recommended for all member names, for clarity and code readability.</p><p>For attribute members, the long name (qualified to uniquely identify
+the member) should be used; for example, <span class="cCode">[Ounces_12]</span> instead
+of just <span class="cCode">[12]</span>.</p></li><li><p>By specifying dimension name or any one of the ancestor member
+names as a prefix to the member name; for example, <span class="cCode">[Product].[100-10]</span> and <span class="cCode">[Diet].[100-10]</span> This
+is a recommended practice for all member names, as it eliminates ambiguity
+and enables you to refer accurately to shared members.</p><div class="note"><p class="admonTitle">Note:</p><p>Use only one ancestor in the qualification. Essbase returns
+an error if multiple ancestors are included. For example, <span class="cCode">[Market].[New
+York]</span> is a valid name for New York, and so is <span class="cCode">[East].[New York]</span>.
+However, <span class="cCode">[Market].[East].[New York]</span> returns an error.</p></div></li><li><p>By specifying the name of a calculated member defined in the
+WITH section.</p></li><li><p>For outlines that have duplicate member names enabled, see
+also <a href="./source_html/mdx_duplicate.htm" title="MDX Syntax for Specifying Duplicate Member Names and Aliases">MDX Syntax for Specifying Duplicate Member Names and Aliases</a>.</p></li></ol></pre>
+<pre>&lt;nonempty_member_list&gt; ::=   &lt;nonempty_member_name&gt;
+                          | &lt;nonempty_member_name&gt; [ , &lt;nonempty_member_list&gt; ]</pre>
+<pre>&lt;nonempty_member_name&gt; ::= 
+         An Essbase member name or a calculated member name (only when used in another calculated member).</pre>
+<pre>&lt;nonempty_specification&gt; ::=    NONEMPTYMEMBER &lt;nonempty_member_list&gt;
+                             | NONEMPTYTUPLE  ( &lt;nonempty_member_list&gt; )</pre>
+<pre>&lt;nonquote_character&gt; ::=  
+       Any character in the character set other than &lt;quote&gt;</pre>
+<pre>&lt;numeric_primary&gt; ::= 
+        &lt;value_expr_primary&gt;
+      | &lt;numeric_value_function&gt;
+      | &lt;mathematical_function&gt;
+      | &lt;date_function&gt;</pre>
+<pre>&lt;numeric_value_expression&gt; ::= 
+        &lt;term&gt;
+      | &lt;numeric_value_expression&gt; + &lt;term&gt;
+      | &lt;numeric_value_expression&gt; - &lt;term&gt;</pre>
+<pre>&lt;numeric_value_function&gt; ::= 
+        <a href="./source_html/mdx_avg.htm" title="Avg"><span class="FunctionName">Avg</span></a> ( &lt;set&gt; [, &lt;numeric_value_expression&gt;] [, IncludeEmpty] )
+      | <a href="./source_html/mdx_max.htm" title="Max"><span class="FunctionName">Max</span></a> ( &lt;set&gt; [, &lt;numeric_value_expression&gt;])
+      | <a href="./source_html/mdx_min.htm" title="Min"><span class="FunctionName">Min</span></a> ( &lt;set&gt; [, &lt;numeric_value_expression&gt;])
+      | <a href="./source_html/mdx_sum.htm" title="Sum"><span class="FunctionName">Sum</span></a> ( &lt;set&gt; [, &lt;numeric_value_expression&gt;])
+      | <a href="./source_html/mdx_nonemptycount.htm" title="NonEmptyCount"><span class="FunctionName">NonEmptyCount</span></a> ( &lt;set&gt; [, &lt;numeric_value_expression&gt;])
+      | <a href="./source_html/mdx_count.htm" title="Count"><span class="FunctionName">Count</span></a> ( &lt;set&gt; [, IncludeEmpty] )
+      | <a href="./source_html/mdx_todate.htm" title="Todate"><span class="FunctionName">Todate</span></a> ( &lt;string_value_expression&gt; , &lt;string_value_expression&gt; )
+      | <a href="./source_html/mdx_ordinal.htm" title="Ordinal"><span class="FunctionName">Ordinal</span></a> (&lt;layer&gt;)
+      | <a href="./source_html/mdx_aggregate.htm" title="Aggregate"><span class="FunctionName">Aggregate</span></a> (&lt;set&gt; [,&lt;member-name-specification&gt;])
+      | <a href="./source_html/mdx_rank.htm" title="Rank"><span class="FunctionName">Rank</span></a> (&lt;member_or_tuple&gt;, &lt;set&gt; [,&lt;numeric_value_expression&gt; 
+                  [, &lt;rank_flags&gt;]])
+      | <a href="./source_html/mdx_ntile.htm" title="NTile"><span class="FunctionName">NTile</span></a> (&lt;member_or_tuple&gt;, &lt;set&gt;, &lt;index&gt;, 
+                  &lt;numeric_value_expression&gt;)
+      | <a href="./source_html/mdx_percentile.htm" title="Percentile"><span class="FunctionName">Percentile</span></a> (&lt;set&gt;, &lt;numeric_value_expression&gt;, 
+                  &lt;numeric_value_expression&gt;)
+      | <a href="./source_html/mdx_median.htm" title="Median"><span class="FunctionName">Median</span></a> (&lt;set&gt;, &lt;numeric_value_expression&gt;)
+      | <a href="./source_html/mdx_len.htm" title="Len"><span class="FunctionName">Len</span></a> (&lt;string_value_expression&gt;)
+      | <a href="./source_html/mdx_instr.htm" title="InStr"><span class="FunctionName">InStr</span></a> (&lt;index&gt;, &lt;string_value_expression&gt;, 
+                  &lt;string_value_expression&gt;, &lt;numeric_value_expression&gt;)
+      | <a href="./source_html/mdx_strtonum.htm" title="StrToNum"><span class="FunctionName">StrToNum</span></a> (&lt;string_value_expression&gt;)
+      | <a href="./source_html/mdx_enumvalue.htm" title="EnumValue"><span class="FunctionName">EnumValue</span></a>(&lt;enum_string&gt;)
+      | <a href="./source_html/mdx_juliandate.htm" title="JulianDate"><span class="FunctionName">JulianDate</span></a>(&lt;date&gt;)</pre>
+<pre>&lt;percentage&gt; ::=  
+        &lt;numeric_value_expression&gt;</pre>
+<pre>&lt;perspective_specification&gt; ::= 
+      PERSPECTIVE REALITY | &lt;tuple&gt; FOR &lt;dimension-name-specification&gt;</pre>
+<pre>&lt;power&gt; ::=  
+        &lt;numeric_value_expression&gt;</pre>
+<pre>&lt;property&gt; ::=  
+        &lt;member&gt;.&lt;property_specification&gt;
+      | &lt;dim_hier&gt;.&lt;property_specification&gt;
+      | &lt;property_specification&gt;</pre>
+<pre>&lt;property_specification&gt; ::=  
+        MEMBER_NAME
+      | MEMBER_ALIAS
+      | GEN_NUMBER
+      | LEVEL_NUMBER
+      | &lt;dimension-name-specification&gt;
+      | &lt;uda-specification&gt;</pre>
+<pre>&lt;quote&gt; ::=  "
+
+
+The following is the syntax for Format Strings in Essbase:
+MdxFormat( string_value_expression )</pre>
+<pre>&lt;quote_symbol&gt; ::=  
+       &lt;quote&gt; &lt;quote&gt;</pre>
+<pre>&lt;rank_flags&gt; ::= 
+        ORDINALRANK
+      | DENSERANK
+      | PERCENTRANK</pre>
+<pre>&lt;result&gt; ::=  
+        &lt;value_expression&gt; | &lt;set&gt;</pre>
+<pre>&lt;search_condition&gt; ::= 
+        &lt;bool_term&gt;
+      | &lt;search_condition&gt; <a href="./source_html/mdx_operators.htm#operators_techref_proj_maxl_dml_rules_d0e159">OR</a> &lt;bool_term&gt;</pre>
+<pre>&lt;searched_case&gt; ::=  
+        <a href="./source_html/mdx_case.htm" title="Case"><span class="FunctionName">Case</span></a>
+             &lt;searched_when_clause&gt;...
+             [ &lt;else_clause&gt; ]
+        END</pre>
+<pre>&lt;searched_when_clause&gt; ::=  
+        WHEN &lt;search_condition&gt; 
+             THEN &lt;result&gt;</pre>
+<pre>&lt;selection_flags&gt; ::= 
+        LEFT
+      | RIGHT
+      | ALL</pre>
+<pre>&lt;set&gt; ::=  
+        <a href="./source_html/mdx_memberrange.htm" title="MemberRange"><span class="FunctionName">MemberRange</span></a> ( &lt;member&gt;, &lt;member&gt; 
+                    [,&lt;layertype&gt;] [,&lt;hierarchy&gt;] )
+      | &lt;member&gt; : &lt;member&gt;  
+      | { &lt;tuple&gt;|&lt;set&gt; [, &lt;tuple&gt;|&lt;set&gt;].. }
+      | ( &lt;set&gt; )
+      | &lt;set_value_expression&gt;</pre>
+<pre>&lt;set_name&gt; ::= &lt;@ NO BNF @&gt; The name of the set to be defined. The name cannot be same as any names/aliases
+of database members, generation/level names, or UDA names.</pre>
+<pre>&lt;set_spec&gt; ::= 
+        SET &lt;set_name&gt; AS ' &lt;set&gt; '</pre>
+<pre>&lt;set_value_expression&gt; ::= 
+      | <a href="./source_html/mdx_members.htm" title="Members"><span class="FunctionName">Members</span></a> ( &lt;dim_hier&gt; )
+           | &lt;dim_hier&gt;.Members 
+      | Members ( &lt;layer&gt; )
+           | &lt;layer&gt;.Members   
+      | <a href="./source_html/mdx_children.htm" title="Children"><span class="FunctionName">Children</span></a> ( &lt;member&gt; )
+           | &lt;member&gt;.Children  
+      | <a href="./source_html/mdx_crossjoin.htm" title="CrossJoin"><span class="FunctionName">CrossJoin</span></a> ( &lt;set&gt; , &lt;set&gt; )
+      | <a href="./source_html/mdx_union.htm" title="Union"><span class="FunctionName">Union</span></a> ( &lt;set&gt; , &lt;set&gt; [,ALL] )
+      | <a href="./source_html/mdx_intersect.htm" title="Intersect"><span class="FunctionName">Intersect</span></a> ( &lt;set&gt; , &lt;set&gt; [,ALL])
+      | <a href="./source_html/mdx_except.htm" title="Except"><span class="FunctionName">Except</span></a> ( &lt;set&gt; , &lt;set&gt; [,ALL])
+      | <a href="./source_html/mdx_extract.htm" title="Extract"><span class="FunctionName">Extract</span></a> ( &lt;set&gt; , &lt;dim_hier&gt; [, &lt;dim_hier&gt;].. )
+      | <a href="./source_html/mdx_head.htm" title="Head"><span class="FunctionName">Head</span></a> ( &lt;set&gt; [, &lt;index&gt;])
+      | <a href="./source_html/mdx_subset.htm" title="Subset"><span class="FunctionName">Subset</span></a> ( &lt;set&gt; , &lt;index&gt; [,index])
+      | <a href="./source_html/mdx_tail.htm" title="Tail"><span class="FunctionName">Tail</span></a> ( &lt;set&gt; [,index])
+      | <a href="./source_html/mdx_distinct.htm" title="Distinct"><span class="FunctionName">Distinct</span></a> ( &lt;set&gt; )
+      | <a href="./source_html/mdx_siblings.htm" title="Siblings"><span class="FunctionName">Siblings</span></a> ( &lt;member&gt; [, &lt;selection_flags&gt;, [INCLUDEMEMBER|EXCLUDEMEMBER]] ) 
+           | &lt;member&gt;.Siblings
+      | <a href="./source_html/mdx_descendants.htm" title="Descendants"><span class="FunctionName">Descendants</span></a> ( &lt;member&gt; , [{&lt;layer&gt;|&lt;index&gt;}[, &lt;Desc_flags&gt;]] )
+      | <a href="./source_html/mdx_periodstodate.htm" title="PeriodsToDate"><span class="FunctionName">PeriodsToDate</span></a> ( [&lt;layer&gt;[, &lt;member&gt; [,&lt;hierarchy&gt;]]] )
+      | <a href="./source_html/mdx_lastperiods.htm" title="LastPeriods"><span class="FunctionName">LastPeriods</span></a> ( &lt;index&gt;[, &lt;member&gt; [,&lt;hierarchy&gt;]] )
+      | <a href="./source_html/mdx_xtd.htm" title="xTD"><span class="FunctionName">xTD</span></a> ( [&lt;member&gt;] )  
+            where xTD could be {HTD|YTD|STD|PTD|QTD|MTD|WTD|DTD}
+      | <a href="./source_html/mdx_hierarchize.htm" title="Hierarchize"><span class="FunctionName">Hierarchize</span></a> ( &lt;set&gt; [,POST] )
+      | <a href="./source_html/mdx_filter.htm" title="Filter"><span class="FunctionName">Filter</span></a> ( &lt;set&gt; , &lt;search_condition&gt; )
+      | <a href="./source_html/mdx_order.htm" title="Order"><span class="FunctionName">Order</span></a> ( &lt;set&gt;, &lt;value_expression&gt; [,BASC | BDESC] )
+      | <a href="./source_html/mdx_topcount.htm" title="TopCount"><span class="FunctionName">TopCount</span></a> ( &lt;set&gt; , &lt;index&gt; [,&lt;numeric_value_expression&gt;] )
+      | <a href="./source_html/mdx_bottomcount.htm" title="BottomCount"><span class="FunctionName">BottomCount</span></a> ( &lt;set&gt; , &lt;index&gt; [,&lt;numeric_value_expression&gt;] )
+      | <a href="./source_html/mdx_topsum.htm" title="TopSum"><span class="FunctionName">TopSum</span></a> ( &lt;set&gt; , &lt;numeric_value_expression&gt; 
+                       , &lt;numeric_value_expression&gt; )
+      | <a href="./source_html/mdx_bottomsum.htm" title="BottomSum"><span class="FunctionName">BottomSum</span></a> ( &lt;set&gt; , &lt;numeric_value_expression&gt; 
+                          , &lt;numeric_value_expression&gt; )
+      | <a href="./source_html/mdx_toppercent.htm" title="TopPercent"><span class="FunctionName">TopPercent</span></a> ( &lt;set&gt; , &lt;percentage&gt; , &lt;numeric_value_expression&gt; ) 
+      | <a href="./source_html/mdx_bottompercent.htm" title="BottomPercent"><span class="FunctionName">BottomPercent</span></a> ( &lt;set&gt; , &lt;percentage&gt; , &lt;numeric_value_expression&gt; )
+      | <a href="./source_html/mdx_generate.htm" title="Generate"><span class="FunctionName">Generate</span></a> ( &lt;set&gt; , &lt;set&gt; [, [ALL]] )
+      | <a href="./source_html/mdx_drilldownmember.htm" title="DrilldownMember"><span class="FunctionName">DrilldownMember</span></a> ( &lt;set&gt; , &lt;set&gt;[, RECURSIVE] )
+      | <a href="./source_html/mdx_drillupmember.htm" title="DrillupMember"><span class="FunctionName">DrillupMember</span></a> ( &lt;set&gt; , &lt;set&gt; )
+      | <a href="./source_html/mdx_drilldownbylayer.htm" title="DrilldownByLayer"><span class="FunctionName">DrilldownByLayer</span></a> ( &lt;set&gt; [, {&lt;layer&gt;|&lt;index&gt;] )
+           | DrilldownLevel ( &lt;set&gt; [, {&lt;layer&gt;|&lt;index&gt;] ) 
+      | <a href="./source_html/mdx_drillupbylayer.htm" title="DrillupByLayer"><span class="FunctionName">DrillupByLayer</span></a> ( &lt;set&gt; [, &lt;layer&gt;] )
+           | DrillupLevel ( &lt;set&gt;[, &lt;layer&gt;] ) 
+      | <a href="./source_html/mdx_withattr.htm" title="WithAttr"><span class="FunctionName">WithAttr</span></a> ( &lt;member&gt; , &lt;character_string_literal&gt;, &lt;value_expression&gt; )
+      | <a href="./source_html/mdx_withattrex.htm" title="WithAttrEx"><span class="FunctionName">WithAttrEx</span></a> ( &lt;member&gt; , &lt;character_string_literal&gt;, &lt;value_expression&gt;, ANY, &lt;tuple&gt;|&lt;member&gt; [, &lt;tuple&gt;|&lt;member&gt;] )
+      | <a href="./source_html/mdx_attribute.htm" title="Attribute"><span class="FunctionName">Attribute</span></a> ( &lt;member&gt; )
+      | <a href="./source_html/mdx_attributeex.htm" title="AttributeEx"><span class="FunctionName">AttributeEx</span></a> ( &lt;member&gt;, ANY, &lt;tuple&gt;|&lt;member&gt; [, &lt;tuple&gt;|&lt;member&gt;] )
+      | <a href="./source_html/mdx_uda.htm" title="Uda"><span class="FunctionName">Uda</span></a> ( &lt;dimension&gt; | &lt;member&gt; , &lt;string_value_expression&gt; )
+      | <a href="./source_html/mdx_relmemberrange.htm" title="RelMemberRange"><span class="FunctionName">RelMemberRange</span></a> ( &lt;member&gt;, &lt;prevcount&gt;, &lt;nextcount&gt;, 
+         [,&lt;layertype&gt;] [,&lt;hierarchy&gt;] )
+      | <a href="./source_html/mdx_ancestors.htm" title="Ancestors"><span class="FunctionName">Ancestors</span></a> ( &lt;member&gt;, &lt;layer&gt;|&lt;index&gt; )
+      | &lt;conditional_expression&gt;</pre>
+<pre>&lt;signed_numeric_literal&gt; ::=  
+        [+|-] &lt;unsigned_numeric_literal&gt;</pre>
+<pre>&lt;simple_case&gt; ::=  
+        <a href="./source_html/mdx_case.htm" title="Case"><span class="FunctionName">Case</span></a> &lt;case_operand&gt;
+             &lt;simple_when_clause&gt;...
+             [ &lt;else_clause&gt; ]
+        END</pre>
+<pre>&lt;simple_when_clause&gt; ::=  
+        WHEN &lt;when_operand&gt; 
+             THEN &lt;result&gt;</pre>
+<pre>&lt;single_frml_spec&gt; ::= 
+        &lt;set_spec&gt;
+      | &lt;perspective_specification&gt;
+      | &lt;member_specification&gt;</pre>
+<pre>&lt;slicer_specification&gt; ::=  &lt;set&gt; | &lt;tuple&gt; | &lt;member&gt;</pre>
+<pre>&lt;solve_order_specification&gt; ::=  
+        SOLVE_ORDER = &lt;unsigned_integer&gt;</pre>
+<pre>&lt;string_property&gt; ::=  &lt;member&gt;.&lt;property_specification&gt;</pre>
+<pre>&lt;string_value_expression&gt; ::=  
+        &lt;string_value_primary&gt;
+      | <a href="./source_html/mdx_formatdate.htm" title="FormatDate"><span class="FunctionName">FormatDate</span></a> (&lt;date&gt;, &lt;date_format_string&gt;)
+      | <a href="./source_html/mdx_concat.htm" title="Concat"><span class="FunctionName">Concat</span></a> (&lt;string_value_expression&gt; [&lt;, string_value_expression&gt; ...])
+      | <a href="./source_html/mdx_left.htm" title="Left"><span class="FunctionName">Left</span></a>(&lt;string_value_expression&gt;, &lt;length&gt;)
+      | <a href="./source_html/mdx_right.htm" title="Right"><span class="FunctionName">Right</span></a>(&lt;string_value_expression&gt;, &lt;length&gt;)
+      | <a href="./source_html/mdx_substring.htm" title="Substring"><span class="FunctionName">Substring</span></a>(&lt;string_value_expression&gt;, &lt;index&gt; [, &lt;index&gt;])
+      | <a href="./source_html/mdx_upper.htm" title="Upper"><span class="FunctionName">Upper</span></a>(&lt;string_value_expression&gt;)
+      | <a href="./source_html/mdx_lower.htm" title="Lower"><span class="FunctionName">Lower</span></a> (&lt;string_value_expression&gt;)          
+      | <a href="./source_html/mdx_rtrim.htm" title="RTrim"><span class="FunctionName">RTrim</span></a>(&lt;string_value_expression&gt;)
+      | <a href="./source_html/mdx_ltrim.htm" title="LTrim"><span class="FunctionName">LTrim</span></a>(&lt;string_value_expression&gt;)
+      | <a href="./source_html/mdx_numtostr.htm" title="NumToStr"><span class="FunctionName">NumToStr</span></a>(&lt;value_expr_primary&gt;)
+      | <a href="./source_html/mdx_enumtext.htm" title="EnumText"><span class="FunctionName">EnumText</span></a>(&lt;textlistname&gt; | &lt;member&gt;, &lt;numeric_value_expression&gt;)</pre>
+<pre>&lt;string_value_primary&gt; ::= 
+        &lt;character_string_literal&gt;
+      | &lt;string_property&gt;</pre>
+<pre>&lt;term&gt; ::= 
+        &lt;factor&gt;
+      | &lt;term&gt; * &lt;factor&gt;
+      | &lt;term&gt; / &lt;factor&gt;</pre>
+<pre>&lt;textlist-name-specification&gt; ::=  
+    Same as &lt;member_name-specification&gt; case 1. The text list name specification should refer to the name of a text list object. 
+    e.g. AccountStatus, [AccountStatus]</pre>
+<pre>&lt;true_part&gt; ::=  
+        &lt;value_expression&gt;  | &lt;set&gt;</pre>
+<pre>&lt;tuple&gt; ::=  
+        &lt;member&gt;
+      | ( &lt;member&gt; [,&lt;member&gt;].. )
+      | &lt;tuple_value_expression&gt;</pre>
+<pre>&lt;tuple_value_expression&gt; ::=  
+        <a href="./source_html/mdx_currenttuple.htm" title="CurrentTuple"><span class="FunctionName">CurrentTuple</span></a> ( &lt;set&gt; )
+           | &lt;set&gt;.Current        
+      | <a href="./source_html/mdx_item.htm" title="Item"><span class="FunctionName">Item</span></a> ( &lt;set&gt;, &lt;index&gt; )
+           | &lt;set&gt;[.Item] (&lt;index&gt;)</pre>
+<pre>&lt;uda-specification&gt; ::= &lt;@ NO BNF @&gt; The <span class="cCode">&lt;uda-specification&gt;</span> specifies a User Defined Attribute(UDA).
+UDA properties are Boolean-valued properties. A TRUE value indicates presence
+of a UDA for a member. For example,Filter (Market.Members, Market.CurrentMember.[Major Market])returns the Market dimension
+members tagged with "Major Market" UDA in the outline.For more discussion of properties, see <a href="./source_html/mdx_properties.htm" title="About MDX Properties">About MDX Properties</a>.The following rule describes the syntax for <span class="bold"><strong>Essbase outline formulas</strong></span> in aggregate storage applications.</pre>
+<pre>&lt;unsigned_integer&gt; ::=  
+        {&lt;digit&gt;}...</pre>
+<pre>&lt;unsigned_numeric_literal&gt; ::=  
+        &lt;exact_numeric_literal&gt;
+      | &lt;approximate_numeric_literal&gt;</pre>
+<pre>&lt;value_expr_primary&gt; ::= 
+        &lt;unsigned_numeric_literal&gt; 
+      | ( &lt;numeric_value_expression&gt; )
+      | &lt;tuple&gt;[.<a href="./source_html/mdx_realvalue.htm" title="RealValue"><span class="FunctionName">RealValue</span></a>]
+      | &lt;member&gt;[.<a href="./source_html/mdx_realvalue.htm" title="RealValue"><span class="FunctionName">RealValue</span></a>]
+      | &lt;tuple&gt; [.<a href="./source_html/mdx_value.htm" title="Value"><span class="FunctionName">Value</span></a>]
+      | &lt;member&gt;[.Value]
+      | <a href="./source_html/mdx_cellvalue.htm" title="CellValue"><span class="FunctionName">CellValue</span></a>()
+      | &lt;property&gt;
+      | &lt;conditional_expression&gt;
+      | MISSING</pre>
+<pre>&lt;value_expression&gt; ::=  
+        &lt;numeric_value_expression&gt;
+      | &lt;string_value_expression&gt;</pre>
+<pre>&lt;week-day-specification&gt; ::= 
+    1 | 2 | 3 | 4 | 5 | 6 | 7
+    e.g. 1 implying Sunday, 7 implying Saturday</pre>
+<pre>&lt;when_operand&gt; ::=  
+        &lt;value_expression&gt;</pre>
+<pre>&lt;with_section&gt; ::= 
+        WITH &lt;frml_spec&gt;</pre>

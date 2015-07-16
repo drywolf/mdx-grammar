@@ -1,0 +1,51 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>IsUda</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_issibling.htm" title="IsSibling"><link rel="next" href="mdx_isvalid.htm" title="IsValid"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_issibling.htm';
+var nextPage = 'mdx_isvalid.htm';
+var tocLinkId = 'mdx_isuda';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="isuda_techref_proj_maxl_dml_funcs"></a>IsUda<a class="indexterm" name="d0e103721"></a><a class="indexterm" name="d0e103726"></a></h1>
+
+
+<p>Returns TRUE if the member has the associated UDA tag (user-defined
+attribute).</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">IsUda ( <span class="italic">member</span> , <span class="italic">string_value_expression</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the IsUda function"><thead><tr><th id="hd-d0e103755-col1">Parameter</th><th id="hd-d0e103755-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e103755-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a></p></td>
+<td headers="hd-d0e103755-col2">
+<p>A member specification.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e103755-col1"><p>string_value_expression</p></td>
+<td headers="hd-d0e103755-col2">
+<p>A user-defined attribute (UDA) name string, defined in the database
+outline.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<pre class="programlisting">IsUda([Market].CurrentMember, "Major Market")</pre>
+<p>returns TRUE if the current
+member of the Market has the user-defined attribute "Major Market."</p>
+<p>Therefore, the following query</p>
+<pre class="programlisting">SELECT
+ Filter([Market].Members, IsUda([Market].CurrentMember, "Major Market"))
+ON COLUMNS
+FROM Sample.Basic</pre>
+<p>returns</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col><col><col><col><col><col></colgroup><tbody><tr><td valign="bottom">East</td><td valign="bottom">New York</td><td valign="bottom">Massachusetts</td><td valign="bottom">Florida</td><td valign="bottom">California</td><td valign="bottom">Texas</td><td valign="bottom">Central</td><td valign="bottom">Illinois</td><td valign="bottom">Ohio</td><td valign="bottom">Colorado</td></tr><tr><td>24161</td><td>8202</td><td>6712</td><td>5029</td><td>12964</td><td>6425</td><td>38262</td><td>12577</td><td>4384</td><td>7227</td></tr></tbody></table></div>
+
+</div></body></html>

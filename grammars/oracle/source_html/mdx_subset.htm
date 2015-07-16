@@ -1,0 +1,80 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Subset</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_strtonum.htm" title="StrToNum"><link rel="next" href="mdx_substring.htm" title="Substring"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_strtonum.htm';
+var nextPage = 'mdx_substring.htm';
+var tocLinkId = 'mdx_subset';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="subset_techref_proj_maxl_dml_funcs"></a>Subset<a class="indexterm" name="d0e111803"></a></h1>
+
+
+<p>Returns a subset from a set, in which the subset is a numerically specified
+range of tuples.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">Subset ( <span class="italic">set</span>, <span class="italic">index1</span> [,<span class="italic">index2</span> ] )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Subset function"><thead><tr><th id="hd-d0e111845-col1">Parameter</th><th id="hd-d0e111845-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e111845-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set</a></p></td>
+<td headers="hd-d0e111845-col2">
+<p>The set from which to take tuples.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e111845-col1"><p>index1</p></td>
+<td headers="hd-d0e111845-col2">
+<p>The location of the tuple with which to begin the subset. Example: if <span class="italic">index1</span> is 0, the subset begins with the first tuple
+of <span class="italic">set</span>. If a negative value, the return
+is an empty set.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e111845-col1"><p>index2</p></td>
+<td headers="hd-d0e111845-col2">
+<p>Optional. The count of tuples to include in the subset. If omitted,
+all tuples to the end of <span class="italic">set</span> are returned.
+If a negative value, the return is an empty set. If the count goes beyond
+the range of the input set, all tuples to the end of the set are returned.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>The first tuple of the subset is represented by <span class="italic">index1</span>.
+If <span class="italic">index1</span> is 0, then the first tuple of
+the returned subset will be the same as the first tuple of the input set.</p>
+
+<p class="func_subhead">Example</p>
+<p class="bridgehead"><a name="d0e111897"></a>Example 1</p>
+<p>The following expression</p>
+<pre class="programlisting">Subset ({Product.Members},0)</pre>
+<p>returns the set:</p>
+<pre class="programlisting">{ Product, [100-10], [100-20], [100-30], [100],
+ [200-10], [200-20], [200-30], [200-40], [200],
+ [300-10], [300-20], [300-30], [300], 
+ [400-10], [400-20], [400-30], [400], 
+ [100-20], [200-20], [300-30], Diet }</pre>
+<p>All tuples of the set {Product.Members} are returned, because the subset
+is told to begin with the first tuple, and no count of tuples given for <span class="italic">index2</span>.</p>
+<p class="bridgehead"><a name="d0e111918"></a>Example 2</p>
+<p>The following expression</p>
+<pre class="programlisting">Subset ({Product.Members},0,4)</pre>
+<p>returns the set:</p>
+<pre class="programlisting">{ Product, [100-10], [100-20], [100-30] }</pre>
+<p>Therefore, the following query</p>
+<pre class="programlisting">Select 
+ Subset ({Product.Members},0,4)
+on columns
+from sample.basic
+  </pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col></colgroup><tbody><tr><td valign="bottom">Product</td><td valign="bottom">100-10</td><td valign="bottom">100-20</td><td valign="bottom">100-30</td></tr><tr><td>105522</td><td>22777</td><td>5708</td><td>1983</td></tr></tbody></table></div>
+
+</div></body></html>

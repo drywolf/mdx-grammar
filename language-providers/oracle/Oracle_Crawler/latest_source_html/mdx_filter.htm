@@ -1,0 +1,194 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Filter</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_factorial.htm" title="Factorial"><link rel="next" href="mdx_firstchild.htm" title="FirstChild"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_factorial.htm';
+var nextPage = 'mdx_firstchild.htm';
+var tocLinkId = 'mdx_filter';
+// --></script>
+                  <script type="text/javascript">
+                    var AKSB=AKSB||{};AKSB.q=[];AKSB.mark=function(c,a){AKSB.q.push(["mark",c,a||(new Date).getTime()])};AKSB.measure=function(c,a,b){AKSB.q.push(["measure",c,a,b||(new Date).getTime()])};AKSB.done=function(c){AKSB.q.push(["done",c])};AKSB.mark("firstbyte",(new Date).getTime());
+                    AKSB.prof={custid:"322179",ustr:"",originlat:0,clientrtt:22,ghostip:"2.20.182.138",ipv6:false,pct:10,xhrtest:false,clientip:"178.190.128.193",requestid:"2d1a523c",protocol:"",akM:"x",akN:"ae"};
+                    (function(c){var a=document.createElement("iframe");a.src="javascript:false";(a.frameElement||a).style.cssText="width: 0; height: 0; border: 0; display: none";var b=document.getElementsByTagName("script"),b=b[b.length-1];b.parentNode.insertBefore(a,b);a=a.contentWindow.document;b=String.fromCharCode;c=b(60)+"body onload=\"var js = document.createElement('script');js.id = 'aksb-ifr';js.src = '"+c+"';document.body.appendChild(js);\""+b(62);a.open().write(c);a.close()})(("https:"===document.location.protocol?
+                    "https:":"http:")+"//ds-aksb-a.akamaihd.net/aksb.min.js");
+                  </script>
+                  </head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="filter_techref_proj_maxl_dml_funcs"></a>Filter<a class="indexterm" name="d0e98744"></a><a class="indexterm" name="d0e98749"></a></h1>
+
+
+<p>Returns the tuples of a set that meet the criteria of a search condition.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">FILTER ( <span class="italic">set</span>, <span class="italic">search_condition</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Filter function"><thead><tr><th id="hd-d0e98785-col1">Parameter</th><th id="hd-d0e98785-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e98785-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set</a></p></td>
+<td headers="hd-d0e98785-col2">
+<p>The set through which to iterate.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e98785-col1"><p>search_condition</p></td>
+<td headers="hd-d0e98785-col2">
+<p>A Boolean expression (see <a href="mdx_grammar_rules.htm" title="MDX Grammar Rules">MDX Grammar Rules</a>). The search condition is evaluated in the context
+of every tuple in the set.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>This function returns the subset of tuples in <span class="italic">set</span> for
+which the value of the search condition is TRUE. The order of tuples in the
+returned set is the same as in the input set.</p>
+
+<p class="func_subhead">Example</p>
+<p class="bridgehead"><a name="d0e98818"></a>Example 1</p>
+<p>The following <span class="italic">unfiltered</span> query returns
+profit for all level-0 products:</p>
+<pre class="programlisting">SELECT
+  { [Profit] }
+ON COLUMNS,
+ [Product].levels(0).members
+ON ROWS
+FROM Sample.Basic</pre>
+<p>This query returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Profit</td></tr><tr><td>100-10</td><td>22777</td></tr><tr><td>100-20</td><td>5708</td></tr><tr><td>100-30</td><td>1983</td></tr><tr><td>200-10</td><td>7201</td></tr><tr><td>200-20</td><td>12025</td></tr><tr><td>200-30</td><td>4636</td></tr><tr><td>200-40</td><td>4092</td></tr><tr><td>300-10</td><td>12195</td></tr><tr><td>300-20</td><td>2511</td></tr><tr><td>300-30</td><td>11093</td></tr><tr><td>400-10</td><td>11844</td></tr><tr><td>400-20</td><td>9851</td></tr><tr><td>400-30</td><td>-394</td></tr><tr><td>100-20</td><td>5708</td></tr><tr><td>200-20</td><td>12025</td></tr><tr><td>300-30</td><td>11093</td></tr></tbody></table></div>
+<p>To filter the above results to only show negative Profit, use the Filter
+function, passing it the original set and a search condition. Filter will
+only return the set of members for which the search condition is true (for
+which Profit is less than zero).</p>
+<pre class="programlisting">SELECT
+  { Profit }
+ON COLUMNS,
+ <span class="bold"><strong>Filter</strong></span>( [Product].levels(0).members, <span class="bold"><strong>Profit &lt; 0</strong></span>)
+ON ROWS
+FROM Sample.Basic</pre>
+<p>The resulting query returns only the products with negative profit:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Profit</td></tr><tr><td>400-30</td><td>-394</td></tr></tbody></table></div>
+<p class="bridgehead"><a name="d0e98953"></a>Example 2</p>
+<p>The search expression in Example 1 compared a value expression (Profit)
+with a value. You can also filter using a member attribute as the search condition.
+For example, you can use the Filter function to only select members whose
+Caffeinated attribute is TRUE.</p>
+<pre class="programlisting">SELECT
+  { [Profit] }
+ON COLUMNS,
+ Filter( [Product].levels(0).members, Product.CurrentMember.[Caffeinated])
+ON ROWS
+FROM Sample.Basic</pre>
+<p>This query returns profit for the members that are caffeinated:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Profit</td></tr><tr><td>100-10</td><td>22777</td></tr><tr><td>100-20</td><td>5708</td></tr><tr><td>200-10</td><td>7201</td></tr><tr><td>200-20</td><td>12025</td></tr><tr><td>300-10</td><td>12195</td></tr><tr><td>300-20</td><td>2511</td></tr><tr><td>300-30</td><td>11093</td></tr></tbody></table></div>
+<p>To understand the search condition, <span class="cCode">Product.CurrentMember.[Caffeinated]</span>,
+it may be helpful to read it right to left: Filter is searching for presense
+of the Caffeinated property on the current member, for each member in the
+input set, which happens to be from the Product dimension (The CurrentMember
+function requires the dimension name as its argument).</p>
+<p>Filter is an iterative function, meaning that at every member or tuple
+in the set being evaluated, the member being operated upon is the "current
+member," until Filter has looped through the entire input set and evaluted
+the search condition for each tuple. So to see how the previous query results
+were generated, it would be useful to see first which members actually have
+the Caffeinated attribute set to true. The following unfiltered query uses
+a calculated member to reveal which of the level-0 product members is caffeinated.
+The IIF function returns a value of 1 for each member whose Caffeinated attribute
+is set to TRUE, and returns a value of 0 otherwise.</p>
+<pre class="programlisting">WITH MEMBER Measures.IsCaffeinated 
+AS 'IIF(Product.CurrentMember.[Caffeinated], 1, 0)'
+SELECT
+  { IsCaffeinated }
+ON COLUMNS,
+ [Product].levels(0).members
+ON ROWS
+FROM Sample.Basic</pre>
+<p>This query returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>IsCaffeinated</td></tr><tr><td>100-10</td><td>1</td></tr><tr><td>100-20</td><td>1</td></tr><tr><td>100-30</td><td>0</td></tr><tr><td>200-10</td><td>1</td></tr><tr><td>200-20</td><td>1</td></tr><tr><td>200-30</td><td>0</td></tr><tr><td>200-40</td><td>0</td></tr><tr><td>300-10</td><td>1</td></tr><tr><td>300-20</td><td>1</td></tr><tr><td>300-30</td><td>1</td></tr><tr><td>400-10</td><td>0</td></tr><tr><td>400-20</td><td>0</td></tr><tr><td>400-30</td><td>0</td></tr><tr><td>100-20</td><td>0</td></tr><tr><td>200-20</td><td>0</td></tr><tr><td>300&#8211;30</td><td>0</td></tr></tbody></table></div>
+<p>Looking at the results for the second query, you can begin to see that
+the search condition is evaluated for each tuple in the input set, and that
+only the tuples meeting the search condition are returned.</p>
+<p class="bridgehead"><a name="d0e99118"></a>Example 3</p>
+<p>Example 2 introduced the CurrentMember function. Even when CurrentMember
+is not explicitly called, Filter operates in the context of "the current member"
+while it iterates through a set. Filter and other iterative functions are
+processed in a nested context.</p>
+<p>By default, Filter operates in the current-member context of top dimension
+members. You make the MDX context smaller by using a slicer (the Where clause),
+which overrides the built-in top-dimensional context. Additionally, you can
+override the slicer context by specifying context in the search condition
+argument for Filter.</p>
+<p>The following query returns the Profit values for Western Region, for
+Qtr1. Note that the MDX context is West, Qtr1.</p>
+<pre class="programlisting">SELECT
+  { [Profit] }
+ON COLUMNS,
+ [Product].levels(0).members
+ON ROWS
+FROM Sample.Basic
+Where (West, Qtr1)</pre>
+<p>When adding a filter to the above query, the values for Profit are still
+evaluated as <span class="cCode">(Profit, West, Qtr1)</span>, because the sub-context for
+Filter is based on the main context.</p>
+<pre class="programlisting">SELECT
+  { [Profit] }
+ON COLUMNS,
+ <span class="bold"><strong>Filter</strong></span>( [Product].levels(0).members, <span class="bold"><strong>Profit &lt; 0</strong></span>)
+ON ROWS
+FROM Sample.Basic
+Where (West, Qtr1)</pre>
+<p>In the next query, the values for Profit are evaluated as <span class="cCode">(Profit,
+West, Qtr1)</span>, even though the outer context is <span class="cCode">(Profit, Market,
+Qtr1)</span>. This is because the inner context in the Filter function overrides
+the outer context of the slicer (West replaces Market).</p>
+<pre class="programlisting">SELECT
+  { [Sales] }
+ON COLUMNS,
+Filter( [Product].levels(0).members, (Profit, West) &lt; 0)
+ON ROWS
+FROM Sample.Basic
+Where (Market, Qtr1)</pre>
+<p>The above query returns the Sales values for West, Qtr1 for members
+of Product whose Profit for West, Qtr1 was less than 0.</p>
+<div class="informaltable"><table border="1"><colgroup><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Sales</td></tr><tr><td>100-20</td><td>2153</td></tr><tr><td>400-30</td><td>1862</td></tr><tr><td>100-20</td><td>2153</td></tr></tbody></table></div>
+<p class="bridgehead"><a name="d0e99188"></a>Additional Examples</p>
+<p>The following query on Sample Basic returns Qtr2 sales figures for products
+where the sales have increased by at least 10% since Qtr1.</p>
+<pre class="programlisting">SELECT 
+{ 
+  Filter (
+    [Product].Members,
+    [Measures].[Sales] &gt;  
+    1.1 * 
+      ( [Measures].[Sales], [Year].CurrentMember.PrevMember )
+  ) 
+}
+on columns
+FROM sample.basic
+WHERE ([Year].[Qtr2], [Measures].[Sales])</pre>
+<div class="informaltable"><table border="1"><colgroup><col><col></colgroup><tbody><tr><td valign="bottom">Cola</td><td valign="bottom">Dark Cream</td></tr><tr><td>16048</td><td>11993</td></tr></tbody></table></div>
+<p>The following query on Sample Basic returns sales figures for product
+family "100" where the monthly sales of that product family are greater than
+8,570. The filtering logic is stored as a named set in the WITH section.</p>
+<pre class="programlisting">WITH SET [High-Sales Months] as 
+' 
+ Filter( 
+ [Year].Levels(0).members, 
+ [Measures].[Sales] &gt; 8570 
+ ) 
+' 
+SELECT 
+   {[Measures].[Sales]} 
+ON COLUMNS, 
+    {[High-Sales Months]}    
+ON ROWS 
+FROM 
+  sample.basic 
+WHERE 
+ ([Product].[100]) </pre>
+<div class="informaltable"><table border="1"><colgroup><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Sales</td></tr><tr><td>Apr</td><td>8685</td></tr><tr><td>May</td><td>8945</td></tr><tr><td>Jun</td><td>9557</td></tr><tr><td>Jul</td><td>9913</td></tr><tr><td>Aug</td><td>9787</td></tr><tr><td>Sep</td><td>8844</td></tr><tr><td>Dec</td><td>8772</td></tr></tbody></table></div>
+
+</div></body></html>

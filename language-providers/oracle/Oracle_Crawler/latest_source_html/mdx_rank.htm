@@ -1,0 +1,99 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Rank</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_prevmember.htm" title="PrevMember"><link rel="next" href="mdx_realvalue.htm" title="RealValue"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_prevmember.htm';
+var nextPage = 'mdx_realvalue.htm';
+var tocLinkId = 'mdx_rank';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="rank_techref_proj_maxl_dml_funcs"></a>Rank</h1>
+
+
+<p>Returns the numeric position of a tuple in a set.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">Rank ( <span class="italic">member_or_tuple</span>, <span class="italic">set</span> [,<span class="italic">numeric_value_expr</span> [,ORDINALRANK | DENSERANK | PERCENTRANK ]] )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Rank function"><thead><tr><th id="hd-d0e110161-col1">Parameter</th><th id="hd-d0e110161-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e110161-col1"><p>member_or_tuple</p></td>
+<td headers="hd-d0e110161-col2">
+<p>The member or tuple to rank.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e110161-col1"><p>set</p></td>
+<td headers="hd-d0e110161-col2">
+<p>The set containing the tuple to rank. Should not have duplicate members.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e110161-col1"><p>numeric_value_expr</p></td>
+<td headers="hd-d0e110161-col2">
+<p>Optional. Numeric sorting criteria.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e110161-col1"><p>ORDINALRANK</p></td>
+<td headers="hd-d0e110161-col2">
+<p>Optional. Rank duplicates separately.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e110161-col1"><p>DENSERANK</p></td>
+<td headers="hd-d0e110161-col2">
+<p>Optional. Rank with no gaps in ordinals.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e110161-col1"><p>PERCENTRANK</p></td>
+<td headers="hd-d0e110161-col2">
+<p>Optional. Rank on a scale from 0 to 1.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>Using this function with the optional numeric value expression is only
+applicable for aggregate storage databases.</p>
+<p>If no numeric value expression is given, this function returns the 1-based
+position of the tuple in the set, and is the same as the Order function.</p>
+<p>If a numeric value expression is given, this function sorts the set
+based on the numeric value and returns the 1-based position of the tuple in
+the sorted set.</p>
+<p>If an optional rank flag is given, this function sorts the set based
+on the numeric value and returns the 1-based position of the tuple in the
+sorted set according to the instructions in the flag. The meanings of the
+flags are:</p>
+<div class="itemizedlist"><ul type="disc"><li><p>[no flag]: Default behavior. Ties are given the same rank,
+and the next member is the count of members. Example:(1,1,1,4,5)</p></li><li><p>ORDINALRANK: Ties are decided by Essbase.
+Duplicates are considered different entities. Example: (1,2,3,4,5).</p></li><li><p>DENSERANK: Ties are given the same rank, but there are no
+gaps in ordinals. Example: (1,1,1,2,3)</p></li><li><p>PERCENTRANK: Rank values are scaled by the cumulative sum
+up to this member. Example: ( .1, .15, .34, .78, 1.0). Values range from 0.0
+to 1.0.</p></li></ul></div>
+
+<p class="func_subhead">Example</p>
+<p class="bridgehead"><a name="d0e110239"></a>Example 1</p>
+<pre class="programlisting">WITH MEMBER [Measures].[Sales_Rank] AS 
+ 'Rank(Product.CurrentMember, Product.CurrentMember.Siblings)' 
+SELECT 
+ {Sales, COGS, [Measures].[Sales_Rank]} 
+ON COLUMNS, 
+ { Product.Members } ON ROWS 
+FROM Sample.Basic; </pre>
+<p class="bridgehead"><a name="d0e110245"></a>Example 2</p>
+<pre class="programlisting">WITH MEMBER [Measures].[Sales_Rank] AS
+  'Rank( Product.CurrentMember, Product.CurrentMember.Siblings)'
+SELECT {Sales, COGS, [Measures].[Sales_Rank]} 
+ON COLUMNS, 
+Union(Children([100]),
+      Children([200])) 
+ON ROWS 
+FROM Sample.Basic</pre>
+
+</div></body></html>

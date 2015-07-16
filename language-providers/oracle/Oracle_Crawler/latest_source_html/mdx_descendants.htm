@@ -1,0 +1,175 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Descendants</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_defaultmember.htm" title="DefaultMember"><link rel="next" href="mdx_distinct.htm" title="Distinct"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_defaultmember.htm';
+var nextPage = 'mdx_distinct.htm';
+var tocLinkId = 'mdx_descendants';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="descendants_techref_proj_maxl_dml_funcs"></a>Descendants<a class="indexterm" name="d0e96645"></a><a class="indexterm" name="d0e96650"></a></h1>
+
+
+<p>Returns the set of descendants of a member at a specified level or distance,
+optionally including or excluding descendants in other levels. The members
+are returned in hierarchized order; for example, parent members are followed
+by child members.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">Descendants ( <span class="italic">member</span> , [{ <span class="italic">layer</span> | <span class="italic">index</span> }[, <span class="italic">Desc_flags</span> ]])</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Descendants function"><thead><tr><th id="hd-d0e96685-col1">Parameter</th><th id="hd-d0e96685-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e96685-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a></p></td>
+<td headers="hd-d0e96685-col2">
+<p>The member for which descendants are sought.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e96685-col1"><p><a href="mdx_layer.htm" title="MDX Layer Specification">layer</a></p></td>
+<td headers="hd-d0e96685-col2">
+<p>Optional. Layer specification indicating the depth of the descendants
+to return.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e96685-col1"><p>index</p></td>
+<td headers="hd-d0e96685-col2">
+<p>Optional. A number of hierarchical steps down from <span class="italic">member</span>,
+locating the descendants you want returned.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e96685-col1"><p>Desc_flags</p></td>
+<td headers="hd-d0e96685-col2">
+<p>Optional. Keywords which further indicate which members to return. These
+keywords are available only if <span class="italic">layer</span> or <span class="italic">index</span> was specified.</p>
+<p>For all flags, SELF refers to <span class="italic">layer</span>;
+therefore, BEFORE indicates "before the layer" and AFTER indicates "after
+the layer." Values:</p>
+<div class="itemizedlist"><ul type="disc"><li><p><span class="cCode">SELF</span>&#8212;Include only members in <span class="italic">layer</span>, including <span class="italic">member</span> only
+if <span class="italic">member</span> is in layer.</p><div><img src="images/self_flag.gif"></div></li><li><p><span class="cCode">AFTER</span>&#8212;Include members below <span class="italic">layer</span>, but not the members of <span class="italic">layer</span>.</p><div><img src="images/aft_flag.gif"></div></li><li><p><span class="cCode">BEFORE</span>&#8212;Include <span class="italic">member</span> and
+all its descendants that are higher in the hierarchy than <span class="italic">layer</span>,
+excluding <span class="italic">layer</span> and anything below it.</p><div><img src="images/bfr_flag.png"></div></li><li><p><span class="cCode">BEFORE_AND_AFTER</span>&#8212;Include <span class="italic">member</span> and
+all its descendants, down to level 0, but excluding members in <span class="italic">layer</span>.</p><div><img src="images/bfr_aft_flag.png"></div></li><li><p><span class="cCode">SELF_AND_AFTER</span>&#8212;Include members in <span class="italic">layer</span> and all descendants below <span class="italic">layer</span>.</p><div><img src="images/self_aft_flag.gif"></div></li><li><p><span class="cCode">SELF_AND_BEFORE</span>&#8212;Include <span class="italic">member</span> and
+all its descendants, down to and including <span class="italic">layer</span>.</p><div><img src="images/self_bfr_flag.png"></div></li><li><p><span class="cCode">SELF_BEFORE_AFTER</span>&#8212;Include <span class="italic">member</span> and
+all its descendants.</p><div><img src="images/self_bfr_aft_flag.png"></div></li><li><p><span class="cCode">LEAVES</span>&#8212;Include only level-0 descendants
+between <span class="italic">member</span> and <span class="italic">layer</span>.</p></li></ul></div>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p>The following query</p>
+<pre class="programlisting">SELECT
+ Descendants ( [Year] )
+ON COLUMNS
+FROM sample.basic</pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col><col><col><col><col><col><col><col><col><col><col><col><col></colgroup><tbody><tr><td valign="bottom">Year</td><td valign="bottom">Qtr1</td><td valign="bottom">Jan</td><td valign="bottom">Feb</td><td valign="bottom">Mar</td><td valign="bottom">Qtr2</td><td valign="bottom">Apr</td><td valign="bottom">May</td><td valign="bottom">Jun</td><td valign="bottom">Qtr3</td><td valign="bottom">Jul</td><td valign="bottom">Aug</td><td valign="bottom">Sep</td><td valign="bottom">Qtr4</td><td valign="bottom">Oct</td><td valign="bottom">Nov</td><td valign="bottom">Dec</td></tr><tr><td>12656</td><td>2747</td><td>924</td><td>888</td><td>935</td><td>3352</td><td>1011</td><td>1071</td><td>1270</td><td>3740</td><td>1334</td><td>1304</td><td>1102</td><td>2817</td><td>907</td><td>884</td><td>1026</td></tr></tbody></table></div>
+<p>The following expressions return the following sets</p>
+<pre class="programlisting">Descendants ( [Year], 2 )</pre>
+<p>returns <span class="cCode">{([Jan]:[Dec])}</span>,
+which is the range of members found two steps below <span class="cCode">Year</span>.</p>
+<pre class="programlisting">Descendants ( [Year], 2, BEFORE )</pre>
+<p>returns <span class="cCode">{[Year], [Qtr1],
+[Qtr2], [Qtr3], [Qtr4]}</span>, which is the set of Year and its descendants
+that occur BEFORE the layer that is two steps below <span class="cCode">Year</span>.</p>
+<pre class="programlisting">Descendants ( [Market], [West].level )</pre>
+<p>returns <span class="cCode">{[East], [West],
+[South], [Central]}</span>, which is the set of Market's descendants found
+at the level of <span class="cCode">West</span>.</p>
+<pre class="programlisting">Descendants([Market])</pre>
+<p>is equivalent to <span class="cCode">Descendants([Market],
+[Market].level, SELF_BEFORE_AFTER)</span>. It returns all descendants of Market: </p>
+<pre class="programlisting">{[Market],
+ [East], [New York], [Massachusetts], [Florida], [Connecticut], [New Hampshire],
+ [West], [California], [Oregon], [Washington], [Utah], [Nevada],
+ [South], [Texas], [Oklahoma], [Louisiana], [New Mexico],
+ [Central], [Illinois], [Ohio], [Wisconsin], [Missouri], [Iowa], [Colorado] }
+Descendants([Market], [Region])</pre>
+
+<p>is equivalent to <span class="cCode">Descendants([Market],
+[Region]), SELF)</span>, where [Region] is an alias. It returns all members
+at [Region] level: </p>
+<pre class="programlisting">{[East], [West], [South], [Central]}
+Descendants([Market], [State], SELF)</pre>
+
+<p>returns all descendants of
+[Market] at [State] level: </p>
+<pre class="programlisting">{[New York], [Massachusetts], [Florida], [Connecticut], [New Hampshire],
+ [California], [Oregon], [Washington], [Utah], [Nevada], [Texas],
+ [Oklahoma], [Louisiana], [New Mexico], [Illinois], [Ohio], [Wisconsin],
+ [Missouri], [Iowa], [Colorado]}
+Descendants([Market], [State], BEFORE)</pre>
+
+<p>returns all regions and [Market]: </p>
+<pre class="programlisting">{[Market], [East], [West], [South], [Central]}
+Descendants([Market], [State], AFTER)</pre>
+
+<p>returns an empty set, because
+there are no levels below [State] level in the [Market] dimension: </p>
+<pre class="programlisting">{}
+Descendants([Market], [Region], AFTER)</pre>
+
+<p>returns all states in the
+[Market] dimension: </p>
+<pre class="programlisting">{[New York], [Massachusetts], [Florida], [Connecticut], [New Hampshire],
+ [California], [Oregon], [Washington], [Utah], [Nevada], [Texas],
+ [Oklahoma], [Louisiana], [New Mexico], [Illinois], [Ohio], [Wisconsin],
+ [Missouri], [Iowa], [Colorado]}
+Descendants([Market], [State], LEAVES)</pre>
+
+<p>returns all level-0 members
+between [Market] level and [State] level, including both levels: </p>
+<pre class="programlisting">{[New York], [Massachusetts], [Florida], [Connecticut], [New Hampshire],
+ [California], [Oregon], [Washington], [Utah], [Nevada], [Texas],
+ [Oklahoma], [Louisiana], [New Mexico], [Illinois], [Ohio], [Wisconsin],
+ [Missouri], [Iowa], [Colorado]}
+Descendants([Market], 1)</pre>
+
+<p>The second argument specifies
+a distance of 1 from [Market] level, which is [Region] level. So this expression
+is equivalent to Descendants([Market], [Region]). It returns: </p>
+<pre class="programlisting">{[East], [West], [South], [Central]}
+Descendants([Market], 2, SELF_BEFORE_AFTER)</pre>
+
+<p>is equivalent to <span class="cCode">Descendants([Market],
+[State], SELF_BEFORE_AFTER)</span>. It returns: </p>
+<pre class="programlisting">{[Market], 
+ [East], [New York], [Massachusetts], [Florida], [Connecticut], [New Hampshire]
+ [West], [California], [Oregon], [Washington], [Utah], [Nevada],
+ [South], [Texas], [Oklahoma], [Louisiana], [New Mexico],
+ [Central], [Illinois], [Ohio], [Wisconsin], [Missouri], [Iowa], [Colorado] }
+Descendants([Market], -1, SELF_BEFORE_AFTER)</pre>
+
+<p>prints a warning in application
+log, because a negative distance argument is not valid. The expression returns
+an empty set: </p>
+<pre class="programlisting">{}
+Descendants([Market], 10, SELF)</pre>
+
+<p>returns an empty set, because
+there are no descendants of [Market] at a distance of 10 from [Market] level.</p>
+<pre class="programlisting">Descendants([Market], 10, BEFORE)</pre>
+<p>returns all descendants of
+[Market]: </p>
+<pre class="programlisting">{[Market],
+ [East], [New York], [Massachusetts], [Florida], [Connecticut], [New Hampshire]
+ [West], [California], [Oregon], [Washington], [Utah], [Nevada],
+ [South], [Texas], [Oklahoma], [Louisiana], [New Mexico],
+ [Central], [Illinois], [Ohio], [Wisconsin], [Missouri], [Iowa], [Colorado] }
+Descendants([Market], 10, LEAVES)</pre>
+
+<p>returns all level-0 descendants
+of [Market]: </p>
+<pre class="programlisting">{[New York], [Massachusetts], [Florida], [Connecticut], [New Hampshire],
+ [California], [Oregon], [Washington], [Utah], [Nevada], [Texas],
+ [Oklahoma], [Louisiana], [New Mexico], [Illinois], [Ohio], [Wisconsin],
+ [Missouri], [Iowa], [Colorado]}</pre>
+
+</div></body></html>

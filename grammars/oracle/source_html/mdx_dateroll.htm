@@ -1,0 +1,84 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>DateRoll</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_datepart.htm" title="DatePart"><link rel="next" href="mdx_datetomember.htm" title="DateToMember"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_datepart.htm';
+var nextPage = 'mdx_datetomember.htm';
+var tocLinkId = 'mdx_dateroll';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="dateroll_techref_proj_maxl_dml_funcs"></a>DateRoll</h1>
+
+
+<p>To the given date, rolls (adds or subtracts) a number of specific time
+intervals, returning another date. This function assumes a standard Gregorian
+calendar.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">DateRoll ( <span class="italic">date</span>, <span class="italic">date_part</span>, <span class="italic">number</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the DateRoll function"><thead><tr><th id="hd-d0e96357-col1">Parameter</th><th id="hd-d0e96357-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e96357-col1"><p>date</p></td>
+<td headers="hd-d0e96357-col2">
+<p>A number representing the date between January 1, 1970 and Dec 31, 2037.
+The number is the number of seconds elapsed since midnight, January 1, 1970.
+To retrieve this number, use any of the following functions: Today(), TodateEx(),
+GetFirstDate(), GetLastDate().</p>
+<p>Date-time attribute properties of a member can also be used to retrieve
+this number. For example,</p>
+<div class="itemizedlist"><ul type="disc"><li><p><span class="cCode">Product.currentmember.[Intro Date]</span> returns the
+product introduction date for the current product in context.</p></li><li><p><span class="cCode">[Cola].[Intro Date]</span> returns the product introduction
+date for Cola.</p></li></ul></div>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e96357-col1"><p>date_part</p></td>
+<td headers="hd-d0e96357-col2">
+<p>Defined time components as per the standard calendar. </p>
+<div class="itemizedlist"><ul type="disc"><li><p>DP_YEAR - Year of the input date.</p></li><li><p>DP_QUARTER - Quarter of the input date.</p></li><li><p>DP_MONTH - Month of the input date.</p></li><li><p>DP_WEEK - Week of the input date.</p></li><li><p>DP_DAY - Day of the input date.</p></li></ul></div>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e96357-col1"><p>number</p></td>
+<td headers="hd-d0e96357-col2">
+<p>Number of time intervals to add or subract.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>Based on input <span class="italic">date_part</span> and dateroll <span class="italic">number</span>, the date is moved forward or backward in
+time.</p>
+<p>Example: For input date June 14, 2005 and input dateroll number 5,</p>
+<div class="itemizedlist"><ul type="disc"><li><p>DP_YEAR adds 5 years to the input date. (June 14, 2010)</p></li><li><p>DP_QUARTER adds 5 quarters to the input date. (June 14, 2005
++ 5 quarters = June 14, 2005 + 15 months = Sept 14, 2006)</p></li><li><p>DP_MONTH adds 5 months to the input date (June 14, 2005 +
+5 months = Nov 14, 2005)</p></li><li><p>DP_WEEK adds 5 weeks to the input date (June 14, 2005 + 5
+weeks = June 14, 2005 + 35 days = July 19, 2005)</p></li><li><p>DP_DAY adds 5 days to the input date. (June 14, 2005 + 5 days
+= June 19, 2005)</p></li></ul></div>
+
+<p class="func_subhead">Example</p>
+<p>The following query returns actual weekly sales, rolling back for six
+months from Apr 2005 (inclusive), for the product Cola in the market California.</p>
+<pre class="programlisting">SELECT 
+ {[Sales]} 
+ON COLUMNS,
+ {DateToMember
+  (
+   DateRoll(
+     GetFirstDate ([Apr 2005]),
+         DP_MONTH,
+         6
+   ),
+   [Time dimension].Dimension, 
+   [Time dimension].[WEEKS]
+   ): ClosingPeriod([Time dimension].[Weeks], [Apr 2005]))
+  } ON ROWS
+FROM MySamp.Basic
+Where (Actual, California, Cola); </pre>
+
+</div></body></html>

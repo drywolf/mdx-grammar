@@ -1,0 +1,43 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Generation</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_generate.htm" title="Generate"><link rel="next" href="mdx_generations.htm" title="Generations"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_generate.htm';
+var nextPage = 'mdx_generations.htm';
+var tocLinkId = 'mdx_generation';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="generation_techref_proj_maxl_dml_funcs"></a>Generation<a class="indexterm" name="d0e100026"></a><a class="indexterm" name="d0e100029"></a></h1>
+
+
+<p>Returns the generation of the input member.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting"><span class="italic">member</span>.Generation</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Generation function"><thead><tr><th id="hd-d0e100054-col1">Parameter</th><th id="hd-d0e100054-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e100054-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a></p></td>
+<td headers="hd-d0e100054-col2">
+<p>Member specification.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p>The following query</p>
+<pre class="programlisting">SELECT
+ [Year].[Qtr1].Generation.Members
+ON COLUMNS,
+ [Product].Generations(2).Members
+ON ROWS
+FROM Sample.Basic</pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Qtr1</td><td>Qtr2</td><td>Qtr3</td><td>Qtr4</td></tr><tr><td>100</td><td>7048</td><td>7872</td><td>8511</td><td>7037</td></tr><tr><td>200</td><td>6721</td><td>7030</td><td>7005</td><td>7198</td></tr><tr><td>300</td><td>5929</td><td>6769</td><td>6698</td><td>6403</td></tr><tr><td>400</td><td>5005</td><td>5436</td><td>5698</td><td>5162</td></tr><tr><td>Diet</td><td>7017</td><td>7336</td><td>7532</td><td>6941</td></tr></tbody></table></div>
+
+<p class="func_subhead">See Also</p><ul><li><a href="mdx_generations.htm" title="Generations"><span class="FunctionName">Generations</span></a></li><li><a href="mdx_level.htm" title="Level"><span class="FunctionName">Level</span></a></li></ul>
+</div></body></html>

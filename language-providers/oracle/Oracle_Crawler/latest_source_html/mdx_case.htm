@@ -1,0 +1,117 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Case</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_bottomsum.htm" title="BottomSum"><link rel="next" href="mdx_cellvalue.htm" title="CellValue"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_bottomsum.htm';
+var nextPage = 'mdx_cellvalue.htm';
+var tocLinkId = 'mdx_case';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="case_techref_proj_maxl_dml_funcs"></a>Case<a class="indexterm" name="d0e93744"></a><a class="indexterm" name="d0e93747"></a><a class="indexterm" name="d0e93752"></a></h1>
+
+
+<p>The CASE keyword begins a conditional expression. There are two types
+of conditional test you can perform using CASE: simple case expression and
+searched case expression.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+
+<p>The simple case expression evaluates <span class="italic">case_operand</span> and
+returns a result based on its value, as specified by WHEN or ELSE clauses.
+The result of a case expression can be a value expression or a set. If no
+ELSE clause is specified, and none of the WHEN clauses is matched, an empty
+value/empty set is returned.</p>
+<pre class="programlisting">CASE 
+<span class="italic">case_operand</span>
+<span class="italic">simple_when_clause</span>...
+[ <span class="italic">else_clause</span> ]
+END</pre>
+
+
+<p>In searched case expression, each WHEN clause specifies a search condition
+and a <span class="italic">result</span> to be returned if that search
+condition is satisfied. The WHEN clauses are evaluated in the order specified.
+The result is returned from the first WHEN clause in which the search condition
+evaluates to TRUE. The result can be a value expression or a set. If no ELSE
+clause is specified, and none of the search conditions in the WHEN clauses
+evaluate to TRUE, an empty value/empty set is returned.</p>
+<pre class="programlisting">CASE
+searched_when_clause...
+[ else_clause ]
+END</pre>
+
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Case function"><thead><tr><th id="hd-d0e93803-col1">Parameter</th><th id="hd-d0e93803-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e93803-col1"><p>case_operand</p></td>
+<td headers="hd-d0e93803-col2">
+<p>An expression to evaluate.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e93803-col1"><p>simple_when_clause</p></td>
+<td headers="hd-d0e93803-col2">
+<p>One or more WHEN/THEN statements. Syntax:<span class="cCode"> WHEN <span class="italic">when_operand</span> THEN <span class="italic">result</span></span></p>
+<div class="itemizedlist"><ul type="disc"><li><p><span class="italic">when_operand</span>: A value expression.</p></li><li><p><span class="italic">result</span>: A numeric value
+expression, a string value expression, or a set.</p></li></ul></div>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e93803-col1"><p>else_clause</p></td>
+<td headers="hd-d0e93803-col2">
+<p>Optional. Syntax:</p>
+<p><span class="cCode">ELSE <span class="italic">numeric_value_expression</span> | <span class="italic">set</span> | <span class="italic">string_value_expression</span></span></p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e93803-col1"><p>searched_when_clause</p></td>
+<td headers="hd-d0e93803-col2">
+<p>One or more WHEN/THEN statements. Syntax:<span class="cCode"> WHEN <span class="italic">search_condition</span> THEN <span class="italic">result</span></span></p>
+<div class="itemizedlist"><ul type="disc"><li><p><span class="italic">search_condition</span>: A value
+expression.</p></li><li><p><span class="italic">result</span>: A numeric value
+expression, a string value expression, or a set.</p></li></ul></div>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p class="bridgehead"><a name="d0e93907"></a>Example for Simple Case Expression</p>
+<p>In the following query, the calculated member <span class="cCode">[Measures].[ProductOunces]</span> is
+evaluated based on the value of the Ounce attribute for the current member
+of the Product dimension.</p>
+<pre class="programlisting">WITH MEMBER [Measures].[ProductOunces] AS
+'Case Product.CurrentMember.Ounces
+         when 32 then 32
+         when 20 then 20
+         when 16 then 16
+         when 12 then 12
+         else 0
+end'
+SELECT
+{  [Measures].[ProductOunces] } ON COLUMNS,
+{ [Product].Members } ON ROWS
+FROM Sample.Basic</pre>
+<p>This query returns the following result:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>ProductOunces</td></tr><tr><td>Product</td><td>0</td></tr><tr><td>Colas</td><td>0</td></tr><tr><td>Cola</td><td>12</td></tr><tr><td>Diet Cola</td><td>12</td></tr><tr><td>Caffeine Free Cola</td><td>16</td></tr><tr><td>Root Beer</td><td>0</td></tr><tr><td>Old Fashioned</td><td>12</td></tr><tr><td>Diet Root Beer</td><td>16</td></tr><tr><td>Sasparilla</td><td>12</td></tr><tr><td>Birch Beer</td><td>16</td></tr><tr><td>Cream Soda</td><td>0</td></tr><tr><td>Dark Cream</td><td>20</td></tr><tr><td>Vanilla Cream</td><td>20</td></tr><tr><td>Diet Cream</td><td>12</td></tr><tr><td>Fruit Soda</td><td>0</td></tr><tr><td>Grape</td><td>32</td></tr><tr><td>Orange</td><td>32</td></tr><tr><td>Strawberry</td><td>32</td></tr><tr><td>Diet Drinks</td><td>0</td></tr><tr><td>Diet Cola</td><td>0</td></tr><tr><td>Diet Root Beer</td><td>0</td></tr><tr><td>Diet Cream</td><td>0</td></tr></tbody></table></div>
+<p class="bridgehead"><a name="d0e94042"></a>Example for Searched Case Expression</p>
+<p>The following query divides products into different profit categories
+based on Profit, and returns categories for each product.</p>
+<pre class="programlisting">WITH MEMBER [Measures].[ProfitCategory] AS
+' Case 
+      when Profit &gt; 10000 then 4 
+      when Profit &gt; 5000  then 3 
+      when Profit &gt; 3000 then  2 
+      else 1
+end'
+SELECT
+{  [Measures].[ProfitCategory] } ON COLUMNS,
+{ [Product].Members } ON ROWS
+FROM Sample.Basic</pre>
+<p>This query returns the following result:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>ProfitCategory</td></tr><tr><td>Product</td><td>4</td></tr><tr><td>Colas</td><td>4</td></tr><tr><td>Cola</td><td>4</td></tr><tr><td>Diet Cola</td><td>3</td></tr><tr><td>Caffeine Free Cola</td><td>1</td></tr><tr><td>Root Beer</td><td>4</td></tr><tr><td>Old Fashioned</td><td>3</td></tr><tr><td>Diet Root Beer</td><td>4</td></tr><tr><td>Sasparilla</td><td>2</td></tr><tr><td>Birch Beer</td><td>2</td></tr><tr><td>Cream Soda</td><td>4</td></tr><tr><td>Dark Cream</td><td>4</td></tr><tr><td>Vanilla Cream</td><td>1</td></tr><tr><td>Diet Cream</td><td>4</td></tr><tr><td>Fruit Soda</td><td>4</td></tr><tr><td>Grape</td><td>4</td></tr><tr><td>Orange</td><td>3</td></tr><tr><td>Strawberry</td><td>1</td></tr><tr><td>Diet Drinks</td><td>4</td></tr><tr><td>Diet Cola</td><td>3</td></tr><tr><td>Diet Root Beer</td><td>4</td></tr><tr><td>Diet Cream</td><td>4</td></tr></tbody></table></div>
+
+</div></body></html>

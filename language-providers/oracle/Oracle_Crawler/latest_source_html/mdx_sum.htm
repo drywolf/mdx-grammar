@@ -1,0 +1,69 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Sum</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_substring.htm" title="Substring"><link rel="next" href="mdx_tail.htm" title="Tail"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_substring.htm';
+var nextPage = 'mdx_tail.htm';
+var tocLinkId = 'mdx_sum';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="sum_techref_proj_maxl_dml_funcs"></a>Sum<a class="indexterm" name="d0e112054"></a><a class="indexterm" name="d0e112057"></a><a class="indexterm" name="d0e112062"></a></h1>
+
+
+<p>Returns the sum of values of tuples in a set.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">Sum ( <span class="italic">set</span> [,<span class="italic">numeric_value_expression</span> ] )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Sum function"><thead><tr><th id="hd-d0e112109-col1">Parameter</th><th id="hd-d0e112109-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e112109-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set</a></p></td>
+<td headers="hd-d0e112109-col2">
+<p>The set containing the tuples to aggregate. If empty, the return value
+is #Missing.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e112109-col1"><p>numeric_value_expression</p></td>
+<td headers="hd-d0e112109-col2">
+<p>Optional. An expression that returns a value. Commonly used to restrict
+the aggregation to a slice from a Measures dimension (see <a href="mdx_grammar_rules.htm" title="MDX Grammar Rules">MDX Grammar Rules</a>). In the example below, [Measures].[Total Expenses]
+is the numeric value expression provided to the Sum function.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>For each tuple in <span class="italic">set</span>, the numeric
+value expression is evaluated in that tuple's context and the resulting values
+are summed up.</p>
+<p>The return value of Sum is #MISSING if either of the following is true:</p>
+<div class="itemizedlist"><ul type="disc"><li><p>The input set is empty.</p></li><li><p>All tuple evaluations result in #MISSING values.</p></li></ul></div>
+
+<p class="func_subhead">Example</p>
+<pre class="programlisting">WITH MEMBER [Market].[Sum Expense for Main States]
+AS
+ 'Sum
+ ({[Market].[California], [Market].[Colorado],
+   [Market].[Texas], [Market].[Illinois],
+   [Market].[Ohio], [Market].[New York],
+   [Market].[Massachusetts], [Market].[Florida]}, 
+  [Measures].[Total Expenses]
+  )' 
+SELECT
+ {[Measures].[Total Expenses]}
+ON COLUMNS, 
+  {UDA([Market], "Major Market"),
+  [Market].[Sum Expense for Main States]}
+ON ROWS
+FROM 
+ Sample.Basic
+WHERE ([Scenario].[Actual])</pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Total Expenses</td></tr><tr><td>New York</td><td>8914</td></tr><tr><td>Massachusetts</td><td>3412</td></tr><tr><td>Florida</td><td>5564</td></tr><tr><td>East</td><td>25310</td></tr><tr><td>California</td><td>11737</td></tr><tr><td>Texas</td><td>4041</td></tr><tr><td>Illinois</td><td>6900</td></tr><tr><td>Ohio</td><td>5175</td></tr><tr><td>Colorado</td><td>6131</td></tr><tr><td>Central</td><td>34864</td></tr><tr><td>Sum Expense for Main States</td><td>51874</td></tr></tbody></table></div>
+
+</div></body></html>

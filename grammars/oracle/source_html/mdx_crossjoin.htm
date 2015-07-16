@@ -1,0 +1,106 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>CrossJoin</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_cousin.htm" title="Cousin"><link rel="next" href="mdx_currentmember.htm" title="CurrentMember"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_cousin.htm';
+var nextPage = 'mdx_currentmember.htm';
+var tocLinkId = 'mdx_crossjoin';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="crossjoin_techref_proj_maxl_dml_funcs"></a>CrossJoin<a class="indexterm" name="d0e95266"></a></h1>
+
+
+<p>Returns the cross-product of two sets from different dimensions.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">CrossJoin ( <span class="italic">set1</span>, <span class="italic">set2</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the CrossJoin function"><thead><tr><th id="hd-d0e95334-col1">Parameter</th><th id="hd-d0e95334-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e95334-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set</a>1</p></td>
+<td headers="hd-d0e95334-col2">
+<p>A set to cross with <span class="italic">set2</span>.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e95334-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set</a>2</p></td>
+<td headers="hd-d0e95334-col2">
+<p>A set to cross with <span class="italic">set1</span>. Must not
+include any dimension used in <span class="italic">set1</span>.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>This function returns the cross-product of two sets from different dimensions.
+If the two sets share a common dimension, an error is returned.</p>
+<p>If one of the input sets is empty, the output set will be empty as well.
+For example, the output will be empty if the input set is <span class="cCode">[Root Beer].children</span> but <span class="cCode">[Root
+Beer]</span> has no children.</p>
+<p>The order of the sets (and their constituent tuples) provided to the
+CrossJoin function have an effect on the order of the tuples in the result
+set. For example,</p>
+<pre class="programlisting">CrossJoin({a, b}, {c, d})</pre>
+<p>returns <span class="cCode">{(a, c), (a,
+d), (b, c), (b, d)}</span></p>
+<pre class="programlisting">CrossJoin({a, b, c}, {d, e, f})</pre>
+<p>returns <span class="cCode">{(a, d), (a,
+e), (a, f), (b, d), (b, e), (b, f), (c, d), (c, e), (c, f)}</span></p>
+<p>Be aware of the order of the output set when using the results of CrossJoin
+with other order-dependent set functions; for example, <a href="mdx_head.htm" title="Head"><span class="FunctionName">Head</span></a> or <a href="mdx_tail.htm" title="Tail"><span class="FunctionName">Tail</span></a>.</p>
+
+<p class="func_subhead">Example</p>
+<p class="bridgehead"><a name="d0e95377"></a>Example 1</p>
+<p>The following expression</p>
+<pre class="programlisting">CrossJoin({[Qtr1], [Qtr2]}, {[New York], [California]})</pre>
+<p>returns the set:</p>
+<pre class="programlisting">{([Qtr1], [New York]), ([Qtr1], [California]), 
+ ([Qtr2], [New York]), ([Qtr2], [California])}
+  </pre>
+<p>Therefore, the following query</p>
+<pre class="programlisting">SELECT
+CrossJoin({[Qtr1], [Qtr2]}, {[New York], [California]})
+ON COLUMNS
+FROM sample.basic</pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col></colgroup><tbody><tr><td valign="bottom">Qtr1</td><td valign="bottom">Qtr1</td><td valign="bottom">Qtr2</td><td valign="bottom">Qtr2</td></tr><tr><td valign="bottom">New York</td><td valign="bottom">California</td><td valign="bottom">New York</td><td valign="bottom">California</td></tr><tr><td>1656</td><td>3129</td><td>2363</td><td>3288</td></tr></tbody></table></div>
+<p class="bridgehead"><a name="d0e95436"></a>Example 2</p>
+<p>The following expression</p>
+<pre class="programlisting">CrossJoin({[Qtr1], [Qtr2], [Qtr3]}, {[New York], [California], [Texas]})</pre>
+<p>returns the set</p>
+<pre class="programlisting">{([Qtr1], [New York]), ([Qtr1], [California]), ([Qtr1], [Texas]), 
+([Qtr2], [New York]), ([Qtr2], [California]), ([Qtr2], [Texas]), 
+([Qtr3], [New York]), ([Qtr3], [California]), ([Qtr3], [Texas])}</pre>
+<p>Therefore, the following query</p>
+<pre class="programlisting">SELECT
+CrossJoin({[Qtr1], [Qtr2], [Qtr3]}, {[New York], [California], [Texas]})
+ON AXIS(0) 
+FROM Sample.Basic
+  </pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col><col><col><col><col></colgroup><tbody><tr><td valign="bottom">Qtr1</td><td valign="bottom">Qtr1</td><td valign="bottom">Qtr1</td><td valign="bottom">Qtr2</td><td valign="bottom">Qtr2</td><td valign="bottom">Qtr2</td><td valign="bottom">Qtr3</td><td valign="bottom">Qtr3</td><td valign="bottom">Qtr3</td></tr><tr><td valign="bottom">New York</td><td valign="bottom">California</td><td valign="bottom">Texas</td><td valign="bottom">New York</td><td valign="bottom">California</td><td valign="bottom">Texas</td><td valign="bottom">New York</td><td valign="bottom">California</td><td valign="bottom">Texas</td></tr><tr><td>1656</td><td>3129</td><td>1582</td><td>2363</td><td>3288</td><td>1610</td><td>1943</td><td>3593</td><td>1703</td></tr></tbody></table></div>
+<p class="bridgehead"><a name="d0e95530"></a>Example 3</p>
+<p>The following expression</p>
+<pre class="programlisting">CrossJoin ([100].children, [Profit].children)
+  </pre>
+<p>returns the set:</p>
+<pre class="programlisting">{([100-10], Margin), ([100-10], [Total Expenses]), 
+ ([100-20], Margin), ([100-20], [Total Expenses]),
+ ([100-30], Margin), ([100-30], [Total Expenses])}
+  </pre>
+<p>Therefore, the following query</p>
+<pre class="programlisting">SELECT
+ {([Market].levels(1).members)} 
+ON COLUMNS, 
+ CrossJoin ([100].children, [Profit].children)
+ON ROWS
+FROM Sample.Basic
+  </pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>&nbsp;</td><td>East</td><td>West</td><td>South</td><td>Central</td></tr><tr><td rowspan="2">100&#8211;10</td><td>Margin</td><td>15762</td><td>8803</td><td>5937</td><td>8124</td></tr><tr><td>Total Expenses</td><td>4633</td><td>4210</td><td>2361</td><td>4645</td></tr><tr><td rowspan="2">100&#8211;20</td><td>Margin</td><td>1785</td><td>3707</td><td>2767</td><td>7426</td></tr><tr><td>Total Expenses</td><td>671</td><td>4241</td><td>1570</td><td>3495</td></tr><tr><td rowspan="2">100&#8211;30</td><td>Margin</td><td>871</td><td>1629</td><td>#Missing</td><td>3975</td></tr><tr><td>Total Expenses</td><td>458</td><td>2139</td><td>#Missing</td><td>1895</td></tr></tbody></table></div>
+
+</div></body></html>

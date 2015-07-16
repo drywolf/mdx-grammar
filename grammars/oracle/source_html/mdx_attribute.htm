@@ -1,0 +1,43 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Attribute</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_ancestors.htm" title="Ancestors"><link rel="next" href="mdx_attributeex.htm" title="AttributeEx"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_ancestors.htm';
+var nextPage = 'mdx_attributeex.htm';
+var tocLinkId = 'mdx_attribute';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="attribute_techref_proj_maxl_dml_funcs"></a>Attribute<a class="indexterm" name="d0e92565"></a><a class="indexterm" name="d0e92570"></a></h1>
+
+
+<p>Returns all base members that are associated with a specified attribute
+member.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">Attribute ( <span class="italic">member</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Attribute function"><thead><tr><th id="hd-d0e92596-col1">Parameter</th><th id="hd-d0e92596-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e92596-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a></p></td>
+<td headers="hd-d0e92596-col2">
+<p>Specification of a member from an attribute dimension.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p>The following query</p>
+<pre class="programlisting">SELECT
+ {[Year].Children}
+ON COLUMNS, 
+ Attribute ([Ounces_12])
+ON ROWS
+FROM Sample.Basic</pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Qtr1</td><td>Qtr2</td><td>Qtr3</td><td>Qtr4</td></tr><tr><td>Cola</td><td>5096</td><td>5892</td><td>6583</td><td>5206</td></tr><tr><td>Diet Cola</td><td>1359</td><td>1534</td><td>1528</td><td>1287</td></tr><tr><td>Old Fashioned</td><td>1697</td><td>1734</td><td>1883</td><td>1887</td></tr><tr><td>Sasparilla</td><td>1153</td><td>1231</td><td>1159</td><td>1093</td></tr><tr><td>Diet Cream</td><td>2695</td><td>2723</td><td>2855</td><td>2820</td></tr></tbody></table></div>
+
+</div></body></html>

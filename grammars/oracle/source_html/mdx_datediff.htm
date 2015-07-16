@@ -1,0 +1,83 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>DateDiff</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_currenttuple.htm" title="CurrentTuple"><link rel="next" href="mdx_datepart.htm" title="DatePart"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_currenttuple.htm';
+var nextPage = 'mdx_datepart.htm';
+var tocLinkId = 'mdx_datediff';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="datediff_techref_proj_maxl_dml_funcs"></a>DateDiff</h1>
+
+
+<p>Returns the difference (number) between two input dates in terms of
+the specified date-parts, following a standard Gregorian calendar.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">DateDiff ( <span class="italic">date1</span>, <span class="italic">date2</span>, <span class="italic">date_part</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the DateDiff function"><thead><tr><th id="hd-d0e96036-col1">Parameter</th><th id="hd-d0e96036-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e96036-col1"><p>date1</p></td>
+<td headers="hd-d0e96036-col2">
+<p>A number representing the input date between January 1, 1970 and Dec
+31, 2037. The number is the number of seconds elapsed since midnight, January
+1, 1970. To retrieve this number, use any of the following functions: Today(),
+TodateEx(), GetFirstDate(), GetLastDate(), DateRoll().</p>
+<p>Date-time attribute properties of a member can also be used to retrieve
+this number. For example,</p>
+<div class="itemizedlist"><ul type="disc"><li><p><span class="cCode">Product.currentmember.[Intro Date]</span> returns the
+product introduction date for the current product in context.</p></li><li><p><span class="cCode">[Cola].[Intro Date]</span> returns the product introduction
+date for Cola.</p></li></ul></div>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e96036-col1"><p>date2</p></td>
+<td headers="hd-d0e96036-col2">
+<p>A second input date. See <span class="italic">date1</span>.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e96036-col1"><p>date_part</p></td>
+<td headers="hd-d0e96036-col2">
+<p>Defined time components as per the standard calendar. </p>
+<div class="itemizedlist"><ul type="disc"><li><p>DP_YEAR - Year of the input date.</p></li><li><p>DP_QUARTER - Quarter of the input date.</p></li><li><p>DP_MONTH - Month of the input date.</p></li><li><p>DP_WEEK - Week of the input date.</p></li><li><p>DP_DAY - Day of the input date.</p></li></ul></div>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>Based on the input <span class="italic">date_part</span>, the
+difference between the two input dates is counted in terms of time component
+specified.</p>
+<p>Example: For input dates June 14, 2005 and Oct 10, 2006,</p>
+<div class="itemizedlist"><ul type="disc"><li><p>DP_YEAR returns the difference in the year component. (2006
+- 2005 = 1)</p></li><li><p>DP_QUARTER returns the distance between the quarters capturing
+the input dates. (Quarter 4, 2006 - Quarter 2, 2005 = 6)</p></li><li><p>DP_MONTH returns the distance between the months capturing
+the input dates. (Oct 2006 - June 2005 = 16)</p></li><li><p>DP_WEEK returns the distance between the weeks capturing the
+input dates. Each Standard calendar week is defined to start on Sunday and
+it spans 7 days. (Oct 10, 2006 - June 14, 2005 = 69)</p></li><li><p>DP_DAY returns the difference between the input dates in terms
+of days. (483 days)</p></li></ul></div>
+
+<p class="func_subhead">Example</p>
+<p>The following query returns weekly sales for the last 6 months for the
+product Cola in the market California.</p>
+<pre class="programlisting">SELECT 
+{sales} ON COLUMNS,
+Filter(
+  [Time dimension].Weeks.members, 
+  Datediff(
+    GetFirstDate([Time dimension].CurrentMember),
+        Today(),
+        DP_MONTH
+   ) &lt; 6
+ )
+ON ROWS
+FROM Mysamp.Basic
+WHERE (Actual, California, Cola);</pre>
+
+</div></body></html>

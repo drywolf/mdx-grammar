@@ -1,0 +1,15 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>MDX Hierarchy Specification</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="mdx_syn_gram.htm" title="MDX Syntax and Grammar Rules"><link rel="prev" href="mdx_member.htm" title="MDX Member Specification"><link rel="next" href="mdx_tuple.htm" title="MDX Tuple Specification"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_member.htm';
+var nextPage = 'mdx_tuple.htm';
+var tocLinkId = 'mdx_hierarchy';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="section" lang="EN-US"><div class="titlepage"><div><div><h1 class="title" style="clear: both"><a name="hierarchy_techref_proj_maxl_dml_rules"></a>MDX Hierarchy Specification</h1></div></div></div><p>A hierarchy is a root member of an alternate hierarchy, which is always
+at generation 2 of a dimension. Member value expressions are not allowed as
+hierarchy arguments.</p><p>Alternate hierarchies are applicable to aggregate storage databases
+only.</p><p>The dimension of the hierarchy argument passed to a function must match
+the dimension of the other arguments passed to the function. If they do not
+match, an error is returned, and the query is aborted.</p></div></body></html>

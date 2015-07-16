@@ -1,0 +1,45 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>LastChild</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_lag.htm" title="Lag"><link rel="next" href="mdx_lastperiods.htm" title="LastPeriods"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_lag.htm';
+var nextPage = 'mdx_lastperiods.htm';
+var tocLinkId = 'mdx_lastchild';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="lastchild_techref_proj_maxl_dml_funcs"></a>LastChild<a class="indexterm" name="d0e104681"></a><a class="indexterm" name="d0e104684"></a></h1>
+
+
+<p>Returns the last child of the input member.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+
+<pre class="programlisting"><span class="italic">member</span>.LastChild</pre>
+
+
+<pre class="programlisting">LastChild ( <span class="italic">member</span> )</pre>
+
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the LastChild function"><thead><tr><th id="hd-d0e104721-col1">Parameter</th><th id="hd-d0e104721-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e104721-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a></p></td>
+<td headers="hd-d0e104721-col2">
+<p>A member specification.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<pre class="programlisting">SELECT
+  {[Qtr1].firstchild} 
+ON COLUMNS,
+  {[Market].[Central].lastchild} 
+ON ROWS
+FROM Sample.Basic</pre>
+<div class="informaltable"><table border="1"><colgroup><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Jan</td></tr><tr><td>Colorado</td><td>585</td></tr></tbody></table></div>
+
+</div></body></html>

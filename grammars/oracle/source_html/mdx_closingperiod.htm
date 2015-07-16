@@ -1,0 +1,92 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>ClosingPeriod</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_children.htm" title="Children"><link rel="next" href="mdx_coalesceempty.htm" title="CoalesceEmpty"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_children.htm';
+var nextPage = 'mdx_coalesceempty.htm';
+var tocLinkId = 'mdx_closingperiod';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="closingperiod_techref_proj_maxl_dml_funcs"></a>ClosingPeriod<a class="indexterm" name="d0e94436"></a><a class="indexterm" name="d0e94439"></a><a class="indexterm" name="d0e94442"></a></h1>
+
+
+<p>Returns the last descendant of a layer, or the last child of the Time
+dimension.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">ClosingPeriod ( [ <span class="italic">layer</span> [,<span class="italic">member</span> ]] )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the ClosingPeriod function"><thead><tr><th id="hd-d0e94521-col1">Parameter</th><th id="hd-d0e94521-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e94521-col1"><p><a href="mdx_layer.htm" title="MDX Layer Specification">layer</a></p></td>
+<td headers="hd-d0e94521-col2">
+<p>Layer specification.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e94521-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a></p></td>
+<td headers="hd-d0e94521-col2">
+<p>Optional member specification. If omitted, the last child of the Time
+dimension is assumed (for example, <span class="cCode">Qtr4</span> in Sample Basic).</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>The return value of this function varies depending on the input.</p>
+<div class="orderedlist"><ol type="1"><li><p>When both <span class="italic">layer</span> and <span class="italic">member</span> arguments are given as input, Closingperiod
+returns the last descendant of the input member at the input layer. For example, <span class="cCode">Closingperiod(Year.generations(3),
+Qtr3)</span> returns <span class="cCode">Sep</span>. If the input <span class="italic">member</span> and <span class="italic">layer</span> are the same layer, the output is the input
+member. For example, <span class="cCode">Closingperiod(Year.generations(3), Sep)</span> returns <span class="cCode">Sep</span>.</p></li><li><p>When only the <span class="italic">layer</span> argument
+is specified, the input member is assumed to be the current member of the
+dimension used in the layer argument. Closingperiod returns the last descendant
+of that dimension, at the input layer. For example, <span class="cCode">Closingperiod(Year.generations(3))</span> returns <span class="cCode">Dec</span>.</p></li><li><p>When no arguments are specified, the input member is assumed
+to be the current member of the Time dimension, and ClosingPeriod returns
+the last child of that member. Do not use this function without arguments
+if there is no dimension tagged as Time.</p></li></ol></div>
+
+<p class="func_subhead">Example</p>
+<p>The following query</p>
+<pre class="programlisting">WITH
+MEMBER [Measures].[Starting Inventory] AS
+'
+IIF (
+ IsLeaf (Year.CurrentMember),
+  [Measures].[Opening Inventory],
+  ([Measures].[Opening Inventory],
+   OpeningPeriod (
+     [Year].Levels(0),
+     [Year].CurrentMember
+   )
+  )
+)'
+
+MEMBER [Measures].[Closing Inventory] AS
+'
+IIF (
+   Isleaf(Year.CurrentMember),
+    [Measures].[Ending Inventory],  
+   ([Measures].[Closing Inventory],
+    ClosingPeriod (
+    [Year].Levels(0),
+    [Year].CurrentMember
+    )
+)
+)'
+SELECT
+CrossJoin (
+ { [100-10] },
+ { [Measures].[Starting Inventory], [Measures].[Closing Inventory] }
+)
+ON COLUMNS,
+Hierarchize ( [Year].Members , POST)
+ON ROWS
+FROM Sample.Basic</pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>100-10</td><td>100-10</td></tr><tr><td>&nbsp;</td><td>Starting Inventory</td><td>Closing Inventory</td></tr><tr><td>Jan</td><td>14587</td><td>14039</td></tr><tr><td>Feb</td><td>14039</td><td>13566</td></tr><tr><td>Mar</td><td>13566</td><td>13660</td></tr><tr><td>Qtr1</td><td>14587</td><td>13660</td></tr><tr><td>Apr</td><td>13660</td><td>14172</td></tr><tr><td>May</td><td>14172</td><td>15127</td></tr><tr><td>Jun</td><td>15127</td><td>15580</td></tr><tr><td>Qtr2</td><td>13660</td><td>15580</td></tr><tr><td>Jul</td><td>15580</td><td>14819</td></tr><tr><td>Aug</td><td>14819</td><td>14055</td></tr><tr><td>Sep</td><td>14055</td><td>13424</td></tr><tr><td>Qtr3</td><td>15580</td><td>13424</td></tr><tr><td>Oct</td><td>13424</td><td>13323</td></tr><tr><td>Nov</td><td>13323</td><td>13460</td></tr><tr><td>Dec</td><td>13460</td><td>12915</td></tr><tr><td>Qtr4</td><td>13424</td><td>12915</td></tr><tr><td>Year</td><td>14587</td><td>12915</td></tr></tbody></table></div>
+
+</div></body></html>

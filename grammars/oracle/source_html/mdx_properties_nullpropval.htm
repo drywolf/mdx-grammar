@@ -1,0 +1,33 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>MDX NULL Property Values</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="mdx_properties.htm" title="About MDX Properties"><link rel="prev" href="mdx_properties_valuetype.htm" title="The Value Type of MDX Properties"><link rel="next" href="mdx_comments.htm" title="MDX Comments"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_properties_valuetype.htm';
+var nextPage = 'mdx_comments.htm';
+var tocLinkId = 'mdx_properties_nullpropval';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="section" lang="EN-US"><div class="titlepage"><div><div><h1 class="title" style="clear: both"><a name="properties_techref_proj_maxl_dml_rules_d0e334"></a>MDX NULL Property Values</h1></div></div></div><p>Not all members may have valid values for a given property name. For
+example, the MEMBER_ALIAS property returns an alternate name for a given member
+as defined in the outline; however, not all members may have aliases defined.
+In these cases A NULL value would be returned for those members that do not
+have aliases.</p><p>In the following query:</p><pre class="programlisting"> SELECT
+  [Year].Members
+     DIMENSION PROPERTIES MEMBER_ALIAS on columns</pre><p>none of the members in the Year dimension have aliases defined for them.
+Therefore, the query returns NULL values for the MEMBER_ALIAS property for
+members in the Year dimension.</p><p>The attribute properties are defined for members of a specific dimension
+and a specific level in that dimension. In the Sample Basic database, the <span class="cCode">[Ounces]</span> property
+is defined only for level-0 members of the Product dimension.</p><p>Therefore, if you query for the <span class="cCode">[Ounces]</span> property of a
+member from the Market dimension, as shown in the following query, you will
+get a syntax error:</p><pre class="programlisting">      
+ SELECT
+    Filter([Market].members,
+           [Market].CurrentMember.[Ounces] = 32) on columns</pre><p>Additionally, if you query for the <span class="cCode">[Ounces]</span> property of
+a non level-0 member of the dimension, you will get a NULL value.</p><p>When using property values in value expressions, you can use the function
+IsValid() to check for NULL values. The following query returns all Product
+dimension members with <span class="cCode">[Ounces]</span> property value of <span class="cCode">12</span>,
+after eliminating members with NULL values.</p><pre class="programlisting">           
+ Select
+    Filter([Product].Members,
+           IsValid([Product].CurrentMember.[Ounces]) and
+           [Product].CurrentMember.[Ounces] = 12) on columns</pre></div></body></html>

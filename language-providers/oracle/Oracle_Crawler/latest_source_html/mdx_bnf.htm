@@ -1,0 +1,45 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Understanding BNF Notation</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="mdx_syn_gram.htm" title="MDX Syntax and Grammar Rules"><link rel="prev" href="mdx_syn_gram.htm" title="MDX Syntax and Grammar Rules"><link rel="next" href="mdx_grammar_rules.htm" title="MDX Grammar Rules"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_syn_gram.htm';
+var nextPage = 'mdx_grammar_rules.htm';
+var tocLinkId = 'mdx_bnf';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="section" lang="EN-US"><div class="titlepage"><div><div><h1 class="title" style="clear: both"><a name="bnf_techref_proj_maxl_dml_rules"></a>Understanding BNF Notation</h1></div></div></div><p>This section briefly explains the meaning of symbolic notations used
+to describe grammar in this document. The query grammar rules are presented
+using Backus-Naur Form (BNF) syntax notation.</p><p>The following table of conventions is not a complete description of
+BNF, but it can help you read the grammar rules presented in this document.</p><div class="informaltable"><table border="1"><colgroup><col><col><col></colgroup><thead><tr><th id="hd-d0e86366-d0e86371-1">Symbol</th><th id="hd-d0e86366-d0e86371-2">Description</th><th id="hd-d0e86366-d0e86371-3">Example</th></tr></thead><tbody><tr><td headers="hd-d0e86366-d0e86371-1"><p><span class="cCode"><span class="bold"><strong>&lt;word&gt;</strong></span></span></p><p>(A
+word in angle brackets.)</p></td><td headers="hd-d0e86366-d0e86371-2">The word presented in angle brackets is not meant to be literally used
+in a statement; its rules are further defined elsewhere.</td><td headers="hd-d0e86366-d0e86371-3"><p>When reading the following syntax,</p><p><span class="cCode">SELECT &lt;axis-specification&gt;
+...</span></p><p>you know that <span class="cCode">axis-specification</span> is not
+meant to be typed literally into the statement. The rules for axis-specification
+are further defined in the documentation (look for <span class="cCode">&lt;axis-specification&gt;
+::=</span> to get the definition).</p></td></tr><tr><td headers="hd-d0e86366-d0e86371-1"><p><span class="cCode"><span class="bold"><strong>&lt;word&gt; ::=</strong></span></span></p><p>(A
+word in angle brackets, followed directly by the symbol <span class="cCode">::=</span>)</p></td><td headers="hd-d0e86366-d0e86371-2"><p>A definition, or BNF "production." The symbol <span class="cCode">::=</span> can
+be interpreted to mean "is defined as."</p><p>The word referred to elsewhere
+as the placeholder <span class="cCode">&lt;word&gt;</span> is defined here, directly following <span class="cCode">&lt;word&gt;
+::=</span>.</p></td><td headers="hd-d0e86366-d0e86371-3"><p>The following syntax tells you that a <span class="italic">tuple</span> is
+defined as either one member in parenthesis, or two or more comma-separated
+members in parenthesis.</p><pre class="programlisting">&lt;tuple&gt; ::= 
+'(' &lt;member&gt; [,&lt;member&gt;]... ')'
+        </pre></td></tr><tr><td headers="hd-d0e86366-d0e86371-1"><p><span class="cCode"><span class="bold"><strong>|</strong></span></span></p><p>The
+pipe symbol or "OR" symbol.</p></td><td headers="hd-d0e86366-d0e86371-2">Precedes alternatives. The symbol <span class="cCode">|</span> can be interpreted
+to mean "or."</td><td headers="hd-d0e86366-d0e86371-3"><p>The following syntax:</p><pre class="programlisting">ON COLUMNS|ROWS|PAGES|CHAPTERS|SECTIONS</pre><p>can
+be used to build any of the following literal statement parts:</p><div class="itemizedlist"><ul type="disc"><li><p><span class="cCode">ON COLUMNS</span></p></li><li><p><span class="cCode">ON ROWS</span></p></li><li><p><span class="cCode">ON PAGES</span></p></li><li><p><span class="cCode">ON CHAPTERS</span></p></li><li><p><span class="cCode">ON SECTIONS</span></p></li></ul></div></td></tr><tr><td headers="hd-d0e86366-d0e86371-1"><p><span class="cCode"><span class="bold"><strong>WORD</strong></span></span></p><p>(Text
+in all caps.)</p></td><td headers="hd-d0e86366-d0e86371-2">A query-grammar keyword, to be typed literally.</td><td headers="hd-d0e86366-d0e86371-3"><p>When reading the following syntax,</p><p><span class="cCode">SELECT &lt;axis-specification&gt;
+...</span></p><p>you know that <span class="cCode">SELECT</span> is a keyword, and
+therefore should be typed literally into its proper location in the statement.</p></td></tr><tr><td headers="hd-d0e86366-d0e86371-1"><p><span class="cCode"><span class="bold"><strong>[&lt;word&gt;]</strong></span></span> or <span class="cCode"><span class="bold"><strong>[word]</strong></span></span> or<span class="cCode"><span class="bold"><strong>[WORD]</strong></span></span></p><p>(Square
+brackets enclosing some word or item.)</p></td><td headers="hd-d0e86366-d0e86371-2">An optional element.</td><td headers="hd-d0e86366-d0e86371-3"><p>In the following high-level query syntax,</p><pre class="programlisting">[&lt;with_section&gt;]
+SELECT [&lt;axis_specification&gt;
+ [, &lt;axis_specification&gt;...]]
+FROM [&lt;cube_specification&gt;]
+[WHERE [&lt;slicer_specification&gt;]]
+                </pre><p>everything, technically, is optional
+except for SELECT and FROM. Therefore, a query containing only the words</p><pre class="programlisting">SELECT FROM</pre><p>would
+in fact be valid; however, it would select one consolidated data value from
+its best estimate of a cube context, which might not be very useful.</p></td></tr><tr><td headers="hd-d0e86366-d0e86371-1"><p><span class="cCode"><span class="bold"><strong>[, &lt;word&gt;...]</strong></span></span></p>(A
+comma, a word, and an ellipsis, all enclosed in square brackets.)       </td><td headers="hd-d0e86366-d0e86371-2">You can optionally append a comma-separated list of one or more <span class="cCode">&lt;words&gt;</span>.</td><td headers="hd-d0e86366-d0e86371-3"><p>The following syntax</p><pre class="programlisting">SELECT [&lt;axis_specification&gt;
+ [, &lt;axis_specification&lt;...]]</pre><p>indicates that multiple,
+comma-separated axis specifications can optionally be supplied to the <span class="cCode">SELECT</span> statement.</p></td></tr></tbody></table></div></div></body></html>

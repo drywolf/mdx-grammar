@@ -1,0 +1,99 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Tail</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_sum.htm" title="Sum"><link rel="next" href="mdx_todate.htm" title="Todate"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_sum.htm';
+var nextPage = 'mdx_todate.htm';
+var tocLinkId = 'mdx_tail';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="tail_techref_proj_maxl_dml_funcs"></a>Tail<a class="indexterm" name="d0e112220"></a></h1>
+
+
+<p>Returns the last <span class="italic">n</span> members or tuples
+present in a set.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">Tail ( <span class="italic">set</span> [,<span class="italic">index</span> ] )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Tail function"><thead><tr><th id="hd-d0e112250-col1">Parameter</th><th id="hd-d0e112250-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e112250-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set</a></p></td>
+<td headers="hd-d0e112250-col2">
+<p>The set from which to take items.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e112250-col1"><p>index</p></td>
+<td headers="hd-d0e112250-col2">
+<p>The number of items to take from the end of the set. If omitted, the
+default is 1. If less than 1, an empty set is returned. If the value exceeds
+the number of tuples in the input set, the original set is returned.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p class="bridgehead"><a name="d0e112281"></a>Example 1</p>
+<p>This example uses the following part of the Sample Basic outline:</p>
+<div><img src="images/product_children.gif"></div>
+<p>The following expression</p>
+<pre class="programlisting">[Product].children</pre>
+<p>returns the set:</p>
+<pre class="programlisting">{ [100], [200], [300], [400], [Diet] }</pre>
+<p>Therefore, the following expression</p>
+<pre class="programlisting"> Tail (
+  [Product].children, 2) </pre>
+<p>returns the last two members of the previous result set:</p>
+<pre class="programlisting">{ [400], [Diet] }</pre>
+<p class="bridgehead"><a name="d0e112313"></a>Example 2</p>
+<p>This example uses the following parts of the Sample Basic outline:</p>
+<p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col></colgroup><tbody><tr><td><img src="images/100_children.gif"></td><td><img src="images/south_children.gif"></td><td><img src="images/year_children.gif"></td></tr></tbody></table></div>
+<p>The following expression</p>
+<pre class="programlisting"> Crossjoin ( [100].children, [South].children )</pre>
+<p>returns the set:</p>
+<pre class="programlisting">{ ([100-10], Texas), ([100-10], Oklahoma), ([100-10], Louisiana), ([100-10], [New Mexico]),
+  ([100-20], Texas), ([100-20], Oklahoma), ([100-20], Louisiana), ([100-20], [New Mexico]),
+  ([100-30], Texas), ([100-30], Oklahoma), ([100-30], Louisiana), ([100-30], [New Mexico]) }</pre>
+<p>And the following expression:</p>
+<pre class="programlisting">Tail ( Crossjoin ([100].children, [South].children), 8 )</pre>
+<p>returns the last 8 tuples of the previous result set:</p>
+<pre class="programlisting">{ ([100-20], Texas), ([100-20], Oklahoma), ([100-20], Louisiana), ([100-20], [New Mexico]),
+  ([100-30], Texas), ([100-30], Oklahoma), ([100-30], Louisiana), ([100-30], [New Mexico]) } </pre>
+<p>Additionally, the following expression</p>
+<pre class="programlisting">([Year].generations(2).members)</pre>
+<p>returns the set of members comprising the second generation of the Year
+dimension:</p>
+<pre class="programlisting">{ [Qtr1], [Qtr2], [Qtr3], [Qtr4] }</pre>
+<p>Therefore, the following query</p>
+<pre class="programlisting">SELECT 
+  {([Year].generations(2).members)}
+ON COLUMNS,
+  Tail (
+    Crossjoin ([100].children, [South].children),
+    8)
+ON ROWS
+FROM Sample.Basic</pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col><col></colgroup><tbody><tr><td colspan="2">&nbsp;</td><td>Qtr1</td><td>Qtr2</td><td>Qtr3</td><td>Qtr4</td></tr><tr><td rowspan="4">100&#8211;20</td><td>Texas</td><td>206</td><td>199</td><td>152</td><td>82</td></tr><tr><td>Oklahoma</td><td>84</td><td>66</td><td>55</td><td>79</td></tr><tr><td>Louisiana</td><td>119</td><td>158</td><td>171</td><td>104</td></tr><tr><td>New Mexico</td><td>&#8211;103</td><td>&#8211;60</td><td>&#8211;97</td><td>&#8211;18</td></tr><tr><td rowspan="4">100&#8211;30</td><td>Texas</td><td>#Missing</td><td>#Missing</td><td>#Missing</td><td>#Missing</td></tr><tr><td>Oklahoma</td><td>#Missing</td><td>#Missing</td><td>#Missing</td><td>#Missing</td></tr><tr><td>Louisiana</td><td>#Missing</td><td>#Missing</td><td>#Missing</td><td>#Missing</td></tr><tr><td>New Mexico</td><td>#Missing</td><td>#Missing</td><td>#Missing</td><td>#Missing</td></tr></tbody></table></div>
+<p>To suppress the missing rows, use NON EMPTY at the beginning of the
+row axis specification:</p>
+<pre class="programlisting">SELECT 
+  {([Year].generations(2).members)}
+ON COLUMNS,
+<span class="bold"><strong>NON EMPTY</strong></span>
+  Tail (
+    Crossjoin ([100].children, [South].children),
+    8)
+ON ROWS
+FROM Sample.Basic</pre>
+<p>This modified query returns as many of the 8 requested tuples as it
+can, without returning any that have entirely #Missing data:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col><col></colgroup><tbody><tr><td colspan="2">&nbsp;</td><td>Qtr1</td><td>Qtr2</td><td>Qtr3</td><td>Qtr4</td></tr><tr><td>100-20</td><td>Texas</td><td>206</td><td>199</td><td>152</td><td>82</td></tr><tr><td>100-20</td><td>Oklahoma</td><td>84</td><td>66</td><td>55</td><td>79</td></tr><tr><td>100-20</td><td>Louisiana</td><td>119</td><td>158</td><td>171</td><td>104</td></tr><tr><td>100-20</td><td>New Mexico</td><td>-103</td><td>-60</td><td>-97</td><td>-18</td></tr></tbody></table></div>
+
+</div></body></html>

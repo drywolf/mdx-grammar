@@ -1,0 +1,59 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>@ISMBR</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="calc_func_ref.htm" title="Calculation Function Reference"><link rel="prev" href="islev.htm" title="@ISLEV"><link rel="next" href="isparent.htm" title="@ISPARENT"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'islev.htm';
+var nextPage = 'isparent.htm';
+var tocLinkId = 'ismbr';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="ismbr_techref_proj_funcs"></a>@ISMBR<a class="indexterm" name="d0e11013"></a></h1>
+
+
+<p>Returns TRUE if the current member matches any one of the specified
+members.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">@ISMBR (<span class="italic">mbrName</span> | <span class="italic">rangeList</span> | <span class="italic">mbrList</span>)</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the @ISMBR function"><thead><tr><th id="hd-d0e11055-col1">Parameter</th><th id="hd-d0e11055-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e11055-col1"><p>mbrName</p></td>
+<td headers="hd-d0e11055-col2">
+<p>Any valid single member name or member combination, or a function that
+returns a single member or member combination.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e11055-col1"><p>rangeList</p></td>
+<td headers="hd-d0e11055-col2">
+<p>A valid member name, a comma-delimited list of member names, member
+set functions, and range functions.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e11055-col1"><p>mbrList</p></td>
+<td headers="hd-d0e11055-col2">
+<p>A comma-delimited list of members.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>If a cross-dimensional (<span class="cCode">-&gt;</span>) member is included, that term
+evaluates as TRUE only if all the components of the cross-dimensional member
+match the current member list.</p>
+<p>If any term returns TRUE, the @ISMBR function returns TRUE.</p>
+
+<p class="func_subhead">Example</p>
+<p>In the Sample Basic database:</p>
+<pre class="programlisting">@ISMBR("New York":"New Hampshire")</pre>
+<p>Returns TRUE for Florida.</p>
+<pre class="programlisting">@ISMBR(@CHILDREN(Qtr1))</pre>
+<p>Returns FALSE for Qtr2, Year.</p>
+
+</div></body></html>

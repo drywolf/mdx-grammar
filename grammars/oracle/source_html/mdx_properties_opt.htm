@@ -1,0 +1,57 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>MDX Optimization Properties</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="mdx_properties.htm" title="About MDX Properties"><link rel="prev" href="mdx_properties_custom.htm" title="MDX Custom Properties"><link rel="next" href="mdx_properties_querymem.htm" title="Querying for Member Properties in MDX"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_properties_custom.htm';
+var nextPage = 'mdx_properties_querymem.htm';
+var tocLinkId = 'mdx_properties_opt';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="section" lang="EN-US"><div class="titlepage"><div><div><h1 class="title" style="clear: both"><a name="properties_techref_proj_maxl_dml_rules_d0e140"></a>MDX Optimization Properties</h1></div></div></div><p>Optimization properties can improve the performance of formulas and
+calculated members, as well as the performance of queries that rely on them.</p><p>Optimization properties are applicable to outline members with formulas
+and calculated members only. Stored members are not associated with these
+properties.</p><p>The NONEMPTYMEMBER and NONEMPTYTUPLE properties enable MDX in Essbase to query on large sets of members or tuples while skipping
+formula execution on non-contributing values that contain only #MISSING data.</p><p>Because large sets tend to be very sparse, only a few members contribute
+to the input member (have non #MISSING values) and are returned. As a result,
+the use of NONEMPTYMEMBER and NONEMPTYTUPLE in calculated members and formulas
+conserves memory resources, allowing for better scalability, especially in
+concurrent user environments.</p><p class="bridgehead"><a name="properties_techref_proj_maxl_dml_rules_d0e151"></a>NONEMPTYMEMBER</p><pre class="programlisting">NONEMPTYMEMBER <span class="italic">nonempty_member_list</span></pre><p>where <span class="italic">nonempty_member_list</span> is one
+or more comma-separated member names or calculated member names from the same
+dimension as the formula or calculated member.</p><p>Use a single NONEMPTYMEMBER property clause at the beginning of a calculated
+member or formula expression to indicate to Essbase that
+the value of the formula or calculated member is empty when any of the members
+specified in <span class="italic">nonempty_member_list</span> are empty.</p><p class="bridgehead"><a name="properties_techref_proj_maxl_dml_rules_d0e169"></a>NONEMPTYTUPLE</p><pre class="programlisting">NONEMPTYTUPLE "("<span class="italic">nonempty_member_list")"</span></pre><p>where <span class="italic">nonempty_member_list</span> is one
+or more comma-separated member names or calculated member names, each from
+different dimensions.</p><p>Use a single NONEMPTYTUPLE property clause at the beginning of a calculated
+member or formula expression to indicate to Essbase that
+the value of the formula or calculated member is empty when the cell value
+at the tuple given in <span class="italic">nonempty_member_list</span> is
+empty.</p><p class="bridgehead"><a name="d0e88999"></a>Example</p><p>The following query calculates a member [3 Month Units] that represents
+the sum of Units (items per package) for the current month and the previous
+two months, where Units data is not missing.</p><p>The calculated member [3 Month Units] calculates Units shipped for last
+three months. If the units shipped for [MTD] (units shipped in a year) is
+empty, it follows that Units data is empty for all months in the Year; therefore,
+the sum of Units shipped for last three months is also empty. Because the
+row axis in the query is very large and sparse, the NONEMPTYTUPLE property
+would significantly increase the performance of the query in this case.</p><pre class="programlisting">WITH MEMBER [Measures].[3 Month Units] AS
+'
+ <span class="bold"><strong>NONEMPTYTUPLE</strong></span> ([Units], [MTD])
+  Sum(
+       {
+        ClosingPeriod(Time.Generations(5), Time.CurrentMember),
+        Time.CurrentMember.Lag(1),
+        Time.CurrentMember.Lag(2)
+        }, 
+        Units
+   )
+'
+SELECT
+ {Units, [3 Month Units]} ON COLUMNS,
+ NON EMPTY 
+  CrossJoin(
+     Stores.Levels(0).Members,
+     [Store Manager].Children
+  )
+ON ROWS
+FROM Asosamp.Sample
+WHERE (Mar);</pre><p>This query returns the following grid (results truncated):</p><div class="informaltable"><table border="1"><colgroup><col><col><col></colgroup><tbody><tr><td valign="bottom">&nbsp;</td><td valign="bottom">Items Per Package</td><td valign="bottom">3 Month Units</td></tr><tr><td>(017589, Carrie)</td><td>610</td><td>1808</td></tr><tr><td>(020408, Debra)</td><td>584</td><td>1778</td></tr><tr><td>(020486, Kalluri)</td><td>551</td><td>1670</td></tr><tr><td>(047108, Kimberley)</td><td>593</td><td>1723</td></tr><tr><td>(051273, Madhukar)</td><td>541</td><td>1642</td></tr><tr><td>(056098, Melisse)</td><td>607</td><td>1750</td></tr><tr><td>...</td><td>...</td><td>...</td></tr></tbody></table></div></div></body></html>

@@ -1,0 +1,92 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>IIF</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_hierarchize.htm" title="Hierarchize"><link rel="next" href="mdx_instr.htm" title="InStr"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_hierarchize.htm';
+var nextPage = 'mdx_instr.htm';
+var tocLinkId = 'mdx_iif';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="iif_techref_proj_maxl_dml_funcs"></a>IIF<a class="indexterm" name="d0e101596"></a><a class="indexterm" name="d0e101601"></a></h1>
+
+
+<p>Performs a conditional test, and returns an appropriate numeric expression
+or set depending on whether the test evaluates to true or false.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">IIF ( <span class="italic">search_condition</span>, <span class="italic">true_part</span>, <span class="italic">false_part</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the IIF function"><thead><tr><th id="hd-d0e101631-col1">Parameter</th><th id="hd-d0e101631-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e101631-col1"><p>search_condition</p></td>
+<td headers="hd-d0e101631-col2">
+<p>An expression to evaluate as true or false (see <a href="mdx_grammar_rules.htm" title="MDX Grammar Rules">MDX Grammar Rules</a>).</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e101631-col1"><p>true_part</p></td>
+<td headers="hd-d0e101631-col2">
+<p>A <span class="italic">value_expression</span> or a <a href="mdx_set_spec.htm" title="MDX Set Specification">set</a>.
+IIF returns this expression if the search condition evaluates to TRUE (something
+other than zero). </p>
+<p>The <span class="italic">value_expression</span> can be a numeric
+value expression or a string value expression.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e101631-col1"><p>false_part</p></td>
+<td headers="hd-d0e101631-col2">
+<p>A <span class="italic">value_expression</span> or a <a href="mdx_set_spec.htm" title="MDX Set Specification">set</a>.
+IIF returns this expression if the search condition evaluates to FALSE (zero). </p>
+<p>The <span class="italic">value_expression</span> can be a numeric
+value expression or a string value expression.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p class="bridgehead"><a name="d0e101699"></a>Example 1</p>
+<p>The company plans an expensive promotion of its caffeinated drinks.
+For the Caffeinated products only, the following query calculates a Revised
+Budget that is 110% of the regular budget.</p>
+<pre class="programlisting">WITH MEMBER 
+ [Scenario].[Revised Budget] 
+AS
+ 'IIF (
+      [Product].CurrentMember.Caffeinated,
+      Budget * 1.1, Budget
+ )'
+SELECT
+ {[Scenario].[Budget], [Scenario].[Revised Budget]}
+ON COLUMNS,
+ [Product].Levels(0).Members
+ON ROWS
+FROM Sample.Basic
+WHERE ([Measures].[Sales], [Year].[Qtr3])</pre>
+<p>This query returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Budget</td><td>Revised Budget</td></tr><tr><td>100-10</td><td>18650</td><td>20515</td></tr><tr><td>100-20</td><td>8910</td><td>9801</td></tr><tr><td>100-30</td><td>3370</td><td>3370</td></tr><tr><td>200-10</td><td>11060</td><td>12166</td></tr><tr><td>200-20</td><td>9680</td><td>10648</td></tr><tr><td>200-30</td><td>3880</td><td>3880</td></tr><tr><td>200-40</td><td>2660</td><td>2660</td></tr><tr><td>300-10</td><td>10600</td><td>11660</td></tr><tr><td>300-20</td><td>3760</td><td>4136</td></tr><tr><td>300-30</td><td>8280</td><td>9108</td></tr><tr><td>400-10</td><td>7750</td><td>7750</td></tr><tr><td>400-20</td><td>6800</td><td>6800</td></tr><tr><td>400-30</td><td>3290</td><td>3290</td></tr><tr><td>100-20</td><td>8910</td><td>8910</td></tr><tr><td>200-20</td><td>9680</td><td>9680</td></tr><tr><td>300-30</td><td>8280</td><td>8280</td></tr></tbody></table></div>
+<p class="bridgehead"><a name="d0e101836"></a>Example 2</p>
+<p>The following query calculates a Revised Budget equaling Budget for
+caffeinated products, and Actual for non-caffeinated products.</p>
+<pre class="programlisting">WITH MEMBER 
+ [Scenario].[Revised Budget] 
+AS
+ 'StrToMbr(IIF (
+      [Product].CurrentMember.Caffeinated,
+      "Budget" , "Actual"
+ ))'
+SELECT
+ {[Scenario].[Budget], [Scenario].[Revised Budget]}
+ON COLUMNS,
+Children([100])
+ON ROWS
+FROM Sample.Basic
+WHERE ([Measures].[Sales], [Year].[Qtr3])</pre>
+<p>This query returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Budget</td><td>Revised Budget</td></tr><tr><td>Cola</td><td>18650</td><td>18650</td></tr><tr><td>Diet Cola</td><td>8910</td><td>8910</td></tr><tr><td>Caffeine Free Cola</td><td>3370</td><td>3189</td></tr></tbody></table></div>
+
+</div></body></html>

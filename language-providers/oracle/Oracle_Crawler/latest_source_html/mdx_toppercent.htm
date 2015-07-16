@@ -1,0 +1,70 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>TopPercent</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_topcount.htm" title="TopCount"><link rel="next" href="mdx_topsum.htm" title="TopSum"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_topcount.htm';
+var nextPage = 'mdx_topsum.htm';
+var tocLinkId = 'mdx_toppercent';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="toppercent_techref_proj_maxl_dml_funcs"></a>TopPercent<a class="indexterm" name="d0e113377"></a><a class="indexterm" name="d0e113380"></a><a class="indexterm" name="d0e113383"></a></h1>
+
+
+<p>Returns the smallest possible subset of a set for which the total results
+of a numeric evaluation are at least a given percentage. Elements in the result
+set are listed from largest to smallest.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">TopPercent ( <span class="italic">set</span>, <span class="italic">percentage</span>, <span class="italic">numeric_value_expression</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the TopPercent function"><thead><tr><th id="hd-d0e113419-col1">Parameter</th><th id="hd-d0e113419-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e113419-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set</a></p></td>
+<td headers="hd-d0e113419-col2">
+<p>The set from which to select the top-percentile elements.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e113419-col1"><p>percentage</p></td>
+<td headers="hd-d0e113419-col2">
+<p>The percentile. This argument must be a value between 0 and 100.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e113419-col1"><p>numeric_value_expression</p></td>
+<td headers="hd-d0e113419-col2">
+<p>The expression that defines the selection criteria (see <a href="mdx_grammar_rules.htm" title="MDX Grammar Rules">MDX Grammar Rules</a>).</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>This function ignores negative and missing values.</p>
+
+<p class="func_subhead">Example</p>
+<p>The following query selects the top-selling markets that contribute
+25% of the total yearly Diet products sales, and displays the quarterly sales
+for each Diet product.</p>
+<pre class="programlisting">SELECT
+ CrossJoin(
+           [Product].[Diet].Children, 
+           [Year].Children
+          )
+ON COLUMNS,
+ TopPercent(
+            [Market].Levels(0).Members,
+            25,
+            [Product].[Diet]
+           ) 
+ON ROWS
+FROM Sample.Basic
+WHERE ([Scenario].[Actual], 
+       [Measures].[Sales])</pre>
+<p>This query returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col><col><col><col><col><col><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td colspan="4">100-20</td><td colspan="4">200-20</td><td colspan="4">300-30</td></tr><tr><td>&nbsp;</td><td>Qtr1</td><td>Qtr2</td><td>Qtr3</td><td>Qtr4</td><td>Qtr1</td><td>Qtr2</td><td>Qtr3</td><td>Qtr4</td><td>Qtr1</td><td>Qtr2</td><td>Qtr3</td><td>Qtr4</td></tr><tr><td>Illinois</td><td>755</td><td>958</td><td>1050</td><td>888</td><td>1391</td><td>1520</td><td>1562</td><td>1402</td><td>675</td><td>755</td><td>859</td><td>894</td></tr><tr><td>California</td><td>367</td><td>491</td><td>506</td><td>468</td><td>1658</td><td>1833</td><td>1954</td><td>1706</td><td>700</td><td>802</td><td>880</td><td>673</td></tr><tr><td>Colorado</td><td>700</td><td>802</td><td>880</td><td>673</td><td>549</td><td>465</td><td>412</td><td>539</td><td>1006</td><td>921</td><td>892</td><td>991</td></tr></tbody></table></div>
+
+</div></body></html>

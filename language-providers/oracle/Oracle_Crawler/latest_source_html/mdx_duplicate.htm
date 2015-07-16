@@ -1,0 +1,45 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>MDX Syntax for Specifying Duplicate Member Names and Aliases</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="mdx_syn_gram.htm" title="MDX Syntax and Grammar Rules"><link rel="prev" href="mdx_grammar_rules.htm" title="MDX Grammar Rules"><link rel="next" href="mdx_axis.htm" title="MDX Axis Specifications"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_grammar_rules.htm';
+var nextPage = 'mdx_axis.htm';
+var tocLinkId = 'mdx_duplicate';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="section" lang="EN-US"><div class="titlepage"><div><div><h1 class="title" style="clear: both"><a name="duplicate_techref_proj_maxl_dml_rules"></a>MDX Syntax for Specifying Duplicate Member Names and Aliases</h1></div></div></div><p>The following member specification rules apply to databases with duplicate
+member names enabled.</p><p>Qualified names must be used to specify duplicate member names. Qualified
+member or alias names can be specified using:</p><div class="itemizedlist"><ul type="disc"><li><p><a name="duplicate_techref_proj_maxl_dml_rules_d0e24"></a><span class="bold"><strong>Fully qualified member names</strong></span>&#8212;Consist of duplicate
+member or alias name and all ancestors up to and including the dimension name.
+Each name must be enclosed in square brackets([]) and separated by a period.</p><pre class="programlisting">[<span class="italic">DimensionMember</span>].[<span class="italic">Ancestors</span>...].[<span class="italic">DuplicateMember</span>] </pre><p>For example:</p><pre class="programlisting">[Product].[100].[100-10]</pre></li><li><p><a name="duplicate_techref_proj_maxl_dml_rules_d0e45"></a><span class="bold"><strong>Shortcut qualified member names</strong></span>&#8212;Essbase internally
+constructs shortcut qualified names for members in duplicate member outlines.
+These can be inserted into scripts using Administration Services by right
+clicking on the member and selecting Insert member name. You can also manually
+insert shortcut qualified names into scripts, spreadsheets, or MDX queries.</p><p>Essbase uses the following syntax to construct
+shortcut qualified names. Using the same syntax that Essbase uses
+when you reference members in scripts, spreadsheets, and MDX queries is optimal,
+but not required.</p><div class="informaltable"><table border="1"><colgroup><col><col><col></colgroup><thead><tr><th id="hd-d0e87233-d0e87238-1">Scenario</th><th id="hd-d0e87233-d0e87238-2">Qualified Name Syntax</th><th id="hd-d0e87233-d0e87238-3">Example</th></tr></thead><tbody><tr><td headers="hd-d0e87233-d0e87238-1">Duplicate member names exist at generation 2</td><td headers="hd-d0e87233-d0e87238-2"><span class="cCode">[<span class="italic">DimensionMember</span>].[<span class="italic">DuplicateMember</span>]</span></td><td headers="hd-d0e87233-d0e87238-3"><p>[Year].[Jan] or [Product].[Jan]</p></td></tr><tr><td headers="hd-d0e87233-d0e87238-1">Duplicate member names exist in an outline, but are unique within a
+dimension</td><td headers="hd-d0e87233-d0e87238-2"><span class="cCode">[<span class="italic">DimensionMember</span>]@[<span class="italic">DuplicateMember</span>]</span></td><td headers="hd-d0e87233-d0e87238-3"><p>[Year]@[Jan]</p></td></tr><tr><td headers="hd-d0e87233-d0e87238-1">Duplicate member names have a unique parent</td><td headers="hd-d0e87233-d0e87238-2"><span class="cCode">[<span class="italic">ParentMember</span>].[<span class="italic">DuplicateMember</span>]</span></td><td headers="hd-d0e87233-d0e87238-3"><p>[East].[New York]</p></td></tr><tr><td headers="hd-d0e87233-d0e87238-1">Duplicate member names exist at generation 3</td><td headers="hd-d0e87233-d0e87238-2"><span class="cCode">[<span class="italic">DimensionMember</span>].[<span class="italic">ParentMember</span>].[<span class="italic">DuplicateMember</span>]</span></td><td headers="hd-d0e87233-d0e87238-3"><p>[Products].[Personal Electronics].[Televisions]</p></td></tr><tr><td headers="hd-d0e87233-d0e87238-1">Duplicate member names exist at a named generation or level, and the
+member is unique at its generation or level</td><td headers="hd-d0e87233-d0e87238-2"><span class="cCode">[<span class="italic">DimensionMember</span>]@[<span class="italic">GenLevelName</span>]|[<span class="italic">DuplicateMember</span>]</span></td><td headers="hd-d0e87233-d0e87238-3"><p>[2006]@[Gen1]|[Jan]</p></td></tr></tbody></table></div><p>In MDX, either one the following syntax methods must be used to reference
+shortcut qualified member names:</p><div class="itemizedlist"><ul type="circle"><li><p><span class="bold"><strong>Escape Character method</strong></span>&#8212;Because
+MDX syntax also uses square brackets:</p><div class="orderedlist"><ol type="1"><li><p>Any internal closing bracket ( ] )used by name parts within
+the shortcut qualified names requires an additional ] escape character.</p></li><li><p>The entire shortcut qualified member name must be enclosed
+in a set of square brackets ([]).</p></li></ol></div><p>Examples:</p><p><span class="cCode">[Year].[Jan]</span> is referenced as <span class="cCode">[[Year]].[Jan]]]</span> in
+MDX.</p><p><span class="cCode">[Year]@[Jan]</span> is referenced as <span class="cCode">[[Year]]@[Jan]]]</span> in
+MDX.</p><p><span class="cCode">[2006]@[Gen1]|[Jan]</span> is referenced as <span class="cCode">[[2006]]@[Gen1]]|[Jan]]]</span> in
+MDX.</p><div class="note"><p class="admonTitle">Note:</p><p>The above syntax also works for fully qualified member names, but is
+not required.</p></div></li><li><p><span class="bold"><strong>StrToMbr Function method</strong></span>&#8212;You
+can use the StrToMbr function to convert qualified name strings to member
+value expressions.</p><p>Examples:</p><p><span class="cCode">[Year].[Jan]</span> is referenced as <span class="cCode">StrToMbr("[Year].[Jan]")</span> in
+MDX.</p><p><span class="cCode">[Year]@[Jan]</span> is referenced as <span class="cCode">StrToMbr("[Year]@[Jan]")</span> in
+MDX.</p><p><span class="cCode">[2006]@[Gen1]|[Jan]</span> is referenced as <span class="cCode">StrToMbr("[2006]@[Gen1]|[Jan]")</span> in
+MDX.</p><div class="note"><p class="admonTitle">Note:</p><p>The above syntax also works for fully qualified member names, but is
+not required.</p></div></li></ul></div></li></ul></div><p class="bridgehead"><a name="duplicate_1"></a>Query Example</p><p>The following query uses both methods of referencing shortcut member
+names in MDX:</p><pre class="programlisting">SELECT
+ { Sales, Profit } 
+ON COLUMNS,
+ {[[Store]]@[6]]], StrToMbr("Product.SKU.1")}
+ON ROWS
+FROM MySample.Basic
+WHERE ([[1998]].[Q1]].[1]]])</pre><div class="note"><p class="admonTitle">Note:</p><p>StrToMbr accepts any type of member-identifier strings: names, aliases
+or qualified names.</p></div></div></body></html>

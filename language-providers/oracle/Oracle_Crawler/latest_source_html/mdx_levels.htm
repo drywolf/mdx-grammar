@@ -1,0 +1,54 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Levels</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_level.htm" title="Level"><link rel="next" href="mdx_linkmember.htm" title="LinkMember"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_level.htm';
+var nextPage = 'mdx_linkmember.htm';
+var tocLinkId = 'mdx_levels';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="levels_techref_proj_maxl_dml_funcs"></a>Levels<a class="indexterm" name="d0e105954"></a><a class="indexterm" name="d0e105959"></a></h1>
+
+
+<p>Returns the level specified by the input level number.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+
+<pre class="programlisting"><span class="italic">dimension</span>.Levels ( <span class="italic">index</span> )</pre>
+
+
+<pre class="programlisting">Levels ( <span class="italic">dimension</span>, <span class="italic">index</span> )</pre>
+
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Levels function"><thead><tr><th id="hd-d0e106000-col1">Parameter</th><th id="hd-d0e106000-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e106000-col1"><p><a href="mdx_dimspec.htm" title="MDX Dimension Specification">dimension</a></p></td>
+<td headers="hd-d0e106000-col2">
+<p>The dimension specification.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e106000-col1"><p>index</p></td>
+<td headers="hd-d0e106000-col2">
+<p>The number of steps up from the lowest level-0 member of the dimension.
+The count begins with zero at leaf members.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p>The following query</p>
+<pre class="programlisting">SELECT
+ [Year].[Qtr1].Level.Members
+ON COLUMNS,
+ [Product].Levels(0).Members
+ON ROWS
+FROM Sample.Basic</pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Qtr1</td><td>Qtr2</td><td>Qtr3</td><td>Qtr4</td></tr><tr><td>100-10</td><td>5096</td><td>5892</td><td>6583</td><td>5206</td></tr><tr><td>100-20</td><td>1359</td><td>1534</td><td>1528</td><td>1287</td></tr><tr><td>100-30</td><td>593</td><td>446</td><td>400</td><td>544</td></tr><tr><td>200-10</td><td>1697</td><td>1734</td><td>1883</td><td>1887</td></tr><tr><td>200-20</td><td>2963</td><td>3079</td><td>3149</td><td>2834</td></tr><tr><td>200-30</td><td>1153</td><td>1231</td><td>1159</td><td>1093</td></tr><tr><td>200-40</td><td>908</td><td>986</td><td>814</td><td>1384</td></tr><tr><td>300-10</td><td>2544</td><td>3231</td><td>3355</td><td>3065</td></tr><tr><td>300-20</td><td>690</td><td>815</td><td>488</td><td>518</td></tr><tr><td>300-30</td><td>2695</td><td>2723</td><td>2855</td><td>2820</td></tr><tr><td>400-10</td><td>2838</td><td>2998</td><td>3201</td><td>2807</td></tr><tr><td>400-20</td><td>2283</td><td>2522</td><td>2642</td><td>2404</td></tr><tr><td>400-30</td><td>-116</td><td>-84</td><td>-145</td><td>-49</td></tr><tr><td>100-20</td><td>1359</td><td>1534</td><td>1528</td><td>1287</td></tr><tr><td>200-20</td><td>2963</td><td>3079</td><td>3149</td><td>2834</td></tr><tr><td>300-30</td><td>2695</td><td>2723</td><td>2855</td><td>2820</td></tr></tbody></table></div>
+
+</div></body></html>

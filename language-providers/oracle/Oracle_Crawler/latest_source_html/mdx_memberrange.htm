@@ -1,0 +1,96 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>MemberRange</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_median.htm" title="Median"><link rel="next" href="mdx_members.htm" title="Members"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_median.htm';
+var nextPage = 'mdx_members.htm';
+var tocLinkId = 'mdx_memberrange';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="memberrange_techref_proj_maxl_dml_funcs"></a>MemberRange<a class="indexterm" name="d0e106982"></a></h1>
+
+
+<p>Using the order of members existing in a database outline, returns a
+range of members inclusive of and between two members in the same generation
+or level.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+
+<pre class="programlisting">MemberRange ( <span class="italic">member1</span>, <span class="italic">member2</span> [,<span class="italic">layertype</span>] [, <span class="italic">hierarchy</span> ] )</pre>
+
+
+<pre class="programlisting"><span class="italic">member1</span>:<span class="italic">member2</span></pre>
+
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the MemberRange function"><thead><tr><th id="hd-d0e107048-col1">Parameter</th><th id="hd-d0e107048-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e107048-col1"><p>member1</p></td>
+<td headers="hd-d0e107048-col2">
+<p>The beginning point of the member range.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e107048-col1"><p>member2</p></td>
+<td headers="hd-d0e107048-col2">
+<p>The endpoint of the member range.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e107048-col1"><p>layertype</p></td>
+<td headers="hd-d0e107048-col2">
+<p>GENERATION or LEVEL. Available only with function-style <span class="cCode">MemberRange()</span> syntax.
+If omitted or if operator-style <span class="cCode">member:member</span> syntax is used,
+the range of members returned is inclusive of and between two specified members
+of the same <span class="bold"><strong>generation</strong></span>. If MemberRange(member,
+member, LEVEL) is used, the range of members returned is inclusive of and
+between two specified members of the same <span class="bold"><strong>level</strong></span>.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e107048-col1"><p>hierarchy</p></td>
+<td headers="hd-d0e107048-col2">
+<p>Optional. A specific hierarchy within the time dimension.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<div class="itemizedlist"><ul type="disc"><li><p>If the two input members are not from the same generation
+or level, the result is an empty set.</p></li><li><p>If the two input members are not from the same dimension,
+an error is returned.</p></li><li><p>The order of the output resembles the order of the input.
+See Example 2.</p></li><li><p>If the hierarchy argument is passed, member1 and member2 should
+belong to the same hierarchy. Otherwise, an empty set is returned.</p></li><li><p>When multiple hierarchies are enabled, this function returns
+NULL when the range begins in one hierarchy and terminates in another hierarchy.</p></li></ul></div>
+
+<p class="func_subhead">Example</p>
+<p class="bridgehead"><a name="d0e107114"></a>Example 1 (MemberRange)</p>
+<p>The following set:</p>
+<pre class="programlisting">{ [Year].[Qtr1], [Year].[Qtr2], [Year].[Qtr3], [Year].[Qtr4] }</pre>
+<p>is returned by both of the following examples:</p>
+<pre class="programlisting">MemberRange ( [Year].[Qtr1], [Year].[Qtr4] )
+( [Year].[Qtr1] : [Year].[Qtr4] )</pre>
+
+<p class="bridgehead"><a name="d0e107132"></a>Example 2 (MemberRange)</p>
+<pre class="programlisting">[Jan] : [Mar]</pre>
+<p>returns:</p>
+<p>{ [Jan], [Feb], [Mar] }</p>
+<pre class="programlisting">[Mar] : [Jan]</pre>
+<p>returns:</p>
+<p>{ [Mar], [Feb], [Jan] }</p>
+<p class="bridgehead"><a name="d0e107153"></a>Example 3 (MemberRange)</p>
+<p>The following query</p>
+<pre class="programlisting">SELECT
+ {[Measures].[Sales], [Measures].[Profit]}
+ON COLUMNS,
+ MemberRange([Year].[Feb], [Year].[Nov])
+ON ROWS
+FROM Sample.Basic</pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Sales</td><td>Profit</td></tr><tr><td>Feb</td><td>32069</td><td>8346</td></tr><tr><td>Mar</td><td>32213</td><td>8333</td></tr><tr><td>Apr</td><td>32917</td><td>8644</td></tr><tr><td>May</td><td>33674</td><td>8929</td></tr><tr><td>Jun</td><td>35088</td><td>9534</td></tr><tr><td>Jul</td><td>36134</td><td>9878</td></tr><tr><td>Aug</td><td>36008</td><td>9545</td></tr><tr><td>Sep</td><td>33073</td><td>8489</td></tr><tr><td>Oct</td><td>32828</td><td>8653</td></tr><tr><td>Nov</td><td>31971</td><td>8367</td></tr></tbody></table></div>
+
+<p class="func_subhead">See Also</p><p><li><a href="mdx_relmemberrange.htm" title="RelMemberRange"><span class="FunctionName">RelMemberRange</span></a></li></p>
+</div></body></html>

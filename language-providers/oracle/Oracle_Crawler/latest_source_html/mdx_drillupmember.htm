@@ -1,0 +1,82 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>DrillupMember</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_drillupbylayer.htm" title="DrillupByLayer"><link rel="next" href="mdx_enumtext.htm" title="EnumText"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_drillupbylayer.htm';
+var nextPage = 'mdx_enumtext.htm';
+var tocLinkId = 'mdx_drillupmember';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="drillupmember_techref_proj_maxl_dml_funcs"></a>DrillupMember<a class="indexterm" name="d0e97887"></a></h1>
+
+
+<p>Tests two sets for common ancestors and drills up members of the first
+set to the level of the ancestors that are present in the second set.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">DrillupMember ( <span class="italic">set1</span>, <span class="italic">set2</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the DrillupMember function"><thead><tr><th id="hd-d0e97940-col1">Parameter</th><th id="hd-d0e97940-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e97940-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set</a>1</p></td>
+<td headers="hd-d0e97940-col2">
+<p>The set containing members to drill up if comparison with <span class="italic">set2</span> tests positive for identical members or tuples.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e97940-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set</a>2</p></td>
+<td headers="hd-d0e97940-col2">
+<p>The set to compare with <span class="italic">set1</span> before
+drilling up members in <span class="italic">set1</span>.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>This function drills up any members of <span class="italic">set1</span> whose
+ancestors are found in <span class="italic">set2</span>. The level
+to which members in <span class="italic">set1</span> are drilled up
+depends on the level of the ancestor found in <span class="italic">set2</span>.
+The resulting set contains the ancestors of the drilled up member at the level
+found in <span class="italic">set2</span>, as well as any members of <span class="italic">set1</span> that were not drilled up.</p>
+
+<p class="func_subhead">Example</p>
+<p class="bridgehead"><a name="d0e97983"></a>Example 1</p>
+<p>The following example</p>
+<pre class="programlisting">DrillupMember({East, South, West, California, Washington, Oregon},{West})</pre>
+<p>returns the set:</p>
+<pre class="programlisting">{East, South, West}</pre>
+<p>The following expression</p>
+<pre class="programlisting">DrillupMember
+ (
+  {East, South, West, California, 
+   Washington, Oregon, Central, Nevada},
+  {West}
+ )</pre>
+<p>returns the set:</p>
+<pre class="programlisting">{East, South, West, Central, Nevada}</pre>
+<p>The member <span class="cCode">Nevada</span> is not drilled up to member <span class="cCode">West</span> because
+another member <span class="cCode">Central</span> interrupts the chain of West descendants.</p>
+<p class="bridgehead"><a name="d0e98022"></a>Example 2</p>
+<p>The following examples use the following part of the Sample Basic outline:</p>
+<div><img src="images/product_100_children.gif"></div>
+<p>The following expression</p>
+<pre class="programlisting">DrillupMember
+ ({Product, [100], [100-10]}, 
+  {[Product]}
+)</pre>
+<p>returns the set:</p>
+<pre class="programlisting">{Product}</pre>
+<p>The following expression</p>
+<pre class="programlisting"> DrillupMember
+  ({Product, [100], [100-10]}, 
+   {[100]}
+  )</pre>
+<p>returns the set:</p>
+<pre class="programlisting">{Product, [100]}</pre>
+
+</div></body></html>

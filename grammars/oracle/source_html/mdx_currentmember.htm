@@ -1,0 +1,68 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>CurrentMember</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_crossjoin.htm" title="CrossJoin"><link rel="next" href="mdx_currenttuple.htm" title="CurrentTuple"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_crossjoin.htm';
+var nextPage = 'mdx_currenttuple.htm';
+var tocLinkId = 'mdx_currentmember';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="currentmember_techref_proj_maxl_dml_funcs"></a>CurrentMember<a class="indexterm" name="d0e95654"></a></h1>
+
+
+<p>Returns the current member in the input dimension.</p>
+<p>The current member is evaluated in the context of query execution mechanics.
+Used in conjunction with iterative functions such as <a href="mdx_filter.htm" title="Filter"><span class="FunctionName">Filter</span></a>, at every stage of iteration the member being operated
+upon is the current member.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+
+<pre class="programlisting"><span class="italic">dimension</span>.CurrentMember</pre>
+
+
+<pre class="programlisting">CurrentMember ( <span class="italic">dimension</span> )</pre>
+
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the CurrentMember function"><thead><tr><th id="hd-d0e95706-col1">Parameter</th><th id="hd-d0e95706-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e95706-col1"><p>dimension</p></td>
+<td headers="hd-d0e95706-col2">
+<p>A dimension specification.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>This function returns the child of an implied shared member instead
+of the member itself. To avoid this behavior when using CurrentMember in MDX
+formulas and calculated members, tag the parent with the "Never Share" property.</p>
+<p>An implied share occurs when a parent has only one child, or only one
+child that consolidates. For more information, see "Understanding Shared Members"
+in the <span class="italic">Oracle Essbase Database Administrator's Guide</span>.</p>
+
+<p class="func_subhead">Example</p>
+<p>The following query selects the quarters during which sales growth is
+3% or more compared to the previous month.</p>
+<pre class="programlisting">SELECT
+Filter (
+  [Year].Children,  -- outer loop
+  Max (
+      Except (
+        [Year].CurrentMember.Children, -- current in outer loop
+        { [Year].[Jan] }
+      ),  
+      (  [Year].CurrentMember         -- current in Max loop
+       /  [Year].CurrentMember.PrevMember)
+  ) &gt;= 1.03
+)
+ON axis(0)
+FROM Sample.Basic
+WHERE ([Measures].[Sales])</pre>
+<p>Returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col></colgroup><tbody><tr><td valign="bottom">Qtr2</td><td valign="bottom">Qtr4</td></tr><tr><td>101679</td><td>98141</td></tr></tbody></table></div>
+
+</div></body></html>

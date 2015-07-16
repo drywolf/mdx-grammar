@@ -1,0 +1,24 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>MDX Dimension Specification</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="mdx_syn_gram.htm" title="MDX Syntax and Grammar Rules"><link rel="prev" href="mdx_with_spec.htm" title="MDX With Section"><link rel="next" href="mdx_layer.htm" title="MDX Layer Specification"><meta name="keywords" content="dimensions specifying in MDX queries "><meta name="keywords" content="dimensions specifying in MDX queries "><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_with_spec.htm';
+var nextPage = 'mdx_layer.htm';
+var tocLinkId = 'mdx_dimspec';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="section" lang="EN-US"><div class="titlepage"><div><div><h1 class="title" style="clear: both"><a name="dimspec_techref_proj_maxl_dml_rules"></a>MDX Dimension Specification<a class="indexterm" name="d0e88103"></a></h1></div></div></div><p>A dimension is a top-level member in the hierarchy (a member with no
+parent). Represent a dimension using the following rules:</p><p class="bridgehead"><a name="d0e88110"></a>Syntax</p><pre class="programlisting">&lt;dimension&gt; :: = 
+    &lt;dimension-name-specification&gt;
+      | &lt;member&gt;.DIMENSION  
+      | &lt;layer&gt;.DIMENSION
+      | DIMENSION ( &lt;member&gt; | &lt;layer&gt; )
+</pre><div class="informaltable"><table border="1"><colgroup><col><col></colgroup><thead><tr><th id="hd-d0e88115-d0e88119-1" valign="top">Syntax</th><th id="hd-d0e88115-d0e88119-2" valign="top">Description</th></tr></thead><tbody><tr><td headers="hd-d0e88115-d0e88119-1">&lt;dimension-name-specification&gt;</td><td headers="hd-d0e88115-d0e88119-2">A dimension name. See Description, item 1.</td></tr><tr><td headers="hd-d0e88115-d0e88119-1">&lt;<a href="mdx_member.htm" title="MDX Member Specification">member</a>&gt;.DIMENSION</td><td headers="hd-d0e88115-d0e88119-2"><span class="bold"><strong>Dimension</strong></span> function with a member specification
+as input.</td></tr><tr><td headers="hd-d0e88115-d0e88119-1">&lt;<a href="mdx_layer.htm" title="MDX Layer Specification">layer</a>&gt;.DIMENSION</td><td headers="hd-d0e88115-d0e88119-2"><span class="bold"><strong>Dimension</strong></span> function with a layer specification
+as input.</td></tr><tr><td headers="hd-d0e88115-d0e88119-1">DIMENSION ( &lt;<a href="mdx_member.htm" title="MDX Member Specification">member</a>&gt;
+| &lt;<a href="mdx_layer.htm" title="MDX Layer Specification">layer</a>&gt; )</td><td headers="hd-d0e88115-d0e88119-2">Alternate syntax. Dimension ( &lt;member&gt; ) has the same effect as
+&lt;member&gt;.Dimension. Dimension ( &lt;layer&gt; ) has the same effect as &lt;layer&gt;.Dimension.</td></tr></tbody></table></div><p class="bridgehead"><a name="d0e88161"></a>Description</p><p>A dimension can be represented in the following ways:</p><div class="orderedlist"><ol type="1"><li><p>Using the dimension name (the name of the top member of a
+dimension.) For example, <span class="cCode">[Market]</span>.</p></li><li><p>Using the <a href="mdx_dimension.htm" title="Dimension"><span class="FunctionName">Dimension</span></a> function with a member of a dimension as input.
+For example, <span class="cCode">[New York].Dimension</span> or <span class="cCode">Dimension ( [New York]
+)</span>.</p></li><li><p>Using the <a href="mdx_dimension.htm" title="Dimension"><span class="FunctionName">Dimension</span></a> function with a layer specification as input. For
+example, <span class="cCode">Dimension ([Market].Generations(2).Members)</span> or <span class="cCode">{([Market].Generations(2).Members)}.Dimension</span>.</p></li></ol></div></div></body></html>

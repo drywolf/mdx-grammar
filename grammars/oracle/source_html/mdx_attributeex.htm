@@ -1,0 +1,84 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>AttributeEx</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_attribute.htm" title="Attribute"><link rel="next" href="mdx_avg.htm" title="Avg"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_attribute.htm';
+var nextPage = 'mdx_avg.htm';
+var tocLinkId = 'mdx_attributeex';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="attributeex_techref_proj_maxl_dml_funcs"></a>AttributeEx<a class="indexterm" name="d0e92705"></a><a class="indexterm" name="d0e92710"></a></h1>
+
+
+<p>Returns the set of base members that are associated with a specified
+varying attribute member or dimension, given the perspective setting.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">AttributeEx ( <span class="italic">member</span>|<span class="italic">dimension</span>, ANY, <span class="italic">tuple</span>|<span class="italic">member</span>[,<span class="italic">tuple</span>|<span class="italic">member</span>] )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the AttributeEx function"><thead><tr><th id="hd-d0e92751-col1">Parameter</th><th id="hd-d0e92751-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e92751-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a></p></td>
+<td headers="hd-d0e92751-col2">
+<p>Specification of a member from an attribute dimension.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e92751-col1"><p><a href="mdx_dimspec.htm" title="MDX Dimension Specification">dimension</a></p></td>
+<td headers="hd-d0e92751-col2">
+<p>Specification of an attribute dimension.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e92751-col1"><p>ANY</p></td>
+<td headers="hd-d0e92751-col2">
+<p>The keyword ANY.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e92751-col1"><p>tuple | member</p></td>
+<td headers="hd-d0e92751-col2">
+<p>Level 0 start tuple (or member) of the independent dimension set. The
+tuple must contain all the discrete dimensions followed by the continuous
+dimension members, in the same order that the continuous range has been defined.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e92751-col1"><p>tuple | member</p></td>
+<td headers="hd-d0e92751-col2">
+<p>Optional level 0 end tuple (or member) of the independent dimension
+set. The tuple must contain all the discrete dimensions followed by the continuous
+dimension members, in the same order that the continuous range has been defined.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p>Consider the following scenario: Products are packaged under different
+ounces over time and the market state, according to the marketing strategy
+of the company. Ounces is defined as a varying attribute for the Product dimension,
+to capture the varying attribute association over the continuous Year dimension
+and the discrete Market dimension.  </p>
+<p>Year and Market are the independent dimensions, and level-0 tuple months
+(for example, Jan) combined with a market state (for example, California)
+is a perspective for which the varying attribute association is defined. </p>
+<p>The following query analyzes the Ounces_32 sales performance of products
+packaged as Ounces_32 any time from Jul to Dec in New York over all quarters.
+This is the reality view, which gives the most current view of metrics as
+they happened over time.</p>
+<pre class="programlisting">WITH PERSPECTIVE REALITY for Ounces   
+SELECT
+ { Qtr1, Qtr2, Qtr3, Qtr4}
+ON COLUMNS,
+ {AttributeEx(Ounces_32, ANY, ([New York], Jul), ([New York], Dec))}
+ON ROWS 
+FROM
+ app.db
+WHERE 
+ (Sales, [New York], Ounces_32);</pre>
+
+</div></body></html>

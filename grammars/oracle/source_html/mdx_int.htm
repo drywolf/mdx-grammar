@@ -1,0 +1,55 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Int</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_instr.htm" title="InStr"><link rel="next" href="mdx_intersect.htm" title="Intersect"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_instr.htm';
+var nextPage = 'mdx_intersect.htm';
+var tocLinkId = 'mdx_int';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="int_techref_proj_maxl_dml_funcs"></a>Int<a class="indexterm" name="d0e101991"></a><a class="indexterm" name="d0e101996"></a></h1>
+
+
+<p>Returns the next lowest integer value of an expression.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">Int ( <span class="italic">numeric_value_expression</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Int function"><thead><tr><th id="hd-d0e102020-col1">Parameter</th><th id="hd-d0e102020-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e102020-col1"><p>numeric_value_expression</p></td>
+<td headers="hd-d0e102020-col2">
+<p>A numeric value or an expression that returns a numeric value (see <a href="mdx_grammar_rules.htm" title="MDX Grammar Rules">MDX Grammar Rules</a>).</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p class="bridgehead"><a name="d0e102040"></a>Example 1</p>
+<p><span class="cCode">Int(104.504)</span> returns <span class="cCode">104</span>.</p>
+<p class="bridgehead"><a name="d0e102051"></a>Example 2</p>
+<p>The following query</p>
+<pre class="programlisting">WITH MEMBER [Market].[West_approx]
+AS
+ 'Int(
+    Sum(
+       Children([Market].[West])
+    )
+  )' 
+SELECT
+ {[Year].[Qtr1].Children}
+ON COLUMNS, 
+  {[Market].[West].children,
+  [Market].[West_approx]}
+ON ROWS
+FROM 
+ Sample.Basic
+WHERE ([Measures].[Profit %], [Product].[Cola], [Scenario].[Actual])</pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Jan</td><td>Feb</td><td>Mar</td></tr><tr><td>California</td><td>38.643</td><td>37.984</td><td>38.370</td></tr><tr><td>Oregon</td><td>17.500</td><td>16.129</td><td>16.107</td></tr><tr><td>Washington</td><td>29.231</td><td>30.986</td><td>32.000</td></tr><tr><td>Utah</td><td>23.077</td><td>23.077</td><td>20.968</td></tr><tr><td>Nevada</td><td>-3.947</td><td>-6.757</td><td>-5.333</td></tr><tr><td>West_approx</td><td>104.000</td><td>101.00</td><td>102.000</td></tr></tbody></table></div>
+
+</div></body></html>

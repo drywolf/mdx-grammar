@@ -1,0 +1,29 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>MDX Member Specification</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="mdx_syn_gram.htm" title="MDX Syntax and Grammar Rules"><link rel="prev" href="mdx_layer.htm" title="MDX Layer Specification"><link rel="next" href="mdx_hierarchy.htm" title="MDX Hierarchy Specification"><meta name="keywords" content="members specifying&#xA;in MDX queries "><meta name="keywords" content="members specifying&#xA;in MDX queries "><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_layer.htm';
+var nextPage = 'mdx_hierarchy.htm';
+var tocLinkId = 'mdx_member';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="section" lang="EN-US"><div class="titlepage"><div><div><h1 class="title" style="clear: both"><a name="member_techref_proj_maxl_dml_rules"></a>MDX Member Specification<a class="indexterm" name="d0e88364"></a></h1></div></div></div><p>A member is a named hierarchical element in a database outline. Represent
+a member using the following rules:</p><p class="bridgehead"><a name="d0e88371"></a>Syntax</p><pre class="programlisting">&lt;member&gt; ::= 
+           &lt;member-name-specification&gt;
+         | &lt;member_value_expression&gt;</pre><p class="bridgehead"><a name="member_techref_proj_maxl_dml_rules_d0e15"></a>Member Name Specification</p><p>A member name can be specified in the following ways:</p><div class="orderedlist"><ol type="1"><li><p>By specifying the actual name or the alias; for example, <span class="cCode">Cola</span>, <span class="cCode">Actual</span>, <span class="cCode">COGS</span>,
+and <span class="cCode">[100]</span>.</p><p>If the member name starts with number
+or contains spaces, it should be within braces; for example, <span class="cCode">[100]</span>.
+Braces are recommended for all member names, for clarity and code readability.</p><p>For attribute members, the long name (qualified to uniquely identify
+the member) should be used; for example, <span class="cCode">[Ounces_12]</span> instead
+of just <span class="cCode">[12]</span>.</p></li><li><p>By specifying dimension name or any one of the ancestor member
+names as a prefix to the member name; for example, <span class="cCode">[Product].[100-10]</span> and <span class="cCode">[Diet].[100-10]</span> This
+is a recommended practice for all member names, as it eliminates ambiguity
+and enables you to refer accurately to shared members.</p><div class="note"><p class="admonTitle">Note:</p><p>Use only one ancestor in the qualification. Essbase returns
+an error if multiple ancestors are included. For example, <span class="cCode">[Market].[New
+York]</span> is a valid name for New York, and so is <span class="cCode">[East].[New York]</span>.
+However, <span class="cCode">[Market].[East].[New York]</span> returns an error.</p></div></li><li><p>By specifying the name of a calculated member defined in the
+WITH section.</p></li><li><p>For outlines that have duplicate member names enabled, see
+also <a href="mdx_duplicate.htm" title="MDX Syntax for Specifying Duplicate Member Names and Aliases">MDX Syntax for Specifying Duplicate Member Names and Aliases</a>.</p></li></ol></div><p class="bridgehead"><a name="member_techref_proj_maxl_dml_rules_d0e98"></a>Member Value Expression</p><p>A member value expression is output from any function that returns a
+member. As an alternative to referencing the member by name or alias, you
+can use a function that returns a member in place of &lt;member&gt;. For a list
+of functions that return a member, see <a href="mdx_func_return_value.htm" title="MDX Functions">MDX Functions</a>.</p></div></body></html>

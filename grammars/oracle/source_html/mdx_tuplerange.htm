@@ -1,0 +1,69 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>TupleRange</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_truncate.htm" title="Truncate"><link rel="next" href="mdx_uda.htm" title="Uda"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_truncate.htm';
+var nextPage = 'mdx_uda.htm';
+var tocLinkId = 'mdx_tuplerange';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="tuplerange_techref_proj_maxl_dml_funcs"></a>TupleRange<a class="indexterm" name="d0e114034"></a></h1>
+
+
+<p>Returns the range of tuples between (and inclusive of) two tuples at
+the same level.</p>
+<p>The range is created by identifying the level of the arguments and pruning
+the result set to include only the argument tuples and the tuples that are,
+in terms of outline order, between them.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">TupleRange ( <span class="italic">tuple1</span>, <span class="italic">tuple2</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the TupleRange function"><thead><tr><th id="hd-d0e114077-col1">Parameter</th><th id="hd-d0e114077-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e114077-col1"><p>tuple1</p></td>
+<td headers="hd-d0e114077-col2">
+<p>The first input tuple, marking the beginning of the range.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e114077-col1"><p>tuple2</p></td>
+<td headers="hd-d0e114077-col2">
+<p>The second input tuple, marking the end of the range.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<div class="itemizedlist"><ul type="disc"><li><p>TupleRange serves the same purpose as the @XRANGE function
+in the Essbase calculator language.</p></li><li><p>The two input tuples must be of the same dimensionality. See
+the example, wherein both input tuples are of the format ([Year],[Month]).</p></li></ul></div>
+
+<p class="func_subhead">Example</p>
+<p>TupleRange can be useful if you have two Time dimensions. For example,
+the following expression averages a value for the range of months from Mar
+2005 to Feb 2006, inclusive.</p>
+<pre class="programlisting">AVG (
+  TUPLERANGE(
+    ([2005], [Mar]), ([2006], [Feb])
+  )
+)</pre>
+<p>The values are averaged for the following range:</p>
+<pre class="programlisting">{([2005], [Mar]), 
+ ([2005], [Apr]), 
+ ([2005], [May]), 
+ ([2005], [Jun]), 
+ ([2005], [Jul]), 
+ ([2005], [Aug]), 
+ ([2005], [Sep]), 
+ ([2005], [Oct]), 
+ ([2005], [Nov]), 
+ ([2005], [Dec]), 
+ ([2006], [Jan]), 
+ ([2006], [Feb])}</pre>
+
+</div></body></html>

@@ -1,0 +1,73 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Members</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_memberrange.htm" title="MemberRange"><link rel="next" href="mdx_min.htm" title="Min"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_memberrange.htm';
+var nextPage = 'mdx_min.htm';
+var tocLinkId = 'mdx_members';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="members_techref_proj_maxl_dml_funcs"></a>Members<a class="indexterm" name="d0e107258"></a></h1>
+
+
+<p>Returns all members of the specified dimension or layer.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+
+<pre class="programlisting"><span class="italic">dimension</span>.Members | Members ( <span class="italic">dimension</span> )</pre>
+
+
+<pre class="programlisting"><span class="italic">layer</span>.Members | Members ( <span class="italic">layer</span> )</pre>
+
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Members function"><thead><tr><th id="hd-d0e107298-col1">Parameter</th><th id="hd-d0e107298-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e107298-col1"><p><a href="mdx_dimspec.htm" title="MDX Dimension Specification">dimension</a></p></td>
+<td headers="hd-d0e107298-col2">
+<p>A dimension specification.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e107298-col1"><p><a href="mdx_layer.htm" title="MDX Layer Specification">layer</a></p></td>
+<td headers="hd-d0e107298-col2">
+<p>A layer specification.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p>This example focuses on the following part of the Sample Basic outline:</p>
+<div><img src="images/market_children.gif"></div>
+<p>The following expression:</p>
+<pre class="programlisting">{([Market].members)}</pre>
+<p>returns the following set, which includes all descendant members of
+the Market dimension:</p>
+<pre class="programlisting">{
+ Market, [New York], Massachusetts, Florida, Connecticut, 
+ [New Hampshire], East, California, Oregon, Washington, 
+ Utah, Nevada, West, Texas, Oklahoma, Louisiana, [New Mexico], 
+ South, Illinois, Ohio, Wisconsin, Missouri, Iowa, Colorado, Central
+}
+  </pre>
+<p>The following expression:</p>
+<pre class="programlisting">{([Market].levels(1).members)}
+  </pre>
+<p>returns the following set, which includes one level of descendant members
+of the Market dimension:</p>
+<pre class="programlisting">{East, West, South, Central}
+  </pre>
+<p>The following query assumes that level 1 of the Market dimension has
+an alias of <span class="cCode">Region</span>:</p>
+<pre class="programlisting">Select
+{( [Market].[Region].members ) }
+on columns 
+from Sample.Basic
+  </pre>
+<p>This query returns the following grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col></colgroup><tbody><tr><td valign="bottom">East</td><td valign="bottom">West</td><td valign="bottom">South</td><td valign="bottom">Central</td></tr><tr><td>24161</td><td>29861</td><td>13238</td><td>38262</td></tr></tbody></table></div>
+
+</div></body></html>

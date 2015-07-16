@@ -1,0 +1,77 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>xTD</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_withattrex.htm" title="WithAttrEx"><link rel="next" href="ch08.htm" title="Query Logging Configuration"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_withattrex.htm';
+var nextPage = 'ch08.htm';
+var tocLinkId = 'mdx_xtd';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="xtd_techref_proj_maxl_dml_funcs"></a>xTD<a class="indexterm" name="d0e115321"></a><a class="indexterm" name="d0e115324"></a><a class="indexterm" name="d0e115329"></a></h1>
+
+
+<p>Returns period-to-date values.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting"><span class="italic">x</span>TD ( [<span class="italic">member</span> ] )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the xTD function"><thead><tr><th id="hd-d0e115429-col1">Parameter</th><th id="hd-d0e115429-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e115429-col1"><p>xTD</p></td>
+<td headers="hd-d0e115429-col2">
+<p>Values:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col></colgroup><thead><tr><th id="hd-d0e115442-d0e115446-1" valign="top">Parameter</th><th id="hd-d0e115442-d0e115446-2" valign="top">Value</th></tr></thead><tbody><tr><td headers="hd-d0e115442-d0e115446-1"><span class="cCode">HTD</span></td><td headers="hd-d0e115442-d0e115446-2">History-To-Date (H-T-D)</td></tr><tr><td headers="hd-d0e115442-d0e115446-1"><span class="cCode">YTD</span></td><td headers="hd-d0e115442-d0e115446-2">Year-To-Date</td></tr><tr><td headers="hd-d0e115442-d0e115446-1"><span class="cCode">STD</span></td><td headers="hd-d0e115442-d0e115446-2">Season-To-Date</td></tr><tr><td headers="hd-d0e115442-d0e115446-1"><span class="cCode">PTD</span></td><td headers="hd-d0e115442-d0e115446-2">Period-To-Date</td></tr><tr><td headers="hd-d0e115442-d0e115446-1"><span class="cCode">QTD</span></td><td headers="hd-d0e115442-d0e115446-2">Quarter-To-Date</td></tr><tr><td headers="hd-d0e115442-d0e115446-1"><span class="cCode">MTD</span></td><td headers="hd-d0e115442-d0e115446-2">Month-To-Date</td></tr><tr><td headers="hd-d0e115442-d0e115446-1"><span class="cCode">WTD</span></td><td headers="hd-d0e115442-d0e115446-2">Week-To-Date</td></tr><tr><td headers="hd-d0e115442-d0e115446-1"><span class="cCode">DTD</span></td><td headers="hd-d0e115442-d0e115446-2">Day-To-Date</td></tr></tbody></table></div>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e115429-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a></p></td>
+<td headers="hd-d0e115429-col2">
+<p>Member specification. Should be a member from the time dimension.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<div class="itemizedlist"><ul type="disc"><li><p><span class="cCode">xTD ( [<span class="italic">member</span> ] )</span> is
+equivalent to <span class="cCode">PeriodsToDate ( <span class="italic">layer</span>,
+[<span class="italic">member</span>])</span> where <span class="italic">layer</span> is
+assumed to be the value set in the corresponding Dynamic Time Series member
+in the database outline.</p><p>For example, in Sample Basic, <span class="cCode">QTD
+([<span class="italic">member</span>])</span> is equivalent to <span class="cCode">PeriodsToDate
+( Year.Generations(2) [,<span class="italic">member</span>])</span>,
+because Q-T-D is Generation 2 in the Year dimension.</p></li><li><p>The <span class="italic">x</span>TD functions YTD,
+QTD, MTD, etc. are not relevant for use in aggregate storage databases, because
+the <span class="italic">x</span>TD functions assume that Dynamic Time
+Series members are defined in the outline. Dynamic Time Series members are
+not supported for aggregate storage database outlines.</p><p>You can
+use the <a href="mdx_periodstodate.htm" title="PeriodsToDate"><span class="FunctionName">PeriodsToDate</span></a> function
+with aggregate storage databases in place of the <span class="italic">x</span>TD
+functions.</p><p>For example,</p><div class="blockquote"><blockquote class="blockquote"><p><span class="cCode">YTD(May)</span> is equivalent to <span class="cCode">PeriodsToDate(Year.Generations(1),
+May)</span></p></blockquote></div><div class="blockquote"><blockquote class="blockquote"><p><span class="cCode">QTD(May)</span> is equivalent to <span class="cCode">PeriodsToDate(Year.Generations(2),
+May)</span>.</p></blockquote></div></li></ul></div>
+
+<p class="func_subhead">Example</p>
+<pre class="programlisting">QTD([Feb])</pre>
+<p>returns the set <span class="cCode">{[Jan],
+[Feb]}</span>.</p>
+<p><span class="cCode">QTD([Feb])</span> is
+equivalent to <span class="cCode">PeriodsToDate([Year].Generations(2), [Feb])</span>, because
+the dynamic-time-series member Q-T-D is defined as Generation 2 of the Year
+dimension.</p>
+<pre class="programlisting">HTD([May])</pre>
+<p>returns the set <span class="cCode">{[Jan],
+[Feb], [Mar], [Apr], [May]}</span>.</p>
+<p><span class="cCode">HTD([May])</span> is
+equivalent to <span class="cCode">PeriodsToDate([Year].Generations(1), [May])</span>, because
+the dynamic-time-series member H-T-D is defined as Generation 1 of the Year
+dimension.</p>
+<div class="note"><p class="admonTitle">Note:</p><p>If a dynamic-time-series member is not defined, an empty set is returned.</p></div>
+<pre class="programlisting">PTD([Feb]) </pre>
+<p>returns an empty set, because
+the dynamic-time-series member P-T-D is not enabled in the outline.</p>
+
+</div></body></html>

@@ -1,0 +1,74 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Parent</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_parallelperiod.htm" title="ParallelPeriod"><link rel="next" href="mdx_percentile.htm" title="Percentile"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_parallelperiod.htm';
+var nextPage = 'mdx_percentile.htm';
+var tocLinkId = 'mdx_parent';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="parent_techref_proj_maxl_dml_funcs"></a>Parent<a class="indexterm" name="d0e109350"></a><a class="indexterm" name="d0e109355"></a></h1>
+
+
+<p>Returns a member's parent.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+
+<pre class="programlisting"><span class="italic">member</span>.Parent [(<span class="italic">hierarchy</span>) ]</pre>
+
+
+<pre class="programlisting">Parent ( <span class="italic">member</span> [, <span class="italic">hierarchy</span> ] )</pre>
+
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Parent function"><thead><tr><th id="hd-d0e109398-col1">Parameter</th><th id="hd-d0e109398-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e109398-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a></p></td>
+<td headers="hd-d0e109398-col2">
+<p>A member specification.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e109398-col1"><p><a href="mdx_hierarchy.htm" title="MDX Hierarchy Specification">hierarchy</a></p></td>
+<td headers="hd-d0e109398-col2">
+<p>Optional. A specific hierarchy within the time dimension.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p class="bridgehead"><a name="d0e109430"></a>Example 1</p>
+<pre class="programlisting">SELECT 
+ {Parent ([100-10])}
+ON COLUMNS
+FROM 
+  sample.basic </pre>
+<p>returns the parent of 100-10:</p>
+<div class="informaltable"><table border="1"><colgroup><col></colgroup><tbody><tr valign="bottom"><td valign="bottom">100</td></tr><tr><td>30468</td></tr></tbody></table></div>
+<p class="bridgehead"><a name="d0e109450"></a>Example 2</p>
+<p>The following query uses Filter to find the months in which Sales for
+[Product].[100] are higher than 8,570. The Parent function is used with Generate
+to create a set consisting of the parents (quarters) of the high-sales months.</p>
+<pre class="programlisting">WITH SET [High-Sales Months] as 
+' 
+ Filter( 
+ [Year].Levels(0).members, 
+ [Measures].[Sales] &gt; 8570 
+ ) 
+' 
+SELECT 
+   {[Measures].[Sales]} 
+ON COLUMNS, 
+   Generate([High-Sales Months], { Parent([Year].CurrentMember) })
+ON ROWS 
+FROM 
+  sample.basic 
+WHERE 
+ ([Product].[100]) </pre>
+<p>This query returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Sales</td></tr><tr><td>Qtr2</td><td>27187</td></tr><tr><td>Qtr3</td><td>28544</td></tr><tr><td>Qtr4</td><td>25355</td></tr></tbody></table></div>
+
+</div></body></html>

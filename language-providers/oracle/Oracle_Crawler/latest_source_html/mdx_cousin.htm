@@ -1,0 +1,66 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Cousin</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_count.htm" title="Count"><link rel="next" href="mdx_crossjoin.htm" title="CrossJoin"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_count.htm';
+var nextPage = 'mdx_crossjoin.htm';
+var tocLinkId = 'mdx_cousin';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="cousin_techref_proj_maxl_dml_funcs"></a>Cousin<a class="indexterm" name="d0e95097"></a><a class="indexterm" name="d0e95100"></a></h1>
+
+
+<p>Returns a child member at the same position as a member from another
+ancestor.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">Cousin ( <span class="italic">member1</span>, <span class="italic">member2</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Cousin function"><thead><tr><th id="hd-d0e95147-col1">Parameter</th><th id="hd-d0e95147-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e95147-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a>1</p></td>
+<td headers="hd-d0e95147-col2">
+<p>A child member. For example, <span class="cCode">[Year].[Qtr1]</span>.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e95147-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a>2</p></td>
+<td headers="hd-d0e95147-col2">
+<p>An ancestor for which Cousin() should the return child member at the
+same position as <span class="italic">member1</span>.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>Assuming a symmetric hierarchy, Cousin takes as input one member (<span class="italic">member1</span>) from one hierarchy and an ancestor member
+(<span class="italic">member2</span>) of another hierarchy, and returns
+the child of <span class="italic">member2</span> that is at the same
+position as <span class="italic">member1</span>.</p>
+
+<p class="func_subhead">Example</p>
+<p>This example uses the following parts of the Sample Basic outline:</p>
+<div><img src="images/product_year.gif"></div>
+<p>The following expression</p>
+<pre class="programlisting">{ Cousin ( [Qtr2].[Apr], [Qtr4] ) }</pre>
+<p>returns the member:</p>
+<pre class="programlisting">[Qtr4].[Oct]</pre>
+<p>And the following expression</p>
+<pre class="programlisting">[Product].generations(2).members</pre>
+<p>returns the set:</p>
+<pre class="programlisting">{ [100], [200], [300], [400], [Diet] }</pre>
+<p>Therefore, the following query</p>
+<pre class="programlisting">SELECT
+  { Cousin ( [Qtr2].[Apr], [Qtr4] ) }  
+ON COLUMNS,
+    [Product].generations(2).members  
+ON ROWS
+FROM Sample.Basic</pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Oct</td></tr><tr><td>100</td><td>2317</td></tr><tr><td>200</td><td>2505</td></tr><tr><td>300</td><td>2041</td></tr><tr><td>400</td><td>1790</td></tr><tr><td>Diet</td><td>2379</td></tr></tbody></table></div>
+
+</div></body></html>

@@ -1,0 +1,61 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Mod</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_min.htm" title="Min"><link rel="next" href="mdx_nextmember.htm" title="NextMember"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_min.htm';
+var nextPage = 'mdx_nextmember.htm';
+var tocLinkId = 'mdx_mod';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="mod_techref_proj_maxl_dml_funcs"></a>Mod<a class="indexterm" name="d0e107534"></a><a class="indexterm" name="d0e107539"></a></h1>
+
+
+<p>Returns the modulus (remainder value) of a division operation.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">Mod ( <span class="italic">numeric_value_expr_1</span>, <span class="italic">numeric_value_expr_2</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Mod function"><thead><tr><th id="hd-d0e107577-col1">Parameter</th><th id="hd-d0e107577-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e107577-col1"><p>numeric_value_expr_1</p></td>
+<td headers="hd-d0e107577-col2">
+<p>The number for which to find the remainder. Must be a numeric value
+or an expression that returns a numeric value (see <a href="mdx_grammar_rules.htm" title="MDX Grammar Rules">MDX Grammar Rules</a>).</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e107577-col1"><p>numeric_value_expr_2</p></td>
+<td headers="hd-d0e107577-col2">
+<p>The divisor. Must be a numeric value or an expression that returns a
+numeric value (see <a href="mdx_grammar_rules.htm" title="MDX Grammar Rules">MDX Grammar Rules</a>).</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>The Essbase implementation of the function Mod
+returns the following values, which may be different from other vendors' implementations:</p>
+<pre class="programlisting">Mod(n,k) = - Mod(-n,k) , where n &lt; 0
+Mod(n,k) =  Mod(n,-k) , where k &lt; 0</pre>
+
+<p class="func_subhead">Example</p>
+<pre class="programlisting">WITH MEMBER [Measures].[Factor] AS 
+ 'Mod ([Measures].[Margin %],[Measures].[Profit %])'
+SELECT
+ {
+  [Measures].[Margin %],
+  [Measures].[Profit %], 
+  [Measures].[Factor]
+ }
+ON COLUMNS, 
+ {[Year].[Qtr1].Children}
+ON ROWS
+FROM sample.basic</pre>
+<p>returns:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Margin %</td><td>Profit %</td><td>Factor</td></tr><tr><td>Jan</td><td>55.102</td><td>25.44</td><td>4.217</td></tr><tr><td>Feb</td><td>55.387</td><td>26.025</td><td>3.337</td></tr><tr><td>Mar</td><td>55.267</td><td>25.868</td><td>3.530</td></tr></tbody></table></div>
+
+</div></body></html>

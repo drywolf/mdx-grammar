@@ -1,0 +1,41 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>MDX Layer Specification</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="mdx_syn_gram.htm" title="MDX Syntax and Grammar Rules"><link rel="prev" href="mdx_dimspec.htm" title="MDX Dimension Specification"><link rel="next" href="mdx_member.htm" title="MDX Member Specification"><meta name="keywords" content="generations in&#xA;MaxL layers in MDX defined levels in MaxL "><meta name="keywords" content="generations in&#xA;MaxL layers in MDX defined levels in MaxL "><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_dimspec.htm';
+var nextPage = 'mdx_member.htm';
+var tocLinkId = 'mdx_layer';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="section" lang="EN-US"><div class="titlepage"><div><div><h1 class="title" style="clear: both"><a name="layer_techref_proj_maxl_dml_rules"></a>MDX Layer Specification<a class="indexterm" name="d0e88198"></a><a class="indexterm" name="d0e88203"></a><a class="indexterm" name="d0e88208"></a></h1></div></div></div><p>A layer is a shared depth in the outline hierarchy. Therefore, the concept
+of <span class="italic">layer</span> includes generations and levels.
+Represent a layer using the following rules:</p><p class="bridgehead"><a name="d0e88218"></a>Syntax</p><pre class="programlisting">&lt;layer&gt; ::= 
+        &lt;layer-name-specification&gt;
+      | Levels ( &lt;dim_hier&gt;, &lt;index&gt; )
+           | &lt;dim_hier&gt;.Levels ( &lt;index&gt; )      
+      | Generations ( &lt;dim_hier&gt;, &lt;index&gt; )
+           | &lt;dim_hier&gt;.Generations ( &lt;index&gt; ) 
+      | &lt;member&gt;.Generation
+      | &lt;member&gt;.Level</pre><div class="informaltable"><table border="1"><colgroup><col><col></colgroup><thead><tr><th id="hd-d0e88223-d0e88227-1" valign="top">Syntax</th><th id="hd-d0e88223-d0e88227-2" valign="top">Description</th></tr></thead><tbody><tr><td headers="hd-d0e88223-d0e88227-1">&lt;layer-name-specification&gt;</td><td headers="hd-d0e88223-d0e88227-2"><p>A layer name can be specified in the following ways:</p><div class="orderedlist"><ol type="1"><li><p>By specifying the generation or level names; for example, <span class="cCode">States</span> or <span class="cCode">Regions</span>. </p><p>The generation or level name can be within braces; for example, <span class="cCode">[Regions]</span>.
+Using braces is recommended.</p></li><li><p>By specifying the dimension name along with the generation
+or level name; for example, <span class="cCode">Market.Regions</span> and <span class="cCode">[Market].[States]</span> This
+naming convention is recommended.</p></li></ol></div></td></tr><tr><td headers="hd-d0e88223-d0e88227-1">&lt;<a href="mdx_dimspec.htm" title="MDX Dimension Specification">dimension</a>&gt;.Levels
+(&lt;index&gt;)</td><td headers="hd-d0e88223-d0e88227-2"><a href="mdx_levels.htm" title="Levels"><span class="FunctionName">Levels</span></a> function
+with the dimension specification and a level number as input. For example, <span class="cCode">[Year].Levels(0)</span>.</td></tr><tr><td headers="hd-d0e88223-d0e88227-1">Levels ( &lt;<a href="mdx_dimspec.htm" title="MDX Dimension Specification">dimension</a>&gt;,
+&lt;index&gt; )</td><td headers="hd-d0e88223-d0e88227-2">Alternate syntax for <a href="mdx_levels.htm" title="Levels"><span class="FunctionName">Levels</span></a> function with the dimension specification and a
+level number as input. For example, <span class="cCode">Levels ( [Year], 0 )</span>.</td></tr><tr><td headers="hd-d0e88223-d0e88227-1">&lt;<a href="mdx_dimspec.htm" title="MDX Dimension Specification">dimension</a>&gt;.Generations
+(&lt;index&gt;)</td><td headers="hd-d0e88223-d0e88227-2"><a href="mdx_generations.htm" title="Generations"><span class="FunctionName">Generations</span></a> function
+with the dimension specification and a generation number as input. For example, <span class="cCode">[Year].Generations
+(3)</span>.</td></tr><tr><td headers="hd-d0e88223-d0e88227-1">Generations ( &lt;<a href="mdx_dimspec.htm" title="MDX Dimension Specification">dimension</a>&gt;,
+&lt;index&gt; )</td><td headers="hd-d0e88223-d0e88227-2">Alternate syntax for <a href="mdx_generations.htm" title="Generations"><span class="FunctionName">Generations</span></a> function with the dimension specification and a
+generation number as input. For example, <span class="cCode">Generations ( [Year], 3)</span>.</td></tr><tr><td headers="hd-d0e88223-d0e88227-1">&lt;<a href="mdx_member.htm" title="MDX Member Specification">member</a>&gt;.Generation</td><td headers="hd-d0e88223-d0e88227-2"><a href="mdx_generation.htm" title="Generation"><span class="FunctionName">Generation</span></a> function
+with a member specification as input. For example, <span class="cCode">[Year].Generation</span>.
+Returns the generation of the specified member.</td></tr><tr><td headers="hd-d0e88223-d0e88227-1">&lt;<a href="mdx_member.htm" title="MDX Member Specification">member</a>&gt;.Level</td><td headers="hd-d0e88223-d0e88227-2"><a href="mdx_level.htm" title="Level"><span class="FunctionName">Level</span></a> function
+with a member specification as input. For example, <span class="cCode">[Year].Level</span>.
+Returns the level of the specified member.</td></tr></tbody></table></div><p class="bridgehead"><a name="d0e88337"></a>Description</p><p>Generation numbers begin counting with 1 at the dimension name; higher
+generation numbers are those that are closest to leaf members in a hierarchy.</p><p>Level numbers begin with 0 at the deepest part of the hierarchy; the
+highest level number is a dimension name.</p><div><img src="images/ac_gnlv1.gif"></div><div class="note"><p class="admonTitle">Note:</p><p>In an asymmetric (or <span class="italic">ragged</span>) hierarchy,
+same level numbers does <span class="italic">not</span> mean that the
+members are at the same depth in the outline. For example, in the following
+diagram, member <span class="bold"><strong>aa</strong></span> and member <span class="bold"><strong>f</strong></span> are
+both level 0 members, and yet they are not at the same depth:</p></div><div><img src="images/ac_gnlv2.gif"></div></div></body></html>

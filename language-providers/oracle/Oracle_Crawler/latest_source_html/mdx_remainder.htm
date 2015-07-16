@@ -1,0 +1,46 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Remainder</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_relmemberrange.htm" title="RelMemberRange"><link rel="next" href="mdx_right.htm" title="Right"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_relmemberrange.htm';
+var nextPage = 'mdx_right.htm';
+var tocLinkId = 'mdx_remainder';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="remainder_techref_proj_maxl_dml_funcs"></a>Remainder<a class="indexterm" name="d0e110514"></a><a class="indexterm" name="d0e110517"></a></h1>
+
+
+<p>Returns the fractional part of the numeric value expression.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">Remainder ( <span class="italic">numeric_value_expression</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Remainder function"><thead><tr><th id="hd-d0e110543-col1">Parameter</th><th id="hd-d0e110543-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e110543-col1"><p>numeric_value_expression</p></td>
+<td headers="hd-d0e110543-col2">
+<p>A numeric value expression (see <a href="mdx_grammar_rules.htm" title="MDX Grammar Rules">MDX Grammar Rules</a>).</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<pre class="programlisting">Remainder([Margin %]) </pre>
+<p>extracts the fractional part
+of the <span class="cCode">[Margin %]</span> value.</p>
+<p>The following query shows <span class="cCode">[Margin %]</span> and the fractional
+part of it for all members of the Product dimension.</p>
+<pre class="programlisting">WITH
+   MEMBER [Measures].[Margin % Rem] AS 'Remainder([Margin %])'
+SELECT
+   {[Margin %], [Margin % Rem]} ON COLUMNS,
+   [Product].Members ON ROWS
+FROM Sample.Basic</pre>
+<p>This query returns the following grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Margin %</td><td>Margin % Rem</td></tr><tr><td>Product</td><td>55.262</td><td>0.262</td></tr><tr><td>100</td><td>57.273</td><td>0.273</td></tr><tr><td>100-10</td><td>61.483</td><td>0.483</td></tr><tr><td>100-20</td><td>51.479</td><td>0.479</td></tr><tr><td>100-30</td><td>50.424</td><td>0.424</td></tr><tr><td>200</td><td>55.540</td><td>0.540</td></tr><tr><td>200-10</td><td>54.270</td><td>0.270</td></tr><tr><td>200-20</td><td>56.436</td><td>0.436</td></tr><tr><td>200-30</td><td>56.450</td><td>0.450</td></tr><tr><td>200-40</td><td>55.753</td><td>0.753</td></tr><tr><td>300</td><td>54.238</td><td>0.238</td></tr><tr><td>300-10</td><td>55.816</td><td>0.816</td></tr><tr><td>300-20</td><td>42.992</td><td>0.992</td></tr><tr><td>300-30</td><td>57.551</td><td>0.551</td></tr><tr><td>400</td><td>53.600</td><td>0.600</td></tr><tr><td>400-10</td><td>57.354</td><td>0.354</td></tr><tr><td>400-20</td><td>56.299</td><td>0.299</td></tr><tr><td>400-30</td><td>39.477</td><td>0.477</td></tr><tr><td>Diet</td><td>55.397</td><td>0.397</td></tr><tr><td>100-20</td><td>51.479</td><td>0.479</td></tr><tr><td>200-20</td><td>56.436</td><td>0.436</td></tr><tr><td>300-30</td><td>57.551</td><td>0.551</td></tr></tbody></table></div>
+
+</div></body></html>

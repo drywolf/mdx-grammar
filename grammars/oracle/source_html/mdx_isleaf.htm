@@ -1,0 +1,47 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>IsLeaf</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_isgeneration.htm" title="IsGeneration"><link rel="next" href="mdx_islevel.htm" title="IsLevel"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_isgeneration.htm';
+var nextPage = 'mdx_islevel.htm';
+var tocLinkId = 'mdx_isleaf';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="isleaf_techref_proj_maxl_dml_funcs"></a>IsLeaf<a class="indexterm" name="d0e103251"></a><a class="indexterm" name="d0e103254"></a></h1>
+
+
+<p>Returns TRUE if the member is a level-0 member.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">IsLeaf ( <span class="italic">member</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the IsLeaf function"><thead><tr><th id="hd-d0e103297-col1">Parameter</th><th id="hd-d0e103297-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e103297-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a></p></td>
+<td headers="hd-d0e103297-col2">
+<p>A member specification.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p><span class="cCode">IsLeaf(<span class="italic">member</span>)</span> is the
+same as <span class="cCode">IsLevel(<span class="italic">member</span>, 0)</span>.</p>
+
+<p class="func_subhead">Example</p>
+<pre class="programlisting">IsLeaf([Market].CurrentMember) </pre>
+<p>returns TRUE if the current
+member of the Market dimension is at level 0.</p>
+<p>Therefore, the following query</p>
+<pre class="programlisting">SELECT
+ Filter([Market].Members, IsLeaf([Market].CurrentMember))
+ON COLUMNS
+FROM Sample.Basic</pre>
+<p>returns</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col><col><col><col><col><col><col><col><col><col><col><col><col><col><col><col></colgroup><tbody><tr><td valign="bottom">New York</td><td valign="bottom">Massachusetts</td><td valign="bottom">Florida</td><td valign="bottom">Connecticut</td><td valign="bottom">New Hampshire</td><td valign="bottom">California</td><td valign="bottom">Oregon</td><td valign="bottom">Washington</td><td valign="bottom">Utah</td><td valign="bottom">Nevada</td><td valign="bottom">Texas</td><td valign="bottom">Oklahoma</td><td valign="bottom">Louisiana</td><td valign="bottom">New Mexico</td><td valign="bottom">Illinois</td><td valign="bottom">Ohio</td><td valign="bottom">Wisconsin</td><td valign="bottom">Missouri</td><td valign="bottom">Iowa</td><td valign="bottom">Colorado</td></tr><tr><td>8202</td><td>6712</td><td>5029</td><td>3093</td><td>1125</td><td>12964</td><td>5062</td><td>4641</td><td>3155</td><td>4039</td><td>6425</td><td>3491</td><td>2992</td><td>330</td><td>12577</td><td>4384</td><td>3547</td><td>1466</td><td>9061</td><td>7227</td></tr></tbody></table></div>
+
+</div></body></html>

@@ -1,0 +1,44 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Today</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_todateex.htm" title="TodateEx"><link rel="next" href="mdx_topcount.htm" title="TopCount"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_todateex.htm';
+var nextPage = 'mdx_topcount.htm';
+var tocLinkId = 'mdx_today';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="today_techref_proj_maxl_dml_funcs"></a>Today</h1>
+
+
+<p>Returns a number representing the current date on the Essbase computer.
+The number is the number of seconds elapsed since midnight, January 1, 1970.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">Today</pre>
+
+<p class="func_subhead">Notes</p>
+<p>The <span class="italic">date</span> returned can be used as
+input to other functions listed in the See Also section.</p>
+
+<p class="func_subhead">Example</p>
+<p>This query returns today's actual sales for the product Cola in the
+market California. Today() returns today's date. StrToMbr retrieves the day
+member represented by the date returned by Today.</p>
+<pre class="programlisting">SELECT
+ {[Sales]} 
+ON COLUMNS,
+ {
+  StrToMbr(
+        FormatDate( Today(), "Mon dd yyyy")
+   )
+ } 
+ON ROWS
+FROM Mysamp.basic; </pre>
+
+<p class="func_subhead">See Also</p><ul><li><a href="mdx_datetomember.htm" title="DateToMember"><span class="FunctionName">DateToMember</span></a></li><li><a href="mdx_dateroll.htm" title="DateRoll"><span class="FunctionName">DateRoll</span></a></li><li><a href="mdx_datediff.htm" title="DateDiff"><span class="FunctionName">DateDiff</span></a></li><li><a href="mdx_datepart.htm" title="DatePart"><span class="FunctionName">DatePart</span></a></li><li><a href="mdx_formatdate.htm" title="FormatDate"><span class="FunctionName">FormatDate</span></a></li></ul>
+</div></body></html>

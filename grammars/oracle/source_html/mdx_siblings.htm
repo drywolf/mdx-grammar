@@ -1,0 +1,96 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Siblings</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_rtrim.htm" title="RTrim"><link rel="next" href="mdx_stddev.htm" title="Stddev"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_rtrim.htm';
+var nextPage = 'mdx_stddev.htm';
+var tocLinkId = 'mdx_siblings';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="siblings_techref_proj_maxl_dml_funcs"></a>Siblings<a class="indexterm" name="d0e110970"></a><a class="indexterm" name="d0e110975"></a></h1>
+
+
+<p>Returns the siblings of the input member, optionally based on selection
+options.</p>
+<p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+
+<pre class="programlisting">Siblings ( <span class="italic">member</span>[, <span class="italic">selection</span> [,<span class="italic">include_or_exclude</span>]] )</pre>
+
+
+<pre class="programlisting"><span class="italic">member</span>.Siblings</pre>
+
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Siblings function"><thead><tr><th id="hd-d0e111049-col1">Parameter</th><th id="hd-d0e111049-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e111049-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a></p></td>
+<td headers="hd-d0e111049-col2">
+<p>The member for which to return siblings.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e111049-col1"><p>selection</p></td>
+<td headers="hd-d0e111049-col2">
+<p>Optional. This option can be one of the following:</p>
+<div class="itemizedlist"><ul type="disc"><li><p>LEFT &#8212; Selects the siblings to the left of the input
+member</p></li><li><p>RIGHT &#8212; Selects the siblings to the right of the input
+member</p></li><li><p>ALL &#8212; Selects all the siblings of the input member</p></li></ul></div>
+<p>If no selection is made, the default is ALL.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e111049-col1"><p>include_or_exclude</p></td>
+<td headers="hd-d0e111049-col2">
+<p>Optional. This option can be one of the following:</p>
+<div class="itemizedlist"><ul type="disc"><li><p>INCLUDEMEMBER&#8212; Includes the input member in the siblings
+list</p></li><li><p>EXCLUDEMEMBER&#8212; Excludes the input member from the siblings
+list</p></li></ul></div>
+<p>If neither is specified, the default is to include the input member.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<div class="itemizedlist"><ul type="disc"><li><p>If the input member is the top level of the dimension, this
+function returns a set containing the input member.</p></li><li><p>This function is the same as <span class="cCode">Children(member.parent)</span>.</p></li><li><p>The <span class="italic">member</span>.Siblings syntax
+returns the same set as Siblings(<span class="italic">member</span>),
+Siblings(<span class="italic">member</span>, ALL), or Siblings(<span class="italic">member</span>, ALL, INCLUDEMEMBER).</p></li></ul></div>
+
+<p class="func_subhead">Example</p>
+<p class="bridgehead"><a name="d0e111117"></a>Example 1</p>
+<p><span class="cCode">Siblings(Year</span>) returns <span class="cCode">{Year}</span>.</p>
+<p>The following query</p>
+<pre class="programlisting">SELECT
+CrossJoin (
+         Union (
+            <span class="bold"><strong>Siblings (</strong></span>[Old Fashioned]<span class="bold"><strong>)</strong></span>,
+            {([Root Beer]), ([Cream Soda])}
+         ),
+         {(Budget), ([Variance])}
+      )
+ON COLUMNS
+from Sample.Basic</pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col><col><col><col><col><col><col><col></colgroup><tbody><tr><td colspan="2" valign="bottom">Old Fashioned</td><td colspan="2" valign="bottom">Diet Root Beer</td><td colspan="2" valign="bottom">Sasparilla</td><td colspan="2" valign="bottom">Birch Beer</td><td colspan="2" valign="bottom">Root Beer</td><td colspan="2" valign="bottom">Cream Soda</td></tr><tr><td>Budget</td><td>Variance</td><td>Budget</td><td>Variance</td><td>Budget</td><td>Variance</td><td>Budget</td><td>Variance</td><td>Budget</td><td>Variance</td><td>Budget</td><td>Variance</td></tr><tr><td>11640</td><td>-4439</td><td>14730</td><td>-2705</td><td>5050</td><td>-414</td><td>4530</td><td>-438</td><td>35950</td><td>-7996</td><td>29360</td><td>-3561</td></tr></tbody></table></div>
+<p class="bridgehead"><a name="d0e111222"></a>Example 2</p>
+<p>The following examples are based on a Years &#8211; Quarters &#8211;
+Months Time hierarchy.</p>
+<pre class="programlisting">Siblings([Feb 2000], LEFT, INCLUDEMEMBER)</pre>
+<p>returns <span class="cCode">{[Jan 2000], [Feb 2000]}</span>.</p>
+<pre class="programlisting">Siblings([Feb 2000], RIGHT, EXCLUDEMEMBER)</pre>
+<p>returns <span class="cCode">{[Mar 2000]}</span>.</p>
+<pre class="programlisting">Siblings([Mar 2000], LEFT)</pre>
+<p>returns <span class="cCode">{[Jan 2000], [Feb 2000], [Mar 2000]}</span>.</p>
+<pre class="programlisting">Siblings([May 2000], RIGHT)</pre>
+<p>returns <span class="cCode">{[May 2000], [Jun 2000]}</span>.</p>
+<pre class="programlisting">Siblings([Mar 2000])</pre>
+<p>OR</p>
+<pre class="programlisting">[Mar 2000].Siblings</pre>
+<p>Returns <span class="cCode">{[Jan 2000], [Feb 2000], [Mar 2000]}</span>.</p>
+
+</div></body></html>

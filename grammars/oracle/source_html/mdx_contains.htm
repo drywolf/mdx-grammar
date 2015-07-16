@@ -1,0 +1,42 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Contains</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_concat.htm" title="Concat"><link rel="next" href="mdx_count.htm" title="Count"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_concat.htm';
+var nextPage = 'mdx_count.htm';
+var tocLinkId = 'mdx_contains';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="contains_techref_proj_maxl_dml_funcs"></a>Contains</h1>
+
+
+<p>Returns TRUE if a tuple is found within a set; otherwise returns FALSE.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">Contains ( <span class="italic">member_or_tuple</span>, <span class="italic">set</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Contains function"><thead><tr><th id="hd-d0e94897-col1">Parameter</th><th id="hd-d0e94897-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e94897-col1"><p>member_or_tuple</p></td>
+<td headers="hd-d0e94897-col2">
+<p>A <a href="mdx_member.htm" title="MDX Member Specification">member</a> or
+a <a href="mdx_tuple.htm" title="MDX Tuple Specification">tuple</a>.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e94897-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set</a></p></td>
+<td headers="hd-d0e94897-col2">
+<p>The set to search.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p>The following expression returns TRUE.</p>
+<pre class="programlisting">Contains([Oregon],{[California], [Oregon]})</pre>
+
+</div></body></html>

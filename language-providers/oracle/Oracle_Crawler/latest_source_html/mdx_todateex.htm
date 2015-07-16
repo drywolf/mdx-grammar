@@ -1,0 +1,80 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>TodateEx</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_todate.htm" title="Todate"><link rel="next" href="mdx_today.htm" title="Today"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_todate.htm';
+var nextPage = 'mdx_today.htm';
+var tocLinkId = 'mdx_todateex';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="todateex_techref_proj_maxl_dml_funcs"></a>TodateEx</h1>
+
+
+<p>Returns the numeric date value from input date-string according to the
+date-format specified. The date returned is the number of seconds elapsed
+since midnight, January 1, 1970.</p>
+<p>If the date or the date format strings are invalid, an error is returned.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">TodateEx ( <span class="italic">internal-date-format</span>, <span class="italic">date-string</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the TodateEx function"><thead><tr><th id="hd-d0e112782-col1">Parameter</th><th id="hd-d0e112782-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e112782-col1"><p>internal-date-format</p></td>
+<td headers="hd-d0e112782-col2">
+<p>One of the following literal strings (excluding ordered-list numbers
+and parenthetical examples) indicating a supported date format. </p>
+<div class="orderedlist"><ol type="1"><li><p><span class="cCode">"mon dd yyyy"</span> (Example: mon = <span class="cCode">Aug</span>)</p></li><li><p><span class="cCode">"Month dd yyyy"</span> (Example: Month = <span class="cCode">August</span>)</p></li><li><p><span class="cCode">"mm/dd/yy"</span></p></li><li><p><span class="cCode">"mm/dd/yyyy"</span></p></li><li><p><span class="cCode">"yy.mm.dd"</span></p></li><li><p><span class="cCode">"dd/mm/yy"</span></p></li><li><p><span class="cCode">"dd.mm.yy"</span></p></li><li><p><span class="cCode">"dd-mm-yy"</span></p></li><li><p><span class="cCode">"dd Month yy"</span></p></li><li><p><span class="cCode">"dd mon yy"</span></p></li><li><p><span class="cCode">"Month dd, yy"</span></p></li><li><p><span class="cCode">"mon dd, yy"</span></p></li><li><p><span class="cCode">"mm-dd-yy"</span></p></li><li><p><span class="cCode">"yy/mm/dd"</span></p></li><li><p><span class="cCode">"yymmdd"</span></p></li><li><p><span class="cCode">"dd Month yyyy"</span></p></li><li><p><span class="cCode">"dd mon yyyy"</span></p></li><li><p><span class="cCode">"yyyy-mm-dd"</span></p></li><li><p><span class="cCode">"yyyy/mm/dd"</span></p></li><li><p><span class="cCode">Long format</span> (Example: <span class="cCode">WeekDay, Mon dd,
+yyyy</span>)</p></li><li><p><span class="cCode">Short format</span> (Example: <span class="cCode">m/d/yy</span>)</p></li></ol></div>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e112782-col1"><p>date-string</p></td>
+<td headers="hd-d0e112782-col2">
+<p>A date string following the rules of <span class="italic">internal-date-format</span>.
+The following examples correspond to the above listed internal date formats. </p>
+<div class="orderedlist"><ol type="1"><li><p><span class="cCode">Jan 15 2006</span></p></li><li><p><span class="cCode">January 15 2006</span></p></li><li><p><span class="cCode">01/15/06</span></p></li><li><p><span class="cCode">01/15/2006</span></p></li><li><p><span class="cCode">06.01.06</span></p></li><li><p><span class="cCode">15/01/06</span></p></li><li><p><span class="cCode">15.01.06</span></p></li><li><p><span class="cCode">15-01-06</span></p></li><li><p><span class="cCode">15 January 06</span></p></li><li><p><span class="cCode">15 Jan 06</span></p></li><li><p><span class="cCode">January 15 06</span></p></li><li><p><span class="cCode">Jan 15 06</span></p></li><li><p><span class="cCode">01-15-06</span></p></li><li><p><span class="cCode">06/01/15</span></p></li><li><p><span class="cCode">060115</span></p></li><li><p><span class="cCode">15 January 2006</span></p></li><li><p><span class="cCode">15 Jan 2006</span></p></li><li><p><span class="cCode">2006-01-15</span></p></li><li><p><span class="cCode">2006/01/15</span></p></li><li><p><span class="cCode">Sunday, January 15, 2006</span></p></li><li><p><span class="cCode">1/8/06</span> (m/d/yy)</p></li></ol></div>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<div class="itemizedlist"><ul type="disc"><li><p>This function is an extension of <a href="mdx_todate.htm" title="Todate"><span class="FunctionName">Todate</span></a>.</p></li><li><p>This function is case-sensitive. For example, using <span class="cCode">apr</span> instead
+of <span class="cCode">Apr</span> returns an error.</p></li><li><p>Using extra whitespace not included in the internal format
+strings returns an error.</p></li><li><p>Trailing characters after the date format has been satisfied
+are ignored. If you erroneously use a date string of <span class="cCode">06/20/2006</span> with
+date format <span class="cCode">mm/dd/yy</span>, the trailing <span class="cCode">06</span> is ignored
+and the date is interpreted as June 20, 2020.</p></li><li><p>Long Format (Weekday, Mon dd, yyyy) is not verified for a
+day-of-week match to the given date.</p><p>For example: For date string <span class="cCode">Sunday,
+March 13, 2007</span> with date format Long Format, the input date string
+is parsed correctly for <span class="cCode">March 13, 2007</span>, although March 13, 2007
+does not fall on Sunday.</p></li><li><p>This function interprets years in the range 1970 to 2037.
+If the function is invoked using a date string outside the year bounds, an
+error is returned.</p></li><li><p>When the <span class="cCode">yy</span> format is used, this function interprets
+years in the range 1970 to 2029.</p></li></ul></div>
+
+<p class="func_subhead">Example</p>
+<p>The following query returns the actual sales on May 31, 2005 for the
+product Cola in the market California.</p>
+<p>TodateEx() returns the date May 31, 2005, corresponding to date string <span class="cCode">05.31.2005</span>.
+StrToMbr returns the corresponding day level member, capturing May 31, 2005.</p>
+<pre class="programlisting">SELECT
+ {[Sales]}
+ON COLUMNS,
+ {
+   StrToMbr(
+        FormatDate(
+                TodateEx("mm.dd.yyyy", "05.31.2005"),
+                "Mon dd yyyy"
+        )
+   ) 
+ }
+ON ROWS
+FROM Mysamp.basic
+WHERE (Actual, California, Cola); </pre>
+
+</div></body></html>

@@ -1,0 +1,78 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>DrillupByLayer</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_drilldownmember.htm" title="DrilldownMember"><link rel="next" href="mdx_drillupmember.htm" title="DrillupMember"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_drilldownmember.htm';
+var nextPage = 'mdx_drillupmember.htm';
+var tocLinkId = 'mdx_drillupbylayer';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="drillupbylayer_techref_proj_maxl_dml_funcs"></a>DrillupByLayer<a class="indexterm" name="d0e97727"></a></h1>
+
+
+<p>Drills up the members of a set that are below a specified layer.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">DrillupByLayer ( <span class="italic">set</span> [,<span class="italic">layer</span>] )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the DrillupByLayer function"><thead><tr><th id="hd-d0e97770-col1">Parameter</th><th id="hd-d0e97770-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e97770-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set</a></p></td>
+<td headers="hd-d0e97770-col2">
+<p>The set in which the drill-up should occur.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e97770-col1"><p><a href="mdx_layer.htm" title="MDX Layer Specification">layer</a></p></td>
+<td headers="hd-d0e97770-col2">
+<p>The layer of the members that should be drilled up. If omitted, the
+set is drilled up to the second lowest level found in the set.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p><span class="cCode">DrillupLevel</span> can
+be used as a synonym for <span class="cCode">DrillupByLayer</span>.</p>
+
+<p class="func_subhead">Example</p>
+<p>These examples focus on the following hierarchy from the Sample Basic
+outline:</p>
+<div><img src="images/profit_drilled.gif"></div>
+<p class="bridgehead"><a name="d0e97807"></a>Example 1</p>
+<p>The following query drills up the members of <span class="italic">set</span> to
+the second generation of the Measures dimension:</p>
+<pre class="programlisting">SELECT
+  DrillupByLayer
+  (
+   {[Measures],[Profit],
+    [Margin], [Sales], [COGS]
+   }, Generations([Measures], 2)
+  )
+
+ON COLUMNS
+FROM Sample.Basic</pre>
+<p>This query returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col></colgroup><tbody><tr><td valign="bottom">Measures</td><td valign="bottom">Profit</td></tr><tr><td>105522</td><td>105522</td></tr></tbody></table></div>
+<p class="bridgehead"><a name="d0e97838"></a>Example 2</p>
+<p>With no <span class="italic">layer</span> specified, the following
+query drills up the members of <span class="italic">set</span> to the
+second lowest level found in <span class="italic">set</span>:</p>
+<pre class="programlisting">SELECT
+  DrillupByLayer
+  (
+   {[Measures],[Profit],
+    [Margin], [Sales], [COGS]
+   }
+  )
+
+ON COLUMNS
+FROM Sample.Basic</pre>
+<p>This query returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col></colgroup><tbody><tr><td valign="bottom">Measures</td><td valign="bottom">Profit</td><td valign="bottom">Margin</td></tr><tr><td>105522</td><td>105522</td><td>221519</td></tr></tbody></table></div>
+
+</div></body></html>

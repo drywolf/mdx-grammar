@@ -1,0 +1,115 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Item</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_isvalid.htm" title="IsValid"><link rel="next" href="mdx_juliandate.htm" title="JulianDate"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_isvalid.htm';
+var nextPage = 'mdx_juliandate.htm';
+var tocLinkId = 'mdx_item';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="item_techref_proj_maxl_dml_funcs"></a>Item<a class="indexterm" name="d0e104061"></a></h1>
+
+
+<p>Extracts a member from a tuple.</p>
+<p>Extracts a tuple from a set.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+
+<p>Syntax that Returns a Member&#8212;one of the following:</p>
+<pre class="programlisting"><span class="italic">tuple</span>[.Item] ( <span class="italic">index</span> )
+Item ( <span class="italic">tuple</span>, <span class="italic">index</span> )</pre>
+
+
+
+<p>Syntax that Returns a Tuple&#8212;one of the following:</p>
+<pre class="programlisting"><a href="mdx_set_spec.htm" title="MDX Set Specification">set</a>[.Item] ( <span class="italic">index</span> )
+Item ( <a href="mdx_set_spec.htm" title="MDX Set Specification">set</a>, <span class="italic">index</span> )</pre>
+
+
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Item function"><thead><tr><th id="hd-d0e104128-col1">Parameter</th><th id="hd-d0e104128-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e104128-col1"><p><a href="mdx_tuple.htm" title="MDX Tuple Specification">tuple</a></p></td>
+<td headers="hd-d0e104128-col2">
+<p>The tuple from which to get a member.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e104128-col1"><p>index</p></td>
+<td headers="hd-d0e104128-col2">
+<p>The usage depends upon whether you are returning a member or a tuple:</p>
+<div class="itemizedlist"><ul type="disc"><li><p>Returning a member: Numeric position (starting from 0) of
+the member to extract from the tuple. A valid value for <span class="italic">index</span> is
+from 0 to 1 less than the size of the input tuple. A value of less than 0,
+or greater than or equal to size of the input tuple, results in an empty member.</p></li><li><p>Returning a tuple: Numeric position (starting from 0) of the
+tuple to extract from the set. A valid value for <span class="italic">index</span> is
+from 0 to 1 less than the size of the input set. A value of less than 0, or
+greater than or equal to size of the input set, results in an empty tuple.</p></li></ul></div>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e104128-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set</a></p></td>
+<td headers="hd-d0e104128-col2">
+<p>The set from which to get a tuple.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p class="bridgehead"><a name="d0e104186"></a>Example 1, Extracting a Member from a Tuple</p>
+<pre class="programlisting">SELECT
+{( [Qtr1], [Sales], [Cola], [Florida], [Actual] ).Item(3)}
+ON COLUMNS 
+FROM Sample.Basic</pre>
+<p>returns:</p>
+<div class="informaltable"><table border="1"><colgroup><col></colgroup><tbody><tr valign="bottom"><td valign="bottom">Florida</td></tr><tr><td>5029</td></tr></tbody></table></div>
+<pre class="programlisting">SELECT
+ {Item(( [Qtr1], [Sales], [Cola], [Florida], [Actual] ), 2)}
+ON COLUMNS 
+FROM Sample.Basic</pre>
+<p>returns:</p>
+<div class="informaltable"><table border="1"><colgroup><col></colgroup><tbody><tr valign="bottom"><td valign="bottom">Cola</td></tr><tr><td>22777</td></tr></tbody></table></div>
+<p class="bridgehead"><a name="d0e104223"></a>Example 2, Extracting a Tuple from a Set</p>
+<p>The following query</p>
+<pre class="programlisting">SELECT
+{CrossJoin
+ (
+  [Market].CHILDREN, 
+  [Product].CHILDREN
+ ).ITEM(0)}
+ ON COLUMNS
+ FROM Sample.Basic</pre>
+<p>returns the first tuple in the set <span class="cCode">CrossJoin([Market].CHILDREN,
+[Product].CHILDREN)</span>, which is <span class="cCode">([East], [Colas])</span>:</p>
+<div class="informaltable"><table border="1"><colgroup><col></colgroup><tbody><tr valign="bottom"><td valign="bottom">East</td></tr><tr valign="bottom"><td valign="bottom">Colas</td></tr><tr><td>12656</td></tr></tbody></table></div>
+<p>The above query can also be written as:</p>
+<pre class="programlisting">SELECT
+{CrossJoin
+ (
+  [Market].CHILDREN, 
+  [Product].CHILDREN
+ )(0)}
+ ON COLUMNS
+ FROM Sample.Basic</pre>
+<p>because the ITEM keyword is optional.</p>
+<p class="bridgehead"><a name="d0e104264"></a>Example 3, Extracting Member from a Set</p>
+<p>Consider the following crossjoined set of Market and Product members:</p>
+<pre class="programlisting">{
+([East],[100]),([East],[200]),([East],[300]),([East],[400]),([East],[Diet]),
+([West],[100]),([West],[200]),([West],[300]),([West],[400]),([West],[Diet]),
+([South],[100]),([South],[200]),([South],[300]),([South],[400]),([South],[Diet]),
+([Central],[100]),([Central],[200]),([Central],[300]),([Central],[400]),([Central],[Diet])
+}</pre>
+<p>The following example</p>
+<pre class="programlisting">CrossJoin([Market].CHILDREN, [Product].CHILDREN).item(0)</pre>
+<p>returns the first tuple of the crossjoined set, <span class="cCode">([East],[100])</span>,
+and the following example</p>
+<pre class="programlisting">CrossJoin([Market].CHILDREN, [Product].CHILDREN).item(0).item(1)</pre>
+<p>returns <span class="cCode">[100]</span>, the second member of the first tuple of
+the crossjoined set.</p>
+
+</div></body></html>

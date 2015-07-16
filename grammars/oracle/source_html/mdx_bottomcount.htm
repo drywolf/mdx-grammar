@@ -1,0 +1,60 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>BottomCount</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_avg.htm" title="Avg"><link rel="next" href="mdx_bottompercent.htm" title="BottomPercent"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_avg.htm';
+var nextPage = 'mdx_bottompercent.htm';
+var tocLinkId = 'mdx_bottomcount';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="bottomcount_techref_proj_maxl_dml_funcs"></a>BottomCount<a class="indexterm" name="d0e93128"></a><a class="indexterm" name="d0e93131"></a><a class="indexterm" name="d0e93134"></a></h1>
+
+
+<p>Returns a set of <span class="italic">n</span> elements ordered
+from smallest to largest, optionally based on an evaluation.</p>
+<p>This function ignores tuples that resulted in missing values after evaluating <span class="italic">numeric value expression</span>.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">BottomCount ( <span class="italic">set</span>, <span class="italic">index</span> [,<span class="italic">numeric_value_expression</span> ] )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the BottomCount function"><thead><tr><th id="hd-d0e93173-col1">Parameter</th><th id="hd-d0e93173-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e93173-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set</a></p></td>
+<td headers="hd-d0e93173-col2">
+<p>The set from which to select the bottom <span class="italic">n</span> elements.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e93173-col1"><p>index</p></td>
+<td headers="hd-d0e93173-col2">
+<p>The number of elements to include in the set (<span class="italic">n</span>).</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e93173-col1"><p>numeric_value_expression</p></td>
+<td headers="hd-d0e93173-col2">
+<p>Optional. An expression further defining the selection criteria (see <a href="mdx_grammar_rules.htm" title="MDX Grammar Rules">MDX Grammar Rules</a>).</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p>The following expression</p>
+<pre class="programlisting">Bottomcount ( [Product].levels(0).members, 10, ( [Sales], [Actual] )  ) </pre>
+<p>returns the set:</p>
+<pre class="programlisting">{ [200-40], [100-30], [400-30], [300-20], [200-30], 
+  [100-20], [100-20], [400-20], [400-10], [300-30] }</pre>
+<p>Therefore, the following query</p>
+<pre class="programlisting">SELECT {[Year].levels(1).members} ON COLUMNS,
+BottomCount ( [Product].levels(0).members, 10, ( [Sales], [Actual] ) ) 
+ON ROWS
+FROM Sample.Basic
+WHERE ( [Sales], [Actual] )</pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Qtr1</td><td>Qtr2</td><td>Qtr3</td><td>Qtr4</td></tr><tr><td>200&#8211;40</td><td>2807</td><td>2922</td><td>2756</td><td>3265</td></tr><tr><td>100&#8211;30</td><td>3187</td><td>3182</td><td>3189</td><td>3283</td></tr><tr><td>400&#8211;30</td><td>3763</td><td>3962</td><td>3995</td><td>4041</td></tr><tr><td>300&#8211;20</td><td>4248</td><td>4638</td><td>4556</td><td>4038</td></tr><tr><td>200&#8211;30</td><td>4440</td><td>4562</td><td>4362</td><td>4195</td></tr><tr><td rowspan="2">100&#8211;20</td><td>7276</td><td>7957</td><td>8057</td><td>7179</td></tr><tr><td>7276</td><td>7957</td><td>8057</td><td>7179</td></tr><tr><td>400&#8211;20</td><td>7771</td><td>8332</td><td>8557</td><td>8010</td></tr><tr><td>400&#8211;10</td><td>8614</td><td>9061</td><td>9527</td><td>8957</td></tr><tr><td>300&#8211;30</td><td>8969</td><td>9105</td><td>9553</td><td>9342</td></tr></tbody></table></div>
+
+</div></body></html>

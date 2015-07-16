@@ -1,0 +1,98 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Lag</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_juliandate.htm" title="JulianDate"><link rel="next" href="mdx_lastchild.htm" title="LastChild"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_juliandate.htm';
+var nextPage = 'mdx_lastchild.htm';
+var tocLinkId = 'mdx_lag';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="lag_techref_proj_maxl_dml_funcs"></a>Lag<a class="indexterm" name="d0e104406"></a></h1>
+
+
+<p>Using the order of members existing in a database outline, returns a
+member that is <span class="italic">n</span> steps behind a given member,
+along the same generation or level (as defined by <span class="italic">layertype</span>).</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+
+<pre class="programlisting">member.Lag (<span class="italic">index</span> [,<span class="italic">layertype</span> ] [, <span class="italic">hierarchy</span> ] )</pre>
+
+
+<pre class="programlisting">Lag ( <span class="italic">member</span>, <span class="italic">index</span> [, <span class="italic">hierarchy</span> ] )</pre>
+
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Lag function"><thead><tr><th id="hd-d0e104474-col1">Parameter</th><th id="hd-d0e104474-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e104474-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a></p></td>
+<td headers="hd-d0e104474-col2">
+<p>The starting member from which .LAG counts to a given number of previous
+members.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e104474-col1"><p>index</p></td>
+<td headers="hd-d0e104474-col2">
+<p>A number <span class="italic">n</span> representing how many
+steps prior to &lt;member&gt; to count.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e104474-col1"><p>layertype</p></td>
+<td headers="hd-d0e104474-col2">
+<p><span class="cCode">GENERATION</span> or <span class="cCode">LEVEL</span>. Generation is the default.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e104474-col1"><p><a href="mdx_hierarchy.htm" title="MDX Hierarchy Specification">hierarchy</a></p></td>
+<td headers="hd-d0e104474-col2">
+<p>Optional. A specific hierarchy within the time dimension.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<div class="itemizedlist"><ul type="disc"><li><p>If the member specified by the Lag function does not exist,
+the result is an empty member. For example, using Sample Basic, <span class="cCode">[Jun].lag
+(12)</span> returns an empty member.</p></li><li><p>When multiple hierarchies are enabled, this function returns
+NULL when the source member is in one hierarchy and the result member belongs
+to a different hierarchy.</p></li></ul></div>
+
+<p class="func_subhead">Example</p>
+<p>The following expression:</p>
+<pre class="programlisting">[Jun].lag (3)</pre>
+<p>returns the member that is 3 steps prior to Jun:</p>
+<pre class="programlisting">[Mar]</pre>
+<p>The following expression:</p>
+<pre class="programlisting">[Jun].lag (-3)</pre>
+<p>returns the member that is 3 steps following Jun:</p>
+<pre class="programlisting">[Sep]</pre>
+<p>For every month, the following query displays the sales and average
+over the last three months.</p>
+<pre class="programlisting">WITH MEMBER
+ [Measures].[Average Sales in Last 3 months]
+AS
+'Avg(
+     {[Year].CurrentMember,
+      [Year].CurrentMember.Lag(1),
+      [Year]. CurrentMember.Lag(2)
+     }, 
+     [Measures].[Sales]
+ )'
+SELECT 
+ {[Measures].[Sales], 
+  [Measures].[Average Sales in Last 3 months] 
+ } 
+ON COLUMNS,
+ [Year].Levels(0).Members
+ON ROWS
+FROM Sample.Basic</pre>
+<p>This query returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Sales</td><td>Average Sales in Last 3 Months</td></tr><tr><td>Jan</td><td>31538</td><td>31538</td></tr><tr><td>Feb</td><td>23069</td><td>31803.500</td></tr><tr><td>March</td><td>32213</td><td>31940</td></tr><tr><td>April</td><td>32917</td><td>32399.667</td></tr><tr><td>May</td><td>33674</td><td>32934.667</td></tr><tr><td>Jun</td><td>35088</td><td>33893</td></tr><tr><td>Jul</td><td>36134</td><td>34965.333</td></tr><tr><td>Aug</td><td>36008</td><td>35743.333</td></tr><tr><td>Sep</td><td>33073</td><td>35071.667</td></tr><tr><td>Oct</td><td>32828</td><td>33969.667</td></tr><tr><td>Nov</td><td>31971</td><td>32624</td></tr><tr><td>Dec</td><td>33342</td><td>32713.667</td></tr></tbody></table></div>
+
+<p class="func_subhead">See Also</p><ul><li><a href="mdx_lead.htm" title="Lead"><span class="FunctionName">Lead</span></a></li><li><a href="mdx_prevmember.htm" title="PrevMember"><span class="FunctionName">PrevMember</span></a></li></ul>
+</div></body></html>

@@ -1,0 +1,54 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>CoalesceEmpty</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_closingperiod.htm" title="ClosingPeriod"><link rel="next" href="mdx_concat.htm" title="Concat"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_closingperiod.htm';
+var nextPage = 'mdx_concat.htm';
+var tocLinkId = 'mdx_coalesceempty';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="coalesceempty_techref_proj_maxl_dml_funcs"></a>CoalesceEmpty<a class="indexterm" name="d0e94710"></a><a class="indexterm" name="d0e94713"></a></h1>
+
+
+<p>Returns the first (from the left) non #Missing value from the given
+value expressions.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">CoalesceEmpty ( <span class="italic">numeric_value_expression1</span>, <span class="italic">numeric_value_expression2</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the CoalesceEmpty function"><thead><tr><th id="hd-d0e94755-col1">Parameter</th><th id="hd-d0e94755-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e94755-col1"><p>numeric_value_expression1</p></td>
+<td headers="hd-d0e94755-col2">
+<p>A numeric value expression (see <a href="mdx_grammar_rules.htm" title="MDX Grammar Rules">MDX Grammar Rules</a>).</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e94755-col1"><p>numeric_value_expression2</p></td>
+<td headers="hd-d0e94755-col2">
+<p>A numeric value expression (see <a href="mdx_grammar_rules.htm" title="MDX Grammar Rules">MDX Grammar Rules</a>).</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>This function returns <span class="italic">numeric_value_expression2</span> if <span class="italic">numeric_value_expression1</span> is #MISSING; otherwise
+it returns <span class="italic">numeric_value_expression1</span>.</p>
+
+<p class="func_subhead">Example</p>
+<pre class="programlisting">CoalesceEmpty([Profit per Ounce], 0)</pre>
+<p>returns the <span class="cCode">[Profit
+per Ounce]</span> value if it is not #MISSING; returns zero otherwise. This
+can be used inside the Order function to coalesce all #MISSING values to zero,
+as shown in the next example:</p>
+<pre class="programlisting">Order([Product].Members, CoalesceEmpty([Profit per Ounce], 0))</pre>
+<p>Without CoalesceEmpty in
+the value expression, the Order function would skip all [Product] members
+with MISSING values for [Profit per Ounce].</p>
+
+<p class="func_subhead">See Also</p><p><li><a href="mdx_order.htm" title="Order"><span class="FunctionName">Order</span></a></li></p>
+</div></body></html>

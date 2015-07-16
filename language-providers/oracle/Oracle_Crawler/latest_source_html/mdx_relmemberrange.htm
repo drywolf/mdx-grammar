@@ -1,0 +1,80 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>RelMemberRange</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_realvalue.htm" title="RealValue"><link rel="next" href="mdx_remainder.htm" title="Remainder"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_realvalue.htm';
+var nextPage = 'mdx_remainder.htm';
+var tocLinkId = 'mdx_relmemberrange';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="relmemberrange_techref_proj_maxl_dml_funcs"></a>RelMemberRange<a class="indexterm" name="d0e110344"></a></h1>
+
+
+<p>Returns a set that is based on the relative position of the specified
+member in the database outline.</p>
+<div class="note"><p class="admonTitle">Note:</p><p>When multiple hierarchies are enabled, this function returns NULL when
+the range begins in one hierarchy and terminates in another hierarchy.</p></div>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">RelMemberRange ( <span class="italic">member</span>, <span class="italic">prevcount</span>, <span class="italic">nextcount</span>, [,<span class="italic">layertype</span>] [, <span class="italic">hierarchy</span> ])</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the RelMemberRange function"><thead><tr><th id="hd-d0e110384-col1">Parameter</th><th id="hd-d0e110384-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e110384-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a></p></td>
+<td headers="hd-d0e110384-col2">
+<p>An input member in the set you want to return.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e110384-col1"><p>prevcount</p></td>
+<td headers="hd-d0e110384-col2">
+<p>The number of members in the same layer specified by <span class="italic">layertype</span> prior
+to <span class="italic">member</span> to include in the return set.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e110384-col1"><p>nextcount</p></td>
+<td headers="hd-d0e110384-col2">
+<p>The number of members in the same layer specified by <span class="italic">layertype</span> following <span class="italic">member</span> to include in the return set.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e110384-col1"><p>layertype</p></td>
+<td headers="hd-d0e110384-col2">
+<p>GENERATION or LEVEL. If omitted, the default is GENERATION. Defines
+whether the set to be returned is based the same generation or on the same
+level as <span class="italic">member</span>.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e110384-col1"><p><a href="mdx_hierarchy.htm" title="MDX Hierarchy Specification">hierarchy</a></p></td>
+<td headers="hd-d0e110384-col2">
+<p>Optional. A specific hierarchy within the time dimension.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p>The following examples are based on ASOSamp.Sample.</p>
+<p class="bridgehead"><a name="d0e110470"></a>Example 1</p>
+<pre class="programlisting">SELECT 
+RelMemberRange ([PORTLAND - OR],1,2)
+ON COLUMNS 
+FROM asosamp.sample </pre>
+<p>This query returns the set:</p>
+<pre class="programlisting">{[PHOENIX - OR],[PORTLAND - OR],[POWERS - OR],[PRAIRIE CITY - OR]}</pre>
+<p class="bridgehead"><a name="d0e110482"></a>Example 2</p>
+<pre class="programlisting">RelMemberRange(Apr, 5, 0)</pre>
+<p>returns the set <span class="cCode">{Jan,
+Feb, Mar, Apr}</span>. Note that the output set has only four members.</p>
+<pre class="programlisting">RelMemberRange(Apr, 5, 10)</pre>
+<p>returns the set <span class="cCode">{Jan,
+Feb, Mar, Apr, May ...,Dec}</span>. Note that the output set has only four
+previous members and seven next members of Apr.</p>
+
+<p class="func_subhead">See Also</p><p><li><a href="mdx_lastperiods.htm" title="LastPeriods"><span class="FunctionName">LastPeriods</span></a></li></p>
+</div></body></html>

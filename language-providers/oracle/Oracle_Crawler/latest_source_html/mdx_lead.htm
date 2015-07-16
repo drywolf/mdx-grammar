@@ -1,0 +1,93 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Lead</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_lastsibling.htm" title="LastSibling"><link rel="next" href="mdx_leaves.htm" title="Leaves"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_lastsibling.htm';
+var nextPage = 'mdx_leaves.htm';
+var tocLinkId = 'mdx_lead';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="lead_techref_proj_maxl_dml_funcs"></a>Lead<a class="indexterm" name="d0e105054"></a></h1>
+
+
+<p>Using the order of members existing in a database outline, returns a
+member that is <span class="italic">n</span> steps past a given member,
+along the same generation or level (as defined by <span class="italic">layertype</span>).</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+
+<pre class="programlisting">member.Lead (<span class="italic">index</span> [,<span class="italic">layertype</span> ] [, <span class="italic">hierarchy</span> ])</pre>
+
+
+<pre class="programlisting">Lead ( <span class="italic">member</span>, <span class="italic">index</span> [, <span class="italic">hierarchy</span> ] )</pre>
+
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Lead function"><thead><tr><th id="hd-d0e105122-col1">Parameter</th><th id="hd-d0e105122-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e105122-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a></p></td>
+<td headers="hd-d0e105122-col2">
+<p>The starting member from which .LEAD counts a given number of following
+members.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e105122-col1"><p>index</p></td>
+<td headers="hd-d0e105122-col2">
+<p>A number <span class="italic">n</span> representing how many
+steps away from &lt;member&gt; to count.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e105122-col1"><p>layertype</p></td>
+<td headers="hd-d0e105122-col2">
+<p><span class="cCode">GENERATION</span> or <span class="cCode">LEVEL</span>.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e105122-col1"><p><a href="mdx_hierarchy.htm" title="MDX Hierarchy Specification">hierarchy</a></p></td>
+<td headers="hd-d0e105122-col2">
+<p>Optional. A specific hierarchy within the time dimension.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<div class="itemizedlist"><ul type="disc"><li><p>If the member specified by the Lead function does not exist,
+the result is an empty member. For example, using Sample Basic, <span class="cCode">[Jun].lead
+(12)</span> returns an empty member.</p></li><li><p>When multiple hierarchies are enabled, this function returns
+NULL when the source member is in one hierarchy and the result member belongs
+to a different hierarchy.</p></li></ul></div>
+
+<p class="func_subhead">Example</p>
+<p>The following expression:</p>
+<pre class="programlisting">[Jan].lead (11)</pre>
+<p>returns the member that is 11 steps past Jan:</p>
+<pre class="programlisting">[Dec]</pre>
+<p>The following expression:</p>
+<pre class="programlisting">[Dec].lead (-11)</pre>
+<p>returns the member that is 11 steps prior to Dec:</p>
+<pre class="programlisting">[Jan]</pre>
+<p>For every month, the following query displays the marketing expenses
+and budgeted sales for the next month.</p>
+<pre class="programlisting">WITH MEMBER
+ [Measures].[Expected Sales in Next month]
+AS
+ '([Measures].[Sales], [Year].CurrentMember.Lead(1))'
+SELECT
+ { 
+  ([Scenario].[Actual], [Measures].[Marketing]),
+  ([Scenario].[Budget], [Measures].[Expected Sales in Next month])
+ } 
+ON COLUMNS,
+[Year].Levels(0).Members 
+ON ROWS
+FROM Sample.Basic</pre>
+<p>This query returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Actual</td><td>Budget</td></tr><tr><td>&nbsp;</td><td>Marketing</td><td>Expected Sales in Next Month</td></tr><tr><td>Jan</td><td>5223</td><td>30000</td></tr><tr><td>Feb</td><td>5289</td><td>30200</td></tr><tr><td>Mar</td><td>5327</td><td>30830</td></tr><tr><td>Apr</td><td>5421</td><td>31510</td></tr><tr><td>May</td><td>5530</td><td>32900</td></tr><tr><td>Jun</td><td>5765</td><td>33870</td></tr><tr><td>Jul</td><td>5985</td><td>33820</td></tr><tr><td>Aug</td><td>6046</td><td>31000</td></tr><tr><td>Sep</td><td>5491</td><td>29110</td></tr><tr><td>Oct</td><td>5388</td><td>29540</td></tr><tr><td>Nov</td><td>5263</td><td>30820</td></tr><tr><td>Dec</td><td>5509</td><td>#Missing</td></tr></tbody></table></div>
+
+<p class="func_subhead">See Also</p><ul><li><a href="mdx_lag.htm" title="Lag"><span class="FunctionName">Lag</span></a></li><li><a href="mdx_nextmember.htm" title="NextMember"><span class="FunctionName">NextMember</span></a></li></ul>
+</div></body></html>

@@ -1,0 +1,104 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>Avg</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_attributeex.htm" title="AttributeEx"><link rel="next" href="mdx_bottomcount.htm" title="BottomCount"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_attributeex.htm';
+var nextPage = 'mdx_bottomcount.htm';
+var tocLinkId = 'mdx_avg';
+// --></script>
+                  <script type="text/javascript">
+                    var AKSB=AKSB||{};AKSB.q=[];AKSB.mark=function(c,a){AKSB.q.push(["mark",c,a||(new Date).getTime()])};AKSB.measure=function(c,a,b){AKSB.q.push(["measure",c,a,b||(new Date).getTime()])};AKSB.done=function(c){AKSB.q.push(["done",c])};AKSB.mark("firstbyte",(new Date).getTime());
+                    AKSB.prof={custid:"322179",ustr:"",originlat:0,clientrtt:22,ghostip:"2.20.182.138",ipv6:false,pct:10,xhrtest:false,clientip:"178.190.128.193",requestid:"2d1a532b",protocol:"",akM:"x",akN:"ae"};
+                    (function(c){var a=document.createElement("iframe");a.src="javascript:false";(a.frameElement||a).style.cssText="width: 0; height: 0; border: 0; display: none";var b=document.getElementsByTagName("script"),b=b[b.length-1];b.parentNode.insertBefore(a,b);a=a.contentWindow.document;b=String.fromCharCode;c=b(60)+"body onload=\"var js = document.createElement('script');js.id = 'aksb-ifr';js.src = '"+c+"';document.body.appendChild(js);\""+b(62);a.open().write(c);a.close()})(("https:"===document.location.protocol?
+                    "https:":"http:")+"//ds-aksb-a.akamaihd.net/aksb.min.js");
+                  </script>
+                  </head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="avg_techref_proj_maxl_dml_funcs"></a>Avg<a class="indexterm" name="d0e92838"></a><a class="indexterm" name="d0e92843"></a><a class="indexterm" name="d0e92848"></a></h1>
+
+
+<p>Returns the average of values found in the tuples of a set.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">Avg ( <span class="italic">set</span> [,<span class="italic">numeric_value_expression</span> [,IncludeEmpty ] ])</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the Avg function"><thead><tr><th id="hd-d0e92901-col1">Parameter</th><th id="hd-d0e92901-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e92901-col1"><p><a href="mdx_set_spec.htm" title="MDX Set Specification">set</a></p></td>
+<td headers="hd-d0e92901-col2">
+<p>Set specification.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e92901-col1"><p>numeric_value_expression</p></td>
+<td headers="hd-d0e92901-col2">
+<p>Numeric value expression (see <a href="mdx_grammar_rules.htm" title="MDX Grammar Rules">MDX Grammar Rules</a>). Avg() sums the numeric value expression and then
+takes the average.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e92901-col1"><p>IncludeEmpty</p></td>
+<td headers="hd-d0e92901-col2">
+<p>Use this keyword if you want to include in the average any tuples with
+#MISSING values. Otherwise, they are omitted by default.</p>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<p>The average is calculated as (sum over the tuples in the set of <span class="italic">numeric_value_expr</span>) / <span class="italic">count</span>,
+where <span class="italic">count</span> is the number of tuples in
+the set. Tuples with missing values are not included in count unless IncludeEmpty
+is specified.</p>
+<p>The return value of Avg is #MISSING if either of the following is true:</p>
+<div class="itemizedlist"><ul type="disc"><li><p>The input set is empty.</p></li><li><p>All tuple evaluations result in #MISSING values.</p></li></ul></div>
+
+<p class="func_subhead">Example</p>
+<p><span class="bold"><strong>Empty Values Included in Calculation of the Average</strong></span></p>
+<p>The following query</p>
+<pre class="programlisting">WITH MEMBER
+ [Market].[Western Avg]
+AS
+ 'Avg ( [Market].[California]:[Market].[Nevada], [Measures].[Sales]<span class="bold"><strong>, INCLUDEEMPTY</strong></span>)'
+SELECT
+ { [Product].[Colas].children }
+ON COLUMNS,
+ { [Market].[West].children, [Market].[Western Avg] }
+ON ROWS
+FROM 
+ Sample.Basic
+WHERE
+ ([Measures].[Sales], [Year].[Jan], [Scenario].[Actual])</pre>
+<p>returns the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Cola</td><td>Diet Cola</td><td>Caffeine Free Cola</td></tr><tr><td>California</td><td>678</td><td>118</td><td>145</td></tr><tr><td>Oregon</td><td>160</td><td>140</td><td>150</td></tr><tr><td>Washington</td><td>130</td><td>190</td><td>#Missing</td></tr><tr><td>Utah</td><td>130</td><td>190</td><td>170</td></tr><tr><td>Nevada</td><td>76</td><td>62</td><td>#Missing</td></tr><tr><td>Western Avg</td><td>234.8</td><td>140</td><td>93</td></tr></tbody></table></div>
+<p>Western Avg for Caffeine Free Cola is 93 because the sales for all Western
+states is divided by 5, the number of states.</p>
+<p><span class="bold"><strong>Empty Values Not Included in Calculation of the
+Average</strong></span></p>
+<p>The following query is the same as the above query, except that it does
+not use IncludeEmpty:</p>
+<pre class="programlisting">WITH MEMBER
+ [Market].[Western Avg]
+AS
+ 'Avg ( [Market].[California]:[Market].[Nevada], [Measures].[Sales])'
+SELECT
+ { [Product].[Colas].children }
+ON COLUMNS,
+ { [Market].[West].children, [Market].[Western Avg] }
+ON ROWS
+FROM 
+ Sample.Basic
+WHERE
+ ([Measures].[Sales], [Year].[Jan], [Scenario].[Actual])
+</pre>
+<p>returning the grid:</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col></colgroup><tbody><tr><td>&nbsp;</td><td>Cola</td><td>Diet Cola</td><td>Caffeine Free Cola</td></tr><tr><td>California</td><td>678</td><td>118</td><td>145</td></tr><tr><td>Oregon</td><td>160</td><td>140</td><td>150</td></tr><tr><td>Washington</td><td>130</td><td>190</td><td>#Missing</td></tr><tr><td>Utah</td><td>130</td><td>190</td><td>170</td></tr><tr><td>Nevada</td><td>76</td><td>62</td><td>#Missing</td></tr><tr><td>Western Avg</td><td>234.8</td><td>140</td><td>155</td></tr></tbody></table></div>
+<p>Western Avg for Caffeine Free Cola is 155 because the sales for all
+Western states is divided by 3, the number of states that do not have empty
+values for Caffeine Free Cola.</p>
+
+</div></body></html>

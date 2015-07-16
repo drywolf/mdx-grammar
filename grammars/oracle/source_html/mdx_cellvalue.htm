@@ -1,0 +1,80 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>CellValue</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_case.htm" title="Case"><link rel="next" href="mdx_children.htm" title="Children"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_case.htm';
+var nextPage = 'mdx_children.htm';
+var tocLinkId = 'mdx_cellvalue';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="cellvalue_techref_proj_maxl_dml_funcs"></a>CellValue<a class="indexterm" name="d0e94181"></a></h1>
+
+
+<p>Returns the numeric value of the current cell.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">CellValue</pre>
+
+<p class="func_subhead">Notes</p>
+<div class="itemizedlist"><ul type="disc"><li><p>This function can be useful when defining format strings for
+a member. Most MDX expressions can be used to specify format strings; however,
+format strings cannot contain references to values of data cells other than
+the current cell value being formatted. Use this function to reference the
+current cell value.</p></li><li><p>Enclose all format strings within the MdxFormat( ) directive
+as shown in the examples.</p></li></ul></div>
+<p>
+
+<p class="func_subhead">Example</p>
+<p class="bridgehead"><a name="d0e94218"></a>Example 1</p>
+<p>The following format string displays negative values for the current
+measure if the current [AccountTypes] member is of type &#8220;Expense&#8221;.
+CellValue refers to the current cell value that is being formatted. The CurrentMember
+function in the expression refers to the context of the cell being formatted.</p>
+<pre class="programlisting">/* Display negative values if current Account is an Expense type account */
+MdxFormat(
+IIF(IsUda(AccountTypes.CurrentMember, "Expense"),
+    NumToStr(-CellValue()),
+    NumToStr(CellValue()))
+)
+</pre>
+<p class="bridgehead"><a name="d0e94227"></a>Example 2</p>
+<p>The following format string displays negative cell values as positive
+values enclosed in parentheses.</p>
+<pre class="programlisting">
+MdxFormat(
+   IIF(
+         CellValue() &lt; 0,
+         Concat(Concat("(", numtostr(-CellValue())), ")" ),
+         numtostr(CellValue())
+      )
+) </pre>
+<p class="bridgehead"><a name="d0e94236"></a>Example 3</p>
+<p>This example illustrates a dynamic member [Variance %] along the [Scenario]
+dimension. [Variance %] has the following formula, which specifies how to
+calculate its value from [Actual] and [Budget]. </p>
+<p class="bridgehead"><a name="d0e94242"></a>[Variance %] Formula</p>
+<pre class="programlisting">IIF(Is(Measures.CurrentMember, Title) OR
+    Is(Measures.CurrentMember, Performance),
+     (Actual &#8211; Budget) * 10, (Actual &#8211; Budget)*100/Budget)
+</pre>
+<p>[Variance %] also has the following format string, which specifies how
+its values should be displayed. In this case, based on the percentage value
+computed for a [Variance %] cell, a text value is displayed which conveys
+the importance of the number.</p>
+<p class="bridgehead"><a name="d0e94251"></a>[Variance %] Format String</p>
+<pre class="programlisting">
+MdxFormat(
+CASE
+    WHEN CellValue() &lt;= 5 THEN		&#8220;Low&#8221;
+    WHEN CellValue() &lt;= 10 THEN		&#8220;Medium&#8221;
+    WHEN CellValue() &lt;= 15 THEN		&#8220;High&#8221;
+    ELSE                                 &#8220;Very High&#8221;
+END
+)</pre>
+
+</div></body></html>

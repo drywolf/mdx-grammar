@@ -1,0 +1,66 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>IsChild</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_isancestor.htm" title="IsAncestor"><link rel="next" href="mdx_isempty.htm" title="IsEmpty"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_isancestor.htm';
+var nextPage = 'mdx_isempty.htm';
+var tocLinkId = 'mdx_ischild';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="ischild_techref_proj_maxl_dml_funcs"></a>IsChild<a class="indexterm" name="d0e102752"></a><a class="indexterm" name="d0e102757"></a></h1>
+
+
+<p>Returns TRUE if the first member is a child of the second member and,
+optionally, if the first member is equal to the second member.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">IsChild ( <span class="italic">member1</span> , <span class="italic">member2</span> [, INCLUDEMEMBER])</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the IsChild function"><thead><tr><th id="hd-d0e102786-col1">Parameter</th><th id="hd-d0e102786-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e102786-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member1</a></p></td>
+<td headers="hd-d0e102786-col2">
+<p>A member specification.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e102786-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member2</a></p></td>
+<td headers="hd-d0e102786-col2">
+<p>A member specification.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e102786-col1"><p>INCLUDEMEMBER</p></td>
+<td headers="hd-d0e102786-col2">
+<p>Optional. Use this keyword if you want IsChild to return TRUE if the
+first member is equal to the second member.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p class="bridgehead"><a name="d0e102830"></a>Example 1</p>
+<p>The following query returns all Market dimension members for which the
+expression <span class="cCode">IsChild([Market].CurrentMember, [East])</span> returns TRUE;
+in other words, the query returns all children of East.</p>
+<pre class="programlisting">SELECT
+ Filter([Market].Members, IsChild([Market].CurrentMember, [East]))
+ON COLUMNS
+FROM Sample.Basic</pre>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col></colgroup><tbody><tr><td valign="bottom">New York</td><td valign="bottom">Massachusetts</td><td valign="bottom">Florida</td><td valign="bottom">Connecticut</td><td valign="bottom">New Hampshire</td></tr><tr><td>8202</td><td>6712</td><td>5029</td><td>3093</td><td>1125</td></tr></tbody></table></div>
+<p class="bridgehead"><a name="d0e102873"></a>Example 2</p>
+<p>The following query is the same as the above query, except that it uses
+INCLUDEMEMBER. It returns all Market dimension members for which the expression <span class="cCode">IsChild([Market].CurrentMember,
+[East])</span> returns TRUE; in other words, the query returns East and all
+children of East.</p>
+<pre class="programlisting">SELECT
+ Filter([Market].Members, IsChild([Market].CurrentMember, [East], INCLUDEMEMBER))
+ON COLUMNS
+FROM Sample.Basic</pre>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col><col><col></colgroup><tbody><tr><td valign="bottom">East</td><td valign="bottom">New York</td><td valign="bottom">Massachusetts</td><td valign="bottom">Florida</td><td valign="bottom">Connecticut</td><td valign="bottom">New Hampshire</td></tr><tr><td>24161</td><td>8202</td><td>6712</td><td>5029</td><td>3093</td><td>1125</td></tr></tbody></table></div>
+
+</div></body></html>

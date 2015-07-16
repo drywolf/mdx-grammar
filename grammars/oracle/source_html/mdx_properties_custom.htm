@@ -1,0 +1,26 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>MDX Custom Properties</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="mdx_properties.htm" title="About MDX Properties"><link rel="prev" href="mdx_properties_intrinsic.htm" title="MDX Intrinsic Properties"><link rel="next" href="mdx_properties_opt.htm" title="MDX Optimization Properties"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_properties_intrinsic.htm';
+var nextPage = 'mdx_properties_opt.htm';
+var tocLinkId = 'mdx_properties_custom';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="section" lang="EN-US"><div class="titlepage"><div><div><h1 class="title" style="clear: both"><a name="properties_techref_proj_maxl_dml_rules_d0e107"></a>MDX Custom Properties</h1></div></div></div><p>MDX in Essbase supports three types of custom
+properties: attribute properties, UDA properties, and alias-table-name properties.
+Attribute properties are defined by the attribute dimensions in an outline.
+In the Sample Basic database, the <span class="cCode">[Pkg Type]</span> attribute dimension
+describes the packaging characteristics of members in the Product dimension.
+This information can be queried in MDX using the property name <span class="cCode">[Pkg
+Type]</span>.</p><p>Attribute properties are defined only for specific dimensions and only
+for a specific level in each dimension. For example, in the Sample Basic outline, <span class="cCode">[Ounces]</span> is
+an attribute property defined only for members in the Product dimension, and
+this property has valid values only for the level-0 members of the Product
+dimension. The <span class="cCode">[Ounces]</span> property does not exist for other dimensions,
+such as Market. The <span class="cCode">[Ounces]</span> property for a non level-0 member
+in the Product dimension is a NULL value. The attribute properties in an outline
+are identified by the names of attribute dimensions in that outline.</p><p>The custom properties also include UDAs. For example, <span class="cCode">[Major Market]</span> is
+a UDA property defined on Market dimension members. It returns a TRUE value
+if <span class="cCode">[Major Market]</span> UDA is defined for a member, and FALSE otherwise.</p><p>Custom alias-table-name properties enable you to query for alias table
+names used by each member returned in the output.</p></div></body></html>

@@ -1,0 +1,120 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>MDX With Section</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="mdx_syn_gram.htm" title="MDX Syntax and Grammar Rules"><link rel="prev" href="mdx_set_spec.htm" title="MDX Set Specification"><link rel="next" href="mdx_dimspec.htm" title="MDX Dimension Specification"><meta name="keywords" content="calculated members in MDX named sets in MDX solve order in MDX queries WITH&#xA;section in MDX queries "><meta name="keywords" content="calculated members in MDX named sets in MDX solve order in MDX queries WITH&#xA;section in MDX queries "><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_set_spec.htm';
+var nextPage = 'mdx_dimspec.htm';
+var tocLinkId = 'mdx_with_spec';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="section" lang="EN-US"><div class="titlepage"><div><div><h1 class="title" style="clear: both"><a name="with_spec_techref_proj_maxl_dml_rules"></a>MDX With Section<a class="indexterm" name="d0e87835"></a><a class="indexterm" name="d0e87838"></a><a class="indexterm" name="d0e87841"></a><a class="indexterm" name="d0e87844"></a></h1></div></div></div><p>The WITH section is for defining referenceable sets or members that
+can be used multiple times during the life of a query.</p><p>Beginning with the keyword <span class="cCode">WITH</span> at the very start of a
+query, you can define a buffer of re-usable logic lasting for the length of
+the query execution. This can save time in lines of code written as well as
+in execution time.</p><p>If varying attributes are enabled, the WITH section can also be used
+to define perspective for each varying attribute dimension. In case of multiple
+varying attributes, perspective setting can be defined for each varying attribute
+dimension separately.</p><p>In the WITH section, you can create the following re-usable elements:</p><div class="itemizedlist"><ul type="disc"><li><p>Calculated members</p></li><li><p>Named Sets</p></li></ul></div><p class="bridgehead"><a name="d0e87865"></a>Syntax</p><pre class="programlisting">WITH
+      SET <span class="italic">set_name</span> AS ' <span class="italic">set</span> '
+      | MEMBER <span class="italic">calculated_member_name</span> AS ' &lt;numeric_value_expr&gt; '
+      [, &lt;solve_order_specification&gt; ]
+      | &lt;perspective_specification&gt;</pre><div class="informaltable"><table border="1"><colgroup><col><col></colgroup><thead><tr><th id="hd-d0e87879-d0e87883-1" valign="top">Item</th><th id="hd-d0e87879-d0e87883-2" valign="top">Description</th></tr></thead><tbody><tr><td headers="hd-d0e87879-d0e87883-1"><span class="italic">set_name</span></td><td headers="hd-d0e87879-d0e87883-2">The name of the set that will be defined after the <span class="cCode">AS</span> keyword.
+Any name can be used; it should be something that helps you remember the nature
+of the set. For example, a set name could be <span class="cCode">Best5Books</span>, which
+names a set of the five top-selling paperback titles in December:<pre class="programlisting">WITH
+SET <span class="bold"><strong>[Best5Books]</strong></span> AS
+ 'Topcount (
+   [Paperbacks].members,
+   5,
+   ([Measures].[Sales], [Scenario].[Actual],
+    [Year].[Dec])
+  )'</pre></td></tr><tr><td headers="hd-d0e87879-d0e87883-1"><span class="italic">set</span></td><td headers="hd-d0e87879-d0e87883-2">The logic of a <a href="mdx_set_spec.htm" title="MDX Set Specification">set
+specification</a>; this can be re-used because it is being named. Must
+be enclosed in single quotation marks. In the example above, the Topcount
+function defines the entire set.</td></tr><tr><td headers="hd-d0e87879-d0e87883-1"><span class="italic">calculated_member_name</span></td><td headers="hd-d0e87879-d0e87883-2">A name for a hypothetical member existing for the duration of query
+execution. In its definition, you must associate the calculated member with
+a dimension (as [Max Qtr2 Sales] is associated with the Measures dimension,
+in the example that follows). <p>For example, the calculated member named <span class="cCode">Max
+Qtr2 Sales</span> has its value calculated at execution time using the Max
+function:</p><pre class="programlisting">WITH
+MEMBER [Measures].[<span class="bold"><strong>Max Qtr2 Sales</strong></span>] AS
+  'Max (
+    {[Year].[Qtr2]},
+    [Measures].[Sales]
+  )'</pre><p>Calculated members do not work with metadata functions
+such as Children, Descendants, Parent, and Siblings. For example, if there
+is a calcualted member defined as [CM1], you cannot use it in the following
+way: <span class="cCode">[CM1].children</span>.</p></td></tr><tr><td headers="hd-d0e87879-d0e87883-1">&lt;numeric_value_expr&gt;</td><td headers="hd-d0e87879-d0e87883-2">An expression involving real members in the database outline, compared
+using mathematical functions. The value resulting from the expression is applied
+to the calculated member. By using calculated members, you can create and
+analyze a great many scenarios without the need to modify the database outline.</td></tr><tr><td headers="hd-d0e87879-d0e87883-1">&lt;solve_order_specification&gt;</td><td headers="hd-d0e87879-d0e87883-2">Optional. By adding <span class="cCode">,SOLVE_ORDER = <span class="italic">n</span></span> to
+the end of each calculated member, you can specify the order in which the
+members are calculated. For example, solve order in the following hypothetical
+query is indicated in bold:<pre class="programlisting">WITH
+MEMBER [Product].[mbr1] AS
+ 'calculation'<span class="bold"><strong>, SOLVE_ORDER = 2</strong></span>
+
+MEMBER [Product].[mbr2] AS
+ 'calculation'<span class="bold"><strong>, SOLVE_ORDER = 1</strong></span>
+
+SELECT
+ {[Year].children}
+on columns,
+ {
+  [Product].[mbr1],
+  [Product].[mbr2]
+ }
+on rows</pre><p><span class="bold"><strong>Usage Example for Solve
+Order</strong></span></p><pre class="programlisting">WITH 
+MEMBER 
+  [Measures].[Profit Percent] 
+  AS 'Profit *100 /Sales', SOLVE_ORDER=20  
+MEMBER 
+  [Year].[FirstFourMonths] 
+  AS 'Sum(Jan:Apr)',SOLVE_ORDER=10  
+SELECT
+  {[Profit], [Sales], [Profit Percent]} 
+ON COLUMNS,
+  {[Jan], [Feb], [Mar], [Apr], [FirstFourMonths]} 
+ON ROWS
+FROM Sample.Basic</pre><p>The calculated member <span class="cCode">[Profit
+Percent]</span>, defined in the Measures dimension, calculates Profit as a
+percentage of Sales.</p><p>The calculated member <span class="cCode">[FirstFourMonths]</span>,
+defined in the Year dimension, calculates sum of data for first four months.</p><p>When
+data for <span class="cCode">([Profit Percent], [FirstFourMonths])</span> is evaluated,
+SOLVE_ORDER specifies the order of evaluation, ensuring that <span class="cCode">[Profit
+Percent]</span> is evaluated first, and resulting in a correct value for percentage.
+If you change the order of evaluation, you will see that the percentage value
+is not correct. In this example, SOLVE_ORDER specifies that sum should be
+calculated before percentage.</p><p><span class="bold"><strong>Tie-Case Example
+for Solve Order</strong></span></p><p>When evaluating a cell identified by
+multiple calculated members, the SOLVE_ORDER value is used to determine the
+order in which the expressions are evaluated. The expression that is used
+to evaluate the cell is that of the calculated member with the highest SOLVE_ORDER
+value. In this case, [Profit Percent]'s expression is used to evaluate ([Profit
+Percent], [FirstFourMonths]). The example above is calculated as:</p><pre class="programlisting">([Profit Percent], [FirstFourMonths])
+    = ([Profit], [FirstFourMonths]) * 100 / ([Sales], [FirstFourMonths])
+    = (([Profit], [Jan]) + ([Profit], [Feb]) + ([Profit], [Mar]) + ([Profit], [Apr])) * 100 / 
+          (([Sales], [Jan]) + ([Sales], [Feb]) + ([Sales], [Mar]) + ([Sales], [Apr]))</pre><p>A
+tie situation is possible because calculated members may have the same SOLVE_ORDER
+value. The tie is broken based on the position of the dimensions to which
+the calculated members are attached:</p><div class="itemizedlist"><ul type="disc"><li><p>For aggregate storage outlines, the calculated member belonging
+to the dimension that comes later in the outline is the one that wins in this
+case.</p></li><li><p>For block storage database outlines (and for pre-Release 7.1.2
+aggregate storage outlines), the solve order property applies to calculated
+members defined in an MDX query. The calculated member belonging to the dimension
+that comes earlier in the outline is the one that wins in this case, and its
+expression is used to evaluate the cell.</p></li></ul></div></td></tr><tr><td headers="hd-d0e87879-d0e87883-1">&lt;perspective_specification&gt;</td><td headers="hd-d0e87879-d0e87883-2"><pre class="programlisting">PERSPECTIVE REALITY | <span class="italic">tuple</span> FOR <span class="italic">dimension</span></pre><p>When a database uses
+varying attributes, base members associated with the varying attributes are
+aggregated according to the specified perspective. </p><p>You can set
+the perspective to reality (using the REALITY keyword) or to explicit (using
+an input tuple consisting of level 0 members).</p><p>Reality-based evaluation
+and reporting is the default, in which independent members are determined
+by the current context.</p><p>When using explicit evaluation and reporting,
+you specify a tuple of level 0 members from the independent dimension to be
+used as the context.</p><p>For an example of a reality-based perspective,
+see the example for <a href="mdx_attributeex.htm" title="AttributeEx"><span class="FunctionName">AttributeEx</span></a>. For an example of an explicit perspective, see
+the example for <a href="mdx_withattrex.htm" title="WithAttrEx"><span class="FunctionName">WithAttrEx</span></a>.</p></td></tr></tbody></table></div><p class="bridgehead"><a name="with_spec_techref_proj_maxl_dml_rules_d0e153"></a>Calculated Members</p><p>For examples of queries using calculated members, see examples for the
+following functions:</p><p><a href="mdx_abs.htm" title="Abs"><span class="FunctionName">Abs</span></a></p><p><a href="mdx_avg.htm" title="Avg"><span class="FunctionName">Avg</span></a></p><p><a href="mdx_bottompercent.htm" title="BottomPercent"><span class="FunctionName">BottomPercent</span></a></p><p><a href="mdx_case.htm" title="Case"><span class="FunctionName">Case</span></a></p><p><a href="mdx_closingperiod.htm" title="ClosingPeriod"><span class="FunctionName">ClosingPeriod</span></a></p><p><a href="mdx_count.htm" title="Count"><span class="FunctionName">Count</span></a></p><p><a href="mdx_exp.htm" title="Exp"><span class="FunctionName">Exp</span></a></p><p><a href="mdx_firstsibling.htm" title="FirstSibling"><span class="FunctionName">FirstSibling</span></a></p><p><a href="mdx_iif.htm" title="IIF"><span class="FunctionName">IIF</span></a></p><p><a href="mdx_int.htm" title="Int"><span class="FunctionName">Int</span></a></p><p><a href="mdx_lag.htm" title="Lag"><span class="FunctionName">Lag</span></a></p><p><a href="mdx_lastperiods.htm" title="LastPeriods"><span class="FunctionName">LastPeriods</span></a></p><p><a href="mdx_lead.htm" title="Lead"><span class="FunctionName">Lead</span></a></p><p><a href="mdx_ln.htm" title="Ln"><span class="FunctionName">Ln</span></a></p><p><a href="mdx_max.htm" title="Max"><span class="FunctionName">Max</span></a></p><p><a href="mdx_min.htm" title="Min"><span class="FunctionName">Min</span></a></p><p><a href="mdx_mod.htm" title="Mod"><span class="FunctionName">Mod</span></a></p><p><a href="mdx_nextmember.htm" title="NextMember"><span class="FunctionName">NextMember</span></a></p><p><a href="mdx_nonemptycount.htm" title="NonEmptyCount"><span class="FunctionName">NonEmptyCount</span></a></p><p><a href="mdx_ordinal.htm" title="Ordinal"><span class="FunctionName">Ordinal</span></a></p><p><a href="mdx_prevmember.htm" title="PrevMember"><span class="FunctionName">PrevMember</span></a></p><p><a href="mdx_remainder.htm" title="Remainder"><span class="FunctionName">Remainder</span></a></p><p><a href="mdx_sum.htm" title="Sum"><span class="FunctionName">Sum</span></a></p><p><a href="mdx_todate.htm" title="Todate"><span class="FunctionName">Todate</span></a></p><p class="bridgehead"><a name="with_spec_techref_proj_maxl_dml_rules_d0e231"></a>Named Sets</p><p>For examples of queries using named sets, see examples for the following
+functions:</p><p><a href="mdx_bottompercent.htm" title="BottomPercent"><span class="FunctionName">BottomPercent</span></a></p><p><a href="mdx_currenttuple.htm" title="CurrentTuple"><span class="FunctionName">CurrentTuple</span></a></p><p><a href="mdx_filter.htm">Filter (example 3)</a></p><p><a href="mdx_generate.htm" title="Generate"><span class="FunctionName">Generate</span></a></p><p><a href="mdx_parent.htm">Parent (example 2)</a></p><p class="bridgehead"><a name="with_spec_3"></a>Perspective</p><p>For examples of varying attribute queries using perspective, see examples
+for the following functions:</p><p><a href="mdx_attributeex.htm" title="AttributeEx"><span class="FunctionName">AttributeEx</span></a></p><p><a href="mdx_withattrex.htm" title="WithAttrEx"><span class="FunctionName">WithAttrEx</span></a></p></div></body></html>

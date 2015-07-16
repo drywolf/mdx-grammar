@@ -1,0 +1,61 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>UnixDate</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_union.htm" title="Union"><link rel="next" href="mdx_upper.htm" title="Upper"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_union.htm';
+var nextPage = 'mdx_upper.htm';
+var tocLinkId = 'mdx_unixdate';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="unixdate_techref_proj_maxl_dml_funcs"></a>UnixDate<a class="indexterm" name="d0e114593"></a><a class="indexterm" name="d0e114598"></a></h1>
+
+
+<p>To the given Julian date, get its UNIX date.</p>
+
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">UnixDate ( <span class="italic">juliandate</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the UnixDate function"><thead><tr><th id="hd-d0e114637-col1">Parameter</th><th id="hd-d0e114637-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e114637-col1"><p>juliandate</p></td>
+<td headers="hd-d0e114637-col2">
+<p>A number representing the Julian date. This number is a continuous count
+of days and fractions elapsed since noon Universal Time on January 1, 4713
+BC in the proleptic Julian calendar.</p>
+<div class="note"><p class="admonTitle">Note:</p><p>For Excel workbooks using 1900 date system, (JulianDate &#8211; 2415018.50)
+gets the sequential serial number as per 1900 date system.</p></div>
+</td>
+</tr>
+</tbody></table></div>
+<p class="func_subhead">Notes</p>
+<div class="itemizedlist"><ul type="disc"><li><p>This function is useful in converting the Julian date to UNIX
+date.</p></li><li><p>In the 1900 date system, the first day that is supported is
+January 1, 1900. When you enter a date, the date is converted into a serial
+number that represents the number of elapsed days since January 1, 1900. For
+example, if you enter July 5, 1998, Microsoft Excel converts the date to the
+serial number 35981.</p><p>By default, Microsoft Excel for Windows uses
+the 1900 date system. The 1900 date system allows greater compatibility between
+Microsoft Excel and other spreadsheet programs, such as Lotus 1-2-3, that
+are designed to run under MS-DOS or Microsoft Windows.</p></li></ul></div>
+
+<p class="func_subhead">Return Value</p>
+
+<p>This function returns <span class="cCode"><span class="italic">date</span></span> a
+number representing the input date between January 1, 1970 and Dec 31, 2037.
+The number is the number of seconds elapsed since midnight, January 1, 1970.
+To retrieve this number, use any of the following functions: Today(), TodateEx(),
+GetFirstDate(), GetLastDate(), DateRoll().</p>
+<p>Date-Time type attribute properties of a member can also be used to
+retrieve this number. For example: <span class="cCode">Product.currentmember.[Intro Date]</span> returns
+the Introduction or release date for the current product in context. <span class="cCode">[Cola].[Intro
+Date]</span> returns the Introduction or release date for the &#8220;Cola&#8221;
+product.</p>
+
+
+<p class="func_subhead">See Also</p><p><li><a href="mdx_juliandate.htm" title="JulianDate"><span class="FunctionName">JulianDate</span></a></li></p>
+</div></body></html>

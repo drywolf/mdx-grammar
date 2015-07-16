@@ -1,0 +1,56 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>@ISLEV</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="calc_func_ref.htm" title="Calculation Function Reference"><link rel="prev" href="isisibling.htm" title="@ISISIBLING"><link rel="next" href="ismbr.htm" title="@ISMBR"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'isisibling.htm';
+var nextPage = 'ismbr.htm';
+var tocLinkId = 'islev';
+// --></script>
+                  <script type="text/javascript">
+                    var AKSB=AKSB||{};AKSB.q=[];AKSB.mark=function(c,a){AKSB.q.push(["mark",c,a||(new Date).getTime()])};AKSB.measure=function(c,a,b){AKSB.q.push(["measure",c,a,b||(new Date).getTime()])};AKSB.done=function(c){AKSB.q.push(["done",c])};AKSB.mark("firstbyte",(new Date).getTime());
+                    AKSB.prof={custid:"322179",ustr:"",originlat:0,clientrtt:23,ghostip:"2.20.182.127",ipv6:false,pct:10,xhrtest:false,clientip:"194.166.212.83",requestid:"26dfc2ed",protocol:"",akM:"x",akN:"ae"};
+                    (function(c){var a=document.createElement("iframe");a.src="javascript:false";(a.frameElement||a).style.cssText="width: 0; height: 0; border: 0; display: none";var b=document.getElementsByTagName("script"),b=b[b.length-1];b.parentNode.insertBefore(a,b);a=a.contentWindow.document;b=String.fromCharCode;c=b(60)+"body onload=\"var js = document.createElement('script');js.id = 'aksb-ifr';js.src = '"+c+"';document.body.appendChild(js);\""+b(62);a.open().write(c);a.close()})(("https:"===document.location.protocol?
+                    "https:":"http:")+"//ds-aksb-a.akamaihd.net/aksb.min.js");
+                  </script>
+                  </head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="islev_techref_proj_funcs"></a>@ISLEV<a class="indexterm" name="d0e10924"></a><a class="indexterm" name="d0e10927"></a></h1>
+
+
+<p>Returns TRUE if the current member of the specified dimension is in
+the specified level.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">@ISLEV (<span class="italic">dimName</span>, <span class="italic">levName | levNum</span>)</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the @ISLEV function"><thead><tr><th id="hd-d0e10956-col1">Parameter</th><th id="hd-d0e10956-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e10956-col1"><p>dimName</p></td>
+<td headers="hd-d0e10956-col2">
+<p>Name of a dimension.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e10956-col1"><p>levName | levNum</p></td>
+<td headers="hd-d0e10956-col2">
+<p>A level name or an integer value that defines the number of a level.
+A value of 0 or a negative integer defines a level number.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<p>In the Sample Basic database:</p>
+<pre class="programlisting">@ISLEV(Market,0)</pre>
+<p>Returns TRUE if the current
+member of Market is New York, California, Texas, or Illinois.</p>
+<pre class="programlisting">@ISLEV(Year,1)</pre>
+<p>Returns FALSE if the current
+member of Year is Jan, Feb, or Mar.</p>
+
+<p class="func_subhead">See Also</p><ul><li><a href="issamelev.htm" title="@ISSAMELEV"><span class="FunctionName">@ISSAMELEV</span></a></li><li><a href="isgen.htm" title="@ISGEN"><span class="FunctionName">@ISGEN</span></a></li></ul>
+</div></body></html>

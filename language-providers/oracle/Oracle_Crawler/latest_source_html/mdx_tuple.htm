@@ -1,0 +1,22 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>MDX Tuple Specification</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="mdx_syn_gram.htm" title="MDX Syntax and Grammar Rules"><link rel="prev" href="mdx_hierarchy.htm" title="MDX Hierarchy Specification"><link rel="next" href="mdx_create_set.htm" title="MDX Create Set / Delete Set"><meta name="keywords" content="tuples in MDX "><meta name="keywords" content="tuples in MDX "><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_hierarchy.htm';
+var nextPage = 'mdx_create_set.htm';
+var tocLinkId = 'mdx_tuple';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="section" lang="EN-US"><div class="titlepage"><div><div><h1 class="title" style="clear: both"><a name="tuple_techref_proj_maxl_dml_rules"></a>MDX Tuple Specification<a class="indexterm" name="d0e88459"></a></h1></div></div></div><p>This section shows rules for tuple specifications.</p><p>A <span class="bold"><strong>tuple</strong></span> is a collection of member(s)
+with the restriction that no two members can be from the same dimension. For
+example, <span class="cCode">(Actual, Sales)</span> is a tuple. <span class="cCode">(Actual, Budget)</span> is
+not a tuple, as both members are from the same dimension.</p><p class="bridgehead"><a name="d0e88475"></a>Syntax</p><pre class="programlisting">&lt;tuple&gt; ::= 
+       &lt;member&gt;
+      | ( &lt;member&gt; [, &lt;member&gt; ].. )
+      | &lt;tuple_value_expression&gt;</pre><div class="informaltable"><table border="1"><colgroup><col><col></colgroup><thead><tr><th id="hd-d0e88480-d0e88484-1" valign="top">Syntax</th><th id="hd-d0e88480-d0e88484-2" valign="top">Description</th></tr></thead><tbody><tr><td headers="hd-d0e88480-d0e88484-1">&lt;member&gt;</td><td headers="hd-d0e88480-d0e88484-2">A member name. If a member name contains spaces or special characters,
+enclose it in brackets [ ]. It is good practice to use brackets for member
+names, even if they do not contain special characters. Example: <span class="cCode">[West]</span></td></tr><tr><td headers="hd-d0e88480-d0e88484-1">( &lt;member&gt; [, &lt;member&gt; ].. )</td><td headers="hd-d0e88480-d0e88484-2">One or more member names, separated by commas. The members must be
+from different dimensions. The list of members must be enclosed in parentheses
+( ). Example: <span class="cCode">( [West], [Feb] )</span></td></tr><tr><td headers="hd-d0e88480-d0e88484-1">&lt;tuple_value_expression&gt;</td><td headers="hd-d0e88480-d0e88484-2">An instance of a function that extracts a tuple from a <a href="mdx_set_spec.htm" title="MDX Set Specification">set</a>.
+There are two such functions available: <div class="itemizedlist"><ul type="disc"><li><p><a href="mdx_currenttuple.htm" title="CurrentTuple"><span class="FunctionName">CurrentTuple</span></a></p></li><li><p><a href="mdx_item.htm" title="Item"><span class="FunctionName">Item</span></a></p></li></ul></div></td></tr></tbody></table></div><p class="bridgehead"><a name="d0e88519"></a>Description</p><p>A tuple represents a single data cell if all dimensions are represented.
+For example, this tuple from Sample Basic is a single data value:</p><pre class="programlisting">( [Qtr1], [Sales], [Cola], [Florida], [Actual] )</pre></div></body></html>

@@ -1,0 +1,49 @@
+﻿
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="EN_US"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <title>IsLevel</title><link rel="stylesheet" href="global.css" type="text/css"><link rel="stylesheet" href="document.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><link rel="start" href="copyrite.htm" title="Oracle Essbase Technical Reference"><link rel="up" href="ch07s09.htm" title="MDX Function Reference"><link rel="prev" href="mdx_isleaf.htm" title="IsLeaf"><link rel="next" href="mdx_issibling.htm" title="IsSibling"><script src="normal.js" language="javascript" type="text/javascript"></script><script language="javascript" type="text/javascript"><!--
+var prevPage = 'mdx_isleaf.htm';
+var nextPage = 'mdx_issibling.htm';
+var tocLinkId = 'mdx_islevel';
+// --></script></head><body onload="javascript:loadPage();" onclick="javascript:clearToc();"><noscript>If you see this message, your browser either has disabled or does not support JavaScript. To use the full features of this help system, such as searching and the table of contents, your browser must have JavaScript support enabled. If your browser supports JavaScript, it provides settings that enable or disable JavaScript. When JavaScript is disabled, you can view only the content of the help topic, which follows this message.</noscript><div class="function" lang="EN-US">
+
+<h1 class="title" style="clear: both"><a name="islevel_techref_proj_maxl_dml_funcs"></a>IsLevel<a class="indexterm" name="d0e103444"></a><a class="indexterm" name="d0e103447"></a></h1>
+
+
+<p>Returns TRUE if the member is in a specified level.</p>
+
+
+
+<p class="func_subhead">Syntax</p>
+<pre class="programlisting">IsLevel ( <span class="italic">member</span> , <span class="italic">index</span> )</pre>
+
+<div class="FunctionParams"><table border="1" cellpadding="2" summary="This table describes the parameters for the IsLevel function"><thead><tr><th id="hd-d0e103476-col1">Parameter</th><th id="hd-d0e103476-col2">Description</th></tr></thead><tbody>
+<tr>
+<td headers="hd-d0e103476-col1"><p><a href="mdx_member.htm" title="MDX Member Specification">member</a></p></td>
+<td headers="hd-d0e103476-col2">
+<p>A member specification.</p>
+</td>
+</tr>
+<tr>
+<td headers="hd-d0e103476-col1"><p>index</p></td>
+<td headers="hd-d0e103476-col2">
+<p>A level number.</p>
+</td>
+</tr>
+</tbody></table></div>
+
+<p class="func_subhead">Example</p>
+<pre class="programlisting">IsLevel([Market].CurrentMember, 1) </pre>
+<p>returns TRUE if the current
+member of the Market dimension is at level 1.</p>
+<p>Therefore, the following query</p>
+<pre class="programlisting">SELECT
+ Filter([Market].Members, IsLevel([Market].CurrentMember, 1))
+ON COLUMNS
+FROM Sample.Basic</pre>
+<p>returns</p>
+<div class="informaltable"><table border="1"><colgroup><col><col><col><col></colgroup><tbody><tr><td valign="bottom">East</td><td valign="bottom">West</td><td valign="bottom">South</td><td valign="bottom">Central</td></tr><tr><td>24161</td><td>29861</td><td>13238</td><td>38262</td></tr></tbody></table></div>
+
+</div></body></html>
